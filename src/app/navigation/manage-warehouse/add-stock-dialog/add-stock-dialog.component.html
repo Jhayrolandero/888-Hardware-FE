@@ -1,0 +1,58 @@
+<div class="flex flex-row py-2 px-6 justify-between items-center bg-mainGreen">
+    <p class="font-DMSans text-white text-[1.2rem] font-bold">Add Incoming Stock</p>
+    <svg (click)="close()" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="white"/>
+    </svg>
+        
+        
+</div>
+<div class="p-4 px-6 w-full">
+
+    @if(data.product.variant_name){
+        <p class="font-DMSans text-mainGreen text-[1rem] font-semibold">{{data.product.variant_name}}</p>
+        <p class="font-DMSans text-mainGreen text-[1rem] font-semibold">Current Stock: {{data.product.variant_stock}}</p>
+    }
+    @else {
+        <p class="font-DMSans text-mainGreen text-[1rem] font-semibold">{{data.product.product_name}}</p>
+        <p class="font-DMSans text-mainGreen text-[1rem] font-semibold">Current Stock: {{data.product.product_stock}}</p>
+    }
+
+    <hr class="my-3">
+    <div class="flex flex-row gap-3">
+        <div class="flex flex-col justify-around flex-1 h-[60px] border-b-2 border-formBorder">
+            <p class="font-DMSans font-medium text-formText tablet:text-[1rem] text-[0.8rem]">Incoming Quantity</p>
+            <input type="text" class="defaultInputPrimary bg-opacity-none">
+        </div>
+        <div class="flex flex-col justify-around flex-1 h-[60px] border-b-2 border-formBorder">
+            <p class="font-DMSans font-medium text-formText tablet:text-[1rem] text-[0.8rem]">Cost Per Item</p>
+            <input type="text" class="defaultInputPrimary bg-opacity-none">
+        </div>
+    </div>
+
+    <div class="flex flex-row gap-3">
+        <div class="flex flex-col justify-around flex-1 h-[60px] border-b-2 border-formBorder">
+            <p class="font-DMSans font-medium text-formText tablet:text-[1rem] text-[0.8rem]">Discount</p>
+            <input type="text" class="defaultInputPrimary bg-opacity-none">
+        </div>
+        <div class="flex flex-col justify-around flex-1 h-[60px] border-b-2 border-formBorder">
+            <p class="font-DMSans font-medium text-formText tablet:text-[1rem] text-[0.8rem]">Supplier</p>
+            <input type="text" class="defaultInputPrimary bg-opacity-none">
+        </div>
+    </div>
+    <div class="flex flex-col justify-around flex-1 h-[60px] border-b-2 border-formBorder">
+        <p class="font-DMSans font-medium text-formText tablet:text-[1rem] text-[0.8rem]">Method of Payment</p>
+        <input type="text" class="defaultInputPrimary bg-opacity-none">
+    </div>
+    <div class="flex flex-col justify-around flex-1 h-[60px] border-b-2 border-formBorder">
+        <p class="font-DMSans font-medium text-formText tablet:text-[1rem] text-[0.8rem]">Payment Details</p>
+        <textarea type="text" class="defaultInputPrimary bg-opacity-none"></textarea>
+    </div>
+
+    <hr class="my-3">
+
+    <div class="flex-1 justify-end float-end">
+        <div class="bg-mainGreen rounded-[10px] text-white p-2 px-4 inline-flex">
+            Add to Stock
+        </div>
+    </div>
+</div>

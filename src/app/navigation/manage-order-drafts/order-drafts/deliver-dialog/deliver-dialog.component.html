@@ -1,0 +1,42 @@
+<div class="flex flex-col py-5 px-5 bg-white">
+    <p class=" pb-2 font-DMSans text-black text-[1.2rem] font-bold">Deliver Order?</p>
+    <!-- <svg (click)="cancel()" class="cursor-pointer hover:scale-[110%]"  width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="black"/>
+    </svg> --> 
+    <p class="font-DMSans font-medium text-formText tablet:text-[1rem] text-[0.8rem]">This order draft will be moved to sale records.</p>
+    <hr class="my-4"> 
+    <div class="flex flex-col">
+        
+        <form [formGroup]="paymentTerm" class="flex flex-row gap-3">
+            <div class="flex flex-col h-[30px]">
+                <p class="font-DMSans font-medium text-black text-[0.9rem]">Payment Term</p>
+                <input 
+                    formControlName="term"
+                    id="term" 
+                    type="text" 
+                    class="px-2 defaultInputPrimary bg-opacity-none rounded-[3px] border-2 w-full border-formBorder"
+                >
+            </div>
+            <div class="flex flex-col h-[30px]">
+                <div class="flex flex-row gap-1">
+                    <p class="font-DMSans font-medium text-black text-[0.9rem]">DR No.</p>
+                    <svg matTooltip="Leave empty to assign default DR No."  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                    </svg>
+                </div>
+                <input 
+                    formControlName="dr"
+                    id="dr" 
+                    type="text" 
+                    class="px-2 defaultInputPrimary bg-opacity-none rounded-[3px] border-2 w-full border-formBorder"
+                >
+            </div>
+        </form>
+    </div>
+    <hr class="my-4"> 
+    <div class="flex ml-auto mr-1 space-x-2 flex-row mb-1 gap-2">
+        <button (click)="cancel()" class="hover:scale-105 duration-300 hover:duration-300 text-medium border-mainGray border-2 p-1 px-5 rounded-[5px] text-[0.9rem] font-medium text-mainGray">Cancel</button>
+        <button (click)="confirm()" class="hover:scale-105 duration-300 hover:duration-300 text-medium bg-mainGreen p-1 px-5 rounded-[5px] text-[0.9rem] font-medium text-white">Submit</button>
+    </div>
+</div>
+

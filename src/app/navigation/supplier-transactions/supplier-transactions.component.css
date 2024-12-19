@@ -1,0 +1,4 @@
+input[type="month"]::-webkit-inner-spin-button,
+input[type="month"]::-webkit-calendar-picker-indicator {
+    color-scheme: dark;
+}

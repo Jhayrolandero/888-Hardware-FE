@@ -1,0 +1,36 @@
+<div class="flex flex-row py-2 px-6 justify-between items-center bg-mainGreen">
+    <p class="font-DMSans text-white text-[1.2rem] font-bold">Add Supplier</p>
+    <button (click)="close()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="white"/>
+        </svg>
+    </button>
+</div>
+<form class="p-4 px-6 w-full flex flex-col gap-2" [formGroup]="supplierForm">
+    <div class="flex flex-row gap-3">
+        <div class="flex flex-col justify-around flex-1 h-[60px] border-b-2 border-formBorder">
+            <p class="font-DMSans font-medium text-formText tablet:text-[1rem] text-[0.8rem]">Supplier Name</p>
+            <input type="text" class="defaultInputPrimary bg-opacity-none" formControlName="supplier_name">
+        </div>
+        <div class="flex flex-col justify-around flex-1 h-[60px] border-b-2 border-formBorder">
+            <p class="font-DMSans font-medium text-formText tablet:text-[1rem] text-[0.8rem]">Supplier Contact</p>
+            <input type="text" class="defaultInputPrimary bg-opacity-none" formControlName="supplier_contact">
+        </div>
+    </div>
+
+    <div class="flex flex-col justify-around flex-1 h-[60px] border-b-2 border-formBorder">
+        <p class="font-DMSans font-medium text-formText tablet:text-[1rem] text-[0.8rem]">Supplier Note</p>
+        <textarea type="text" class="defaultInputPrimary bg-opacity-none" formControlName="supplier_note"></textarea>
+    </div>
+
+    <hr class="my-3">
+
+    <div class="flex justify-end">
+        <button
+        type="submit"
+        (click)="submitForm()"
+        class="bg-mainGreen rounded-[10px] text-white p-2 px-4 inline-flex">
+        Add to Supplier
+        </button>
+    </div>
+</form>

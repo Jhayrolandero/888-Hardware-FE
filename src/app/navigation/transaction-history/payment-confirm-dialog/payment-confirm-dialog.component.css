@@ -1,0 +1,28 @@
+::ng-deep .mat-mdc-dialog-container {
+    --mdc-dialog-container-shape: 5px;
+  }
+
+  .plain-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+  }
+  
+  .plain-button:hover {
+    text-decoration: underline;
+  }
+
+  select {
+    outline: none !important;
+    box-shadow: none !important;
+    /* -webkit-appearance: none; 
+    -moz-appearance: none; 
+    appearance: none;  */
+  }
+  
+  select:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }

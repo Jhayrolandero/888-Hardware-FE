@@ -1,0 +1,9 @@
+input[type="text"], textarea {
+
+  background-color : #2A5C66; 
+
+}
+
+::placeholder{
+    color: white;
+}

@@ -1,0 +1,3 @@
+::ng-deep .mat-mdc-dialog-container {
+    --mdc-dialog-container-shape: 5px;
+  }

@@ -1,0 +1,99 @@
+@if(!offlineService.isOnline()) {
+  <div class="flex flex-col justify-center items-center h-full">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" size-12 text-mainGreen">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m3 3 8.735 8.735m0 0a.374.374 0 1 1 .53.53m-.53-.53.53.53m0 0L21 21M14.652 9.348a3.75 3.75 0 0 1 0 5.304m2.121-7.425a6.75 6.75 0 0 1 0 9.546m2.121-11.667c3.808 3.807 3.808 9.98 0 13.788m-9.546-4.242a3.733 3.733 0 0 1-1.06-2.122m-1.061 4.243a6.75 6.75 0 0 1-1.625-6.929m-.496 9.05c-3.068-3.067-3.664-7.67-1.79-11.334M12 12h.008v.008H12V12Z" />
+    </svg>
+    <p
+    class="text-center text-mainGreen font-DMSans font-bold text-[1.7rem] tablet:text-[2rem] py-2"
+    >
+        You are offline!
+    </p>
+</div>
+} @else {
+  <div class="bg-[#EFFAFC] text-[#2A5C66] flex flex-col gap-3 w-full h-screen p-5">
+    <div class="bg-white w-full rounded-[10px] flex flex-row justify-center mobileL:justify-between items-center px-5 border">
+        <p class="text-mainGreen font-DMSans font-bold text-[1.7rem]  mobileL:text-[2.5rem] py-2">
+            Activity Logs
+        </p>
+    </div>
+    @if(isLoading) {
+    <div  class="w-full flex flex-row justify-center">
+        <mat-spinner class="mat-progress-spinner" [diameter]="50"></mat-spinner>
+    </div>
+    } @else {
+    <div class=" mainPanelp-3 px-4 border bg-white w-full rounded-[10px] flex flex-col text-black" *ngFor="let group of groupedLogs">
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+          <mat-expansion-panel-header>
+            <p class="text-black font-medium text-[1.3rem]">{{group.date}}</p>
+          </mat-expansion-panel-header>
+          <div *ngFor="let log of group.logs" class="p-[7px] flex flex-col justify-center pl-10 border-b-2 py-5">
+            <div class="flex flex-row items-center">
+              <div class="mr-20 flex flex-row items-center ">
+                @switch (log.log_type) {
+                  @case ("POST") {
+                    @switch (log.log_action.split("/")[log.log_action.split("/").length - 1]) {
+                      @case ("addTransaction"){
+                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M17 4H7C5.89543 4 5 4.89543 5 6V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V6C19 4.89543 18.1046 4 17 4Z" stroke="#2A5C66" stroke-width="2"/>
+                          <path d="M9 9H15M9 13H15M9 17H13" stroke="#2A5C66" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                          
+                      }
+                      @default {
+                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M21 14V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H10V5H5V19H19V14H21Z" fill="#2A5C66"/>
+                          <path d="M21 7H17V3H15V7H11V9H15V13H17V9H21V7Z" fill="#2A5C66"/>
+                        </svg>  
+                      }
+                    }
+                  }
+                  @case ("PATCH") {
+                    @switch (log.log_action.split("/")[log.log_action.split("/").length - 1]) {
+                      @case ("deliverOrder") {
+                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M9.564 8.73L10.079 10.593C10.564 12.348 10.806 13.226 11.519 13.625C12.232 14.025 13.137 13.789 14.947 13.319L16.867 12.819C18.677 12.349 19.582 12.114 19.994 11.423C20.406 10.731 20.164 9.853 19.678 8.098L19.164 6.236C18.679 4.48 18.436 3.602 17.724 3.203C17.01 2.803 16.105 3.039 14.295 3.51L12.375 4.008C10.565 4.478 9.66 4.714 9.249 5.406C8.837 6.097 9.079 6.975 9.564 8.73Z" fill="#eb8f71"/>
+                          <path d="M2.277 5.24703C2.30335 5.15205 2.34816 5.0632 2.40887 4.98555C2.46958 4.90791 2.54499 4.84299 2.63081 4.79451C2.71662 4.74603 2.81115 4.71494 2.90899 4.70302C3.00683 4.69109 3.10606 4.69857 3.201 4.72503L4.904 5.19703C5.35521 5.31987 5.76695 5.55739 6.09919 5.88647C6.43143 6.21555 6.67286 6.62501 6.8 7.07503L8.951 14.861L9.109 15.408C9.74676 15.6431 10.2842 16.0905 10.631 16.675L10.941 16.579L19.811 14.274C19.9063 14.2492 20.0056 14.2434 20.1032 14.257C20.2008 14.2705 20.2948 14.3032 20.3797 14.353C20.4647 14.4029 20.539 14.469 20.5984 14.5476C20.6578 14.6262 20.7012 14.7157 20.726 14.811C20.7508 14.9064 20.7566 15.0057 20.7431 15.1032C20.7295 15.2008 20.6969 15.2948 20.647 15.3797C20.5971 15.4647 20.531 15.539 20.4524 15.5984C20.3739 15.6579 20.2843 15.7012 20.189 15.726L11.352 18.022L11.022 18.124C11.016 19.394 10.139 20.556 8.81201 20.9C7.22201 21.314 5.587 20.398 5.161 18.856C4.735 17.314 5.679 15.727 7.269 15.314C7.34834 15.294 7.42734 15.2767 7.506 15.262L5.354 7.47403C5.29581 7.27408 5.18699 7.09253 5.03809 6.94695C4.88918 6.80137 4.70522 6.69669 4.504 6.64303L2.8 6.17003C2.70505 6.14378 2.61619 6.09908 2.53852 6.03849C2.46084 5.97789 2.39586 5.90259 2.34729 5.81687C2.29872 5.73116 2.26752 5.63672 2.25546 5.53894C2.2434 5.44117 2.25072 5.34197 2.277 5.24703Z" fill="#eb8f71"/>
+                        </svg>
+                          
+                      }
+                      @default {
+                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M7 7H6C5.46957 7 4.96086 7.21071 4.58579 7.58579C4.21071 7.96086 4 8.46957 4 9V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H15C15.5304 20 16.0391 19.7893 16.4142 19.4142C16.7893 19.0391 17 18.5304 17 18V17" stroke="#eb8f71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M16 4.99998L19 7.99998M20.385 6.58499C20.7788 6.19114 21.0001 5.65697 21.0001 5.09998C21.0001 4.543 20.7788 4.00883 20.385 3.61498C19.9912 3.22114 19.457 2.99988 18.9 2.99988C18.343 2.99988 17.8088 3.22114 17.415 3.61498L9 12V15H12L20.385 6.58499Z" stroke="#eb8f71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      }
+                    }
+                  }
+                  @case ("DELETE"){
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7.37796 5.531C7.89159 5.0302 8.58059 4.74994 9.29796 4.75H19.595C20.193 4.75 20.889 4.916 21.458 5.269C22.037 5.627 22.568 6.243 22.568 7.125V16.875C22.568 17.757 22.037 18.372 21.458 18.731C20.8949 19.0684 20.2513 19.2477 19.595 19.25H9.29796C8.58059 19.2501 7.89159 18.9698 7.37796 18.469L2.02796 13.253C1.86074 13.09 1.72785 12.8951 1.63712 12.6799C1.54638 12.4647 1.49963 12.2335 1.49963 12C1.49963 11.7665 1.54638 11.5353 1.63712 11.3201C1.72785 11.1049 1.86074 10.91 2.02796 10.747L7.37796 5.531ZM14.03 9.47C13.9613 9.39631 13.8785 9.33721 13.7865 9.29622C13.6945 9.25523 13.5952 9.23318 13.4945 9.23141C13.3938 9.22963 13.2937 9.24816 13.2004 9.28588C13.107 9.3236 13.0221 9.37974 12.9509 9.45096C12.8797 9.52218 12.8236 9.60701 12.7858 9.7004C12.7481 9.79379 12.7296 9.89382 12.7314 9.99452C12.7331 10.0952 12.7552 10.1945 12.7962 10.2865C12.8372 10.3785 12.8963 10.4613 12.97 10.53L14.44 12L12.97 13.47C12.8963 13.5387 12.8372 13.6215 12.7962 13.7135C12.7552 13.8055 12.7331 13.9048 12.7314 14.0055C12.7296 14.1062 12.7481 14.2062 12.7858 14.2996C12.8236 14.393 12.8797 14.4778 12.9509 14.549C13.0221 14.6203 13.107 14.6764 13.2004 14.7141C13.2937 14.7518 13.3938 14.7704 13.4945 14.7686C13.5952 14.7668 13.6945 14.7448 13.7865 14.7038C13.8785 14.6628 13.9613 14.6037 14.03 14.53L15.5 13.06L16.97 14.53C17.0386 14.6037 17.1214 14.6628 17.2134 14.7038C17.3054 14.7448 17.4047 14.7668 17.5054 14.7686C17.6061 14.7704 17.7062 14.7518 17.7996 14.7141C17.8929 14.6764 17.9778 14.6203 18.049 14.549C18.1202 14.4778 18.1764 14.393 18.2141 14.2996C18.2518 14.2062 18.2703 14.1062 18.2685 14.0055C18.2668 13.9048 18.2447 13.8055 18.2037 13.7135C18.1627 13.6215 18.1036 13.5387 18.03 13.47L16.56 12L18.03 10.53C18.1036 10.4613 18.1627 10.3785 18.2037 10.2865C18.2447 10.1945 18.2668 10.0952 18.2685 9.99452C18.2703 9.89382 18.2518 9.79379 18.2141 9.7004C18.1764 9.60701 18.1202 9.52218 18.049 9.45096C17.9778 9.37974 17.8929 9.3236 17.7996 9.28588C17.7062 9.24816 17.6061 9.22963 17.5054 9.23141C17.4047 9.23318 17.3054 9.25523 17.2134 9.29622C17.1214 9.33721 17.0386 9.39631 16.97 9.47L15.5 10.94L14.03 9.47Z" fill="#8C4848"/>
+                    </svg>
+                      
+                  }
+                }
+                <p class="mx-3 mr-4 font-medium">{{log.log_user}}</p>
+              </div>
+              <div class="flex w-full flex-row">
+                <div class="flex flex-col flex-1">
+                  <p class="text-[1.2rem] text-mainGreen">{{parseMainAction(log)}}</p>
+                  <p class="italic text-[0.8rem] opacity-55">API endpoint: {{log.log_action}}</p>
+                </div>
+                <div class="flex">
+                  <p>{{log.log_date}}</p>
+                </div>
+              </div>
+            </div>
+        </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    @if(!isLastPage()) {
+    <div class="bg-[#EFFAFC] flex gap-4 justify-end px-5  py-2">
+      <!-- <button class="bg-mainGreen text-white font-medium px-2 py-1 rounded-md">Previous</button> -->
+         <button class="bg-mainGreen text-white font-medium px-4 py-1 rounded-md" (click)="nextPage()">Load More</button>
+    </div>
+    }
+  }
+  </div>
+}

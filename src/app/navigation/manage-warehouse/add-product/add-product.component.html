@@ -1,0 +1,471 @@
+<form (ngSubmit)="submitForm()" [formGroup]="inventoryForm" class="tablet:p-5 grid gap-3">
+    <div (click)="goHome()" class="m-2 cursor-pointer hover:scale-[105%] hover:duration-300 duration-300 rounded-[50%] w-[50px] h-[50px] bg-white flex justify-center items-center border shadow-md">
+        <svg width="30" height="30" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.1562 23.9062H43.0312C43.4539 23.9062 43.8593 24.0742 44.1582 24.373C44.4571 24.6719 44.625 25.0773 44.625 25.5C44.625 25.9227 44.4571 26.3281 44.1582 26.627C43.8593 26.9258 43.4539 27.0938 43.0312 27.0938H11.1562C10.7336 27.0938 10.3282 26.9258 10.0293 26.627C9.73041 26.3281 9.5625 25.9227 9.5625 25.5C9.5625 25.0773 9.73041 24.6719 10.0293 24.373C10.3282 24.0742 10.7336 23.9062 11.1562 23.9062Z" fill="#2A5C66"/>
+            <path d="M11.816 25.5L25.0345 38.7154C25.3338 39.0146 25.5019 39.4205 25.5019 39.8437C25.5019 40.267 25.3338 40.6729 25.0345 40.9721C24.7353 41.2714 24.3294 41.4395 23.9062 41.4395C23.4829 41.4395 23.0771 41.2714 22.7778 40.9721L8.43404 26.6284C8.28562 26.4803 8.16787 26.3045 8.08752 26.1108C8.00718 25.9172 7.96582 25.7096 7.96582 25.5C7.96582 25.2904 8.00718 25.0828 8.08752 24.8892C8.16787 24.6955 8.28562 24.5197 8.43404 24.3716L22.7778 10.0279C23.0771 9.72861 23.4829 9.56049 23.9062 9.56049C24.3294 9.56049 24.7353 9.72861 25.0345 10.0279C25.3338 10.3271 25.5019 10.733 25.5019 11.1562C25.5019 11.5795 25.3338 11.9854 25.0345 12.2846L11.816 25.5Z" fill="#2A5C66"/>
+        </svg>
+
+    </div>
+
+    <!-- Title Segment -->
+    <div
+        class="bg-white w-full tablet:rounded-[10px] flex flex-col p-5 border shadow-md">
+        <div class="">
+            @if(this.isEditing) {
+                <h1 class="text-mainGreen font-DMSans font-bold text-[1.5rem] tablet:text-[2.3rem] pb-2">
+                    Edit Product
+                </h1>    
+            } @else {
+                <h1 class="text-mainGreen font-DMSans font-bold text-[1.5rem] tablet:text-[2.3rem] pb-2">
+                    Add Inventory
+                </h1>  
+            }     
+        </div>
+        <!-- Primary Details -->
+        <div class="flex justify-between items-center mt-5">
+            <p class="font-DMSans font-medium text-mainGreen text-[1rem] tablet:text-[1.3rem]">Primary Details</p>
+            <button 
+            (click)="showProductForm = !showProductForm"
+            type="button"
+            class="text-[0.75rem]">{{showProductForm ? 'Hide' : 'Show'}}</button>
+        </div>
+        <hr class="border-[1.5px] my-2 border-slate-400" />
+
+        <!-- Product Form -->
+        @if(showProductForm){
+            <div class="flex flex-row gap-2 mb-4">
+                <!-- Image Col -->
+                <div class="hidden tablet:flex flex-col gap-2">
+                    <p class="font-DMSans text-formText font-medium text-[1rem]">Product Preview Image (optional)</p>
+                    <label for="dropzone-main-file">
+                        <div
+                            class="border-2 border-formBorder rounded-[5px] w-[220px] h-[220px] flex flex-col justify-center items-center overflow-hidden"
+                        >
+                        
+                            @if(inventoryForm.get('product_image')!.value !== '' && inventoryForm.get('product_image')!.value!.substring(0, 4) === "/888") {
+                                <img
+                                class="object-cover"
+                                [src]="port + inventoryForm.get('product_image')!.value"
+                                onerror="this.onerror=null; this.src=port+mainImageURL"
+                                />
+                            }
+                            @else if(mainImageURL === ''){
+                                <svg width="40" height="40" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M35.7969 52.152V26.0475L27.4691 34.3753L22.9849 29.731L38.9999 13.7159L55.015 29.731L50.5308 34.3753L42.2029 26.0475V52.152H35.7969ZM19.7819 64.9641C18.0202 64.9641 16.5127 64.3373 15.2592 63.0839C14.0058 61.8305 13.378 60.3218 13.3759 58.558V48.949H19.7819V58.558H58.218V48.949H64.624V58.558C64.624 60.3197 63.9973 61.8283 62.7438 63.0839C61.4904 64.3395 59.9818 64.9662 58.218 64.9641H19.7819Z" fill="#AAAAAA"/>
+                                </svg>
+                            }
+                            
+                            @else {
+                                <img
+                                class="object-cover"
+                                [src]="mainImageURL"
+                                onerror="this.onerror=null; this.src=port+mainImageURL"
+                                />
+                            }
+                                
+                        </div>
+                    </label>
+                    <input
+                    id="dropzone-main-file"
+                    type="file"
+                    class="hidden"
+                    (change)="PreviewMainImage($event)"
+                    accept="image/*"
+                    />
+                </div>
+
+                <!-- Main Product Details Form -->
+                <div class="flex flex-col w-full gap-2 ">
+                    <div class="flex flex-col laptop:hidden gap-2">
+                        <p class="font-DMSans text-formText font-medium text-[1rem]">Product Preview Image (optional)</p>
+                        <label for="dropzone-main-file">
+                            <div
+                                class="border-2 border-formBorder rounded-[5px]  h-[60px] w-full flex flex-col justify-center items-center overflow-hidden"
+                            >
+                                @if(inventoryForm.get('product_image')!.value !== '' && inventoryForm.get('product_image')!.value!.substring(0, 4) === "http") {
+                                    <img
+                                    class="object-cover"
+                                    [src]="port + inventoryForm.get('product_image')!.value"
+                                    onerror="this.onerror=null; this.src=port+mainImageURL"
+                                    />
+                                }
+                                
+                                @else if(mainImageURL === ''){
+                                    <svg width="40" height="40" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M35.7969 52.152V26.0475L27.4691 34.3753L22.9849 29.731L38.9999 13.7159L55.015 29.731L50.5308 34.3753L42.2029 26.0475V52.152H35.7969ZM19.7819 64.9641C18.0202 64.9641 16.5127 64.3373 15.2592 63.0839C14.0058 61.8305 13.378 60.3218 13.3759 58.558V48.949H19.7819V58.558H58.218V48.949H64.624V58.558C64.624 60.3197 63.9973 61.8283 62.7438 63.0839C61.4904 64.3395 59.9818 64.9662 58.218 64.9641H19.7819Z" fill="#AAAAAA"/>
+                                    </svg>
+                                }
+                                
+                                @else {
+                                    <img
+                                    class="object-cover"
+                                    [src]="mainImageURL"
+                                    onerror="this.onerror=null; this.src=port+mainImageURL"
+                                    />
+                                }
+                                    
+                            </div>
+                        </label>
+                        <input
+                        id="dropzone-main-file"
+                        type="file"
+                        class="hidden"
+                        (change)="PreviewMainImage($event)"
+                        accept="image/*"
+                        />
+                    </div>
+
+
+                    <div class="flex flex-col tablet:flex-row gap-5 flex-wrap">
+                        <div class="flex flex-col justify-around h-[60px] border-b-2 border-formBorder flex-1">
+                            <p class="font-DMSans font-medium text-formText">Product Name</p>
+                            <input formControlName="product_name" type="text" class="bg-opacity-none defaultInputPrimary" (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); focusProduct(productCodeInput)">
+                        </div>
+                        <div class="flex flex-col justify-around h-[60px] border-b-2 border-formBorder flex-1">
+                            <p class="font-DMSans font-medium text-formText">Product Code</p>
+                            <input #productCodeInput formControlName="product_code" type="text" class="defaultInputPrimary" (keydown.enter)="$event.stopPropagation(); $event.preventDefault();"> <!-- focusProduct(categorySelect) -->
+                        </div>
+                        <div class="flex flex-col justify-around h-[60px] border-b-2 border-formBorder flex-1">
+                            <p class="font-DMSans font-medium text-formText">Brand</p>
+                            <input #productBrand formControlName="brand" type="text" class="defaultInputPrimary" (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); focusProduct(initialStock)">
+                        </div>
+                        <div class="flex flex-col justify-around   h-[60px] border-b-2 border-formBorder flex-1">
+                            <p class="font-DMSans font-medium text-formText">Category</p>
+                            <div class=" cursor-pointer flex items-center overflow-hidden" (click)="$event.stopPropagation(); $event.preventDefault(); selectCategory()">
+                                <p *ngIf="selectedProductCategory !== ''" class=" text-xs font-DMSans font-semibold w-[200px] whitespace-nowrap overflow-hidden text-ellipsis" title="{{selectedProductCategory}}">
+                                    {{this.selectedProductCategory}}
+                                </p>
+                                <p class="text-xs font-DMSans font-semibold whitespace-nowrap overflow-hidden" *ngIf="selectedProductCategory === ''">
+                                    Set Category
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="flex flex-col tablet:flex-row gap-5">
+
+                        <div class="flex flex-col justify-around  h-[65px] border-b-2 border-formBorder w-[40%]">
+                            <div class="flex flex-row items-center ">
+                                <p class="font-DMSans font-medium text-formText mr-2">
+                                    Stock Price 
+                                </p>
+                                <svg matTooltip="Value entered in this field pre-fills variant/group inputs."  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                                </svg>
+                            </div>
+                            <input #stockPrice placeholder="Enter stock price" formControlName="default_stock_price" type="number" class="defaultInputPrimary" (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); focusProduct(unitName)">
+                        </div> 
+
+                        <div class="flex flex-row justify-between h-[65px] border-b-2 border-formBorder w-[60%]">
+                            <div class="flex flex-col flex-1">
+                                <div class="flex gap-2 w-full">
+                                    <div class="flex flex-row items-center max-w-[60%]">
+                                        <p class="mr-2 font-DMSans font-medium text-formText">Supplier Price Adjustment</p>
+                                        <svg matTooltip="Add a Discount or Markup Percentage (e.g. -5, 10). Value entered here pre-fills variant/group inputs."  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="flex flex-row items-center overflow-x-auto max-w-[40%] flex-shrink-0 gap-1">
+                                        <div 
+                                        *ngFor="let disc of discountArr; let i = index" 
+                                        [ngClass]="{'border-mainGreen': +disc > 0, 'border-mainRed': +disc < 0}"
+                                        class="flex flex-row items-center border px-1 rounded-[5px] gap-1">
+                                            <span [ngClass]="{'text-mainGreen': +disc > 0, 'text-mainRed': +disc < 0}"
+                                                    class="font-semibold select-none text-[0.6rem]">
+                                                {{disc}}%
+                                            </span> 
+
+                                            @if(+disc > 0) {
+                                                <svg (click)="deleteDiscount(i)" class="cursor-pointer duration-300 hover:duration-300 hover:scale-[110%]" width="9" height="9" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#2A5C66"/>
+                                                </svg>
+                                            } @else {
+                                                <svg (click)="deleteDiscount(i)" class="cursor-pointer duration-300 hover:duration-300 hover:scale-[110%]" width="9" height="9" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#8C4848"/>
+                                                </svg>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-row justify-between items-center">
+                                    <div (click)="addDiscount('add')"  class="cursor-pointer mr-2 hover:scale-[105%] hover:duration-300 duration-300 bg-mainGreen flex w-[28px] h-[28px] items-center justify-center rounded-[8px] text-white p-1 px-2 mb-1">
+                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M6 8H0V6H6V0H8V6H14V8H8V14H6V8Z" fill="white"/>
+                                        </svg> 
+                                    </div>
+                                    <input id="discountInput" type="number" class="defaultInputPrimary" (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); " >
+                                    <p>%</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+
+
+                        <div class="flex flex-col justify-around  h-[65px] border-b-2 border-formBorder w-[45%]">
+                            <div class="flex flex-row items-center">
+                                <p class="font-DMSans font-medium text-formText mr-2">
+                                    Unit Price
+                                </p>
+                                <svg matTooltip="Add a Discount or Markup Percentage (e.g. -5, 10). Value entered here pre-fills variant/group inputs."  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                                </svg>
+                            </div>
+                            <input placeholder="Enter unit price" #sellPrice formControlName="unit_price" type="number" class="defaultInputPrimary">
+                        </div>
+                        
+                        <div class="flex flex-row justify-between h-[65px] border-b-2 border-formBorder w-[55%]">
+                            <div class="flex flex-col flex-1">
+                                <div class="flex gap-2 w-full">
+                                    <div class="flex flex-row items-center max-w-[60%]">
+                                        <p class="mr-2 font-DMSans font-medium text-formText">Unit Price Adjustment</p>
+                                        <svg matTooltip="Add a Discount or Markup Percentage (e.g. -5, 10). Value entered here pre-fills variant/group inputs."  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="flex flex-row items-center overflow-x-auto max-w-[40%] flex-shrink-0 gap-1">
+                                        <div 
+                                        *ngFor="let disc of unitDiscountArr; let i = index" 
+                                        [ngClass]="{'border-mainGreen': +disc > 0, 'border-mainRed': +disc < 0}"
+                                        class="flex flex-row items-center border px-1 rounded-[5px] gap-1">
+                                            <span [ngClass]="{'text-mainGreen': +disc > 0, 'text-mainRed': +disc < 0}"
+                                                    class="font-semibold select-none text-[0.6rem]">
+                                                {{disc}}%
+                                            </span> 
+
+                                            @if(+disc > 0) {
+                                                <svg (click)="deleteUnitDiscount(i)" class="cursor-pointer duration-300 hover:duration-300 hover:scale-[110%]" width="9" height="9" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#2A5C66"/>
+                                                </svg>
+                                            } @else {
+                                                <svg (click)="deleteUnitDiscount(i)" class="cursor-pointer duration-300 hover:duration-300 hover:scale-[110%]" width="9" height="9" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#8C4848"/>
+                                                </svg>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-row justify-between items-center">
+                                    <div (click)="addUnitDiscount('add')"  class="cursor-pointer mr-2 hover:scale-[105%] hover:duration-300 duration-300 bg-mainGreen flex w-[28px] h-[28px] items-center justify-center rounded-[8px] text-white p-1 px-2 mb-1">
+                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M6 8H0V6H6V0H8V6H14V8H8V14H6V8Z" fill="white"/>
+                                        </svg> 
+                                    </div>
+                                    <input id="unitDiscountInput" type="number" class="defaultInputPrimary" (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); " >
+                                    <p>%</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+
+
+
+
+
+                    </div>
+            
+                    <div class="flex flex-col tablet:flex-row gap-5 flex-wrap">
+                        <div class="flex flex-col justify-around  h-[60px] border-b-2 border-formBorder flex-1">
+                            <p class="font-DMSans font-medium text-formText">Unit Name</p>
+                            <input #unitName formControlName="unit_name" type="text" class="defaultInputPrimary" (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); focusProduct(sellPrice)">
+                        </div>
+                        
+                        <!-- Supplier Discount here -->
+                        <div class="flex flex-col justify-around  h-[60px] border-b-2 border-formBorder flex-1">
+                            @if(isEditing) {
+                                <p class="font-DMSans font-medium text-formText">Current Stock Quantity</p>
+                            } @else {
+                                <p class="font-DMSans font-medium text-formText">Initial Stock Quantity</p>
+                            }
+                            
+                            <input #initialStock placeholder="Enter stock quantity" formControlName="product_stock" type="number" class="defaultInputPrimary" (keydown.enter)="$event.stopPropagation(); $event.preventDefault();" >
+                        </div>
+                        <div class="flex flex-col justify-around  h-[60px] border-b-2 border-formBorder flex-1">
+                            <p class="font-DMSans font-medium text-formText">Low Stock Level</p>
+                            <input  placeholder="Enter LSL" formControlName="low_stock_level"  type="number" class="defaultInputPrimary" (keydown.enter)="$event.stopPropagation(); $event.preventDefault();" >
+                        </div>
+                        <div class="flex flex-col justify-around  h-[60px] border-b-2 border-formBorder flex-1">
+                            <p class="font-DMSans font-medium text-formText">Critical Stock Level</p>
+                            <input placeholder="Enter CSL"  formControlName="critical_stock_level"  type="number" class="defaultInputPrimary" (keydown.enter)="$event.stopPropagation(); $event.preventDefault();" >
+                        </div>
+
+                    </div>
+                    
+                    <p class="font-DMSans font-medium text-formText">Description</p>
+                    <textarea formControlName="description" class="flex flex-col justify-around  h-[60px] border-b-2 border-formBorder">
+                    </textarea>
+
+
+                </div>
+            </div>
+        }
+
+
+        <!-- Variants -->
+        <p class="font-DMSans font-medium text-mainGreen text-[1rem] tablet:text-[1.3rem] mt-5">Variants / Brand </p>
+        <hr class="border-[1.5px] my-2 border-slate-400" />
+        <div>
+            <div class="flex flex-row justify-end items-center mb-3">
+                <div class="rounded-[10px] w-full tablet:w-auto border-2 border-mainGreen flex items-center justify-between p-1  cursor-pointer">
+                    <div (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); addVariant()" class="pl-2" >
+                        <input id="variantGroupName" type="text" class="w-full outline-none" placeholder="Enter Group Name">
+                    </div>
+                    <div (click)="addVariant()" class="bg-mainGreen rounded-[6px] text-[0.8rem] text-white py-1 px-2 mr-1">
+                        Add Group
+                    </div>
+    
+                </div>
+                @if(variantGroupError){
+                    <p class="ml-3 font-DMSans font-medium text-[#FF4040]">Variant already exists!</p>
+                }
+            </div>
+
+            <div *ngFor="let varG of variantGroups; let i = index">
+                <app-add-variant-group 
+                [id]="'variant-custom-image' + i" 
+                [varG]="varG" 
+                [productForm]="inventoryForm"
+                [unitDiscountInput]="unitDiscountArr"
+                [stockDiscountInput]="discountArr"
+                (updateVariant)="updateVariant($event, varG.groupName)" 
+                (deleteVariantGroup)="deleteVariant($event)"
+                (editingVariant)="isEditingVariant = !isEditingVariant"
+                ></app-add-variant-group>
+            </div>
+
+        </div>
+
+        <!-- Volume Bracket -->
+        <div class="flex flex-row mt-5">
+            <div class="flex flex-col w-full">
+
+                <p class="font-DMSans font-medium text-mainGreen text-[1rem] tablet:text-[1.3rem]">Volume Bracket <span class="font-DMSans text-xs text-formText"> *only available when all variations are of the same price. </span></p>
+                @if(enableVolume) {
+                <hr class="border-[1.5px] my-2 border-slate-400" />
+        
+                <div class="flex flex-row items-center bg-mainGreen rounded-tr-[10px] rounded-tl-[10px] text-[0.8rem] mobileS:text-[1rem] mb-2 p-2">
+                    <p class="text-white text-[0.8rem] tablet:text-[1rem] flex-1">Quantity</p>
+                    <p class="text-white text-[0.8rem] tablet:text-[1rem] flex-1">Price</p>
+                    <button [disabled]="this.currentlyEditing" class="flex flex-row justify-center text-mainGreen cursor-pointer font-semibold bg-white px-4 rounded-[5px]" (click)="$event.preventDefault(); $event.stopPropagation(); addNewVolume()">+ <span class="hidden tablet:block">Volume</span></button>
+                </div>
+
+                @if(volume.length > 0) {
+                    <div *ngFor="let vol of volume; let idx = index"  class=" items-center text-[0.8rem] flex-col flex mobileS:text-[1rem] mb-2 px-2"
+                    [ngClass]="idx % 2 == 0? 'bg-[#f8f8f8]' : ''">
+                        <div class="flex flex-row items-center w-full space-x-2">
+                            @if(this.editingVolume && idx === volumeEditIdx && !this.currentlyAdding) {
+                                <div class="flex w-full flex-col tablet:flex-row items-center text-[0.9rem] gap-1">
+                                    <div class="tablet:block w-full tablet:flex-1"><input type="number"  class="border rounded p-2 w-full"  [ngModelOptions]="{standalone: true}" [(ngModel)]="newVolumeQuantity" placeholder="newVolumeQuantity"></div>
+                                    <div class="tablet:block w-full tablet:flex-1"><input type="text" class="border rounded p-2 w-full"  [ngModelOptions]="{standalone: true}" [(ngModel)]="newVolumePrice" placeholder="newVolumePrice"></div>
+                                    
+                                    
+        
+                                    <div class="flex flex-row w-full tablet:w-auto justify-end items-center pr-2 pl-1">
+                                        <svg class="cursor-pointer hover:scale-[110%]" (click)="$event.preventDefault(); $event.stopPropagation(); cancel(vol)" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z" fill="#8C4848"/>
+                                        </svg>
+        
+                                        <svg class="cursor-pointer hover:scale-[110%]" title="Submit"  (click)="$event.preventDefault(); $event.stopPropagation(); confirm(vol)" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.5501 18L3.8501 12.3L5.2751 10.875L9.5501 15.15L18.7251 5.97498L20.1501 7.39998L9.5501 18Z" fill="#2A5C66"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            } @else {
+                                <p class="text-formText flex-1">{{ vol.volume_quantity }}</p>
+                                <p class="text-formText flex-1">{{ vol.volume_price }}</p>
+
+
+                                <div class="flex">
+                                    <button type="button" class="flex justify-center items-center" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                        <mat-icon>more_vert</mat-icon>
+                                        <!-- <p>Actions</p> -->
+                                    </button>
+                                </div>
+                    
+                                <mat-menu class="flex flex-row items-center" #menu="matMenu">
+                                <div *ngIf="this.deletingID !== vol.volume_ID" [disabled]="currentlyDeleting" (click)="$event.preventDefault(); $event.stopPropagation(); editVolume(vol, idx)"  mat-menu-item>
+                                    <mat-icon>
+                                        <svg class="duration-300 hover:duration-300 hover:scale-[110%]" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M4 5H3C2.46957 5 1.96086 5.21071 1.58579 5.58579C1.21071 5.96086 1 6.46957 1 7V16C1 16.5304 1.21071 17.0391 1.58579 17.4142C1.96086 17.7893 2.46957 18 3 18H12C12.5304 18 13.0391 17.7893 13.4142 17.4142C13.7893 17.0391 14 16.5304 14 16V15" stroke="#44474e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M13 3L16 6M17.385 4.585C17.7788 4.19115 18.0001 3.65698 18.0001 3.1C18.0001 2.54302 17.7788 2.00885 17.385 1.615C16.9912 1.22115 16.457 0.999893 15.9 0.999893C15.343 0.999893 14.8088 1.22115 14.415 1.615L6 10V13H9L17.385 4.585Z" stroke="#44474e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </mat-icon>
+                                    <span>Edit Volume</span>
+                                </div>
+                                <div *ngIf="this.deletingID !== vol.volume_ID" [disabled]="currentlyDeleting" (click)="$event.preventDefault(); $event.stopPropagation(); deleteVolume(vol)" mat-menu-item>
+                                    <mat-icon>
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M7 21C6.45 21 5.97933 20.8043 5.588 20.413C5.19667 20.0217 5.00067 19.5507 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8043 20.021 18.413 20.413C18.0217 20.805 17.5507 21.0007 17 21H7ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z" fill="#44474e"/>
+                                        </svg>
+                                            
+                                    </mat-icon>
+                                    <span>Delete Volume</span>
+                                </div>
+                                <div *ngIf="currentlyDeleting && this.deletingID === vol.volume_ID" class="flex flex-row items-center w-[15%] space-x-2">
+                                    <p class="font-DMSans text-sm">
+                                        Removing volume bracket..
+                                    </p>
+                                    <mat-spinner *ngIf="currentlyLoading" class="mat-progress-spinner" [diameter]="30"></mat-spinner>
+                                </div>
+                                </mat-menu>
+                            }
+                        </div>
+                    </div>
+                }
+                <div *ngIf="currentlyAdding" class="w-full flex flex-row justify-center items-center ">
+                    <div class="w-full rounded-xl" >
+                        <div class="p-[7px] flex flex-col justify-center w-full">
+                            <div class="flex w-full flex-col tablet:flex-row items-center text-[0.9rem] gap-1">
+                                <div class="tablet:block w-full tablet:flex-1"><input [ngModelOptions]="{standalone: true}" [(ngModel)]="newVolumeQuantity" placeholder="Enter Volume Quantity" class="border rounded p-2 w-full" type="number"></div>    
+                                <div class="tablet:block w-full tablet:flex-1"><input [ngModelOptions]="{standalone: true}" [(ngModel)]="newVolumePrice" placeholder="Enter Price" type="number" class="border rounded p-2 w-full"></div>
+                                <div class="flex flex-row w-full tablet:w-auto justify-end items-center pr-2 pl-1">
+                                    <svg *ngIf="!currentlyLoading" class="cursor-pointer hover:scale-[110%]" (click)="cancel(null)" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z" fill="#8C4848"/>
+                                    </svg>
+                                    <svg *ngIf="!currentlyLoading" class="cursor-pointer hover:scale-[110%]" title="Submit" (click)="confirm(null)" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9.5501 18L3.8501 12.3L5.2751 10.875L9.5501 15.15L18.7251 5.97498L20.1501 7.39998L9.5501 18Z" fill="#2A5C66"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                }
+            </div>
+        </div>
+
+    </div>
+    
+    
+    <div class="flex justify-end space-x-2 p-5">
+        @if(!isEditingVariant) {
+            @if(isEditing) {
+                <button [disabled]="isSubmitting" (click)="$event.preventDefault(); $event.stopPropagation(); goBack()" class="bg-mainRed rounded-[5px] flex flex-col w-[80px] items-center p-2 font-DMSans font-medium text-white duration-300 hover:duration-300 hover:scale-[102%] hover:shadow-main" >
+                    Cancel
+                </button>
+
+
+                <button type="submit" class="bg-mainGreen rounded-[5px] flex flex-col items-center p-2 font-DMSans font-medium text-white duration-300 hover:duration-300 hover:scale-[102%] hover:shadow-main" 
+                [disabled]="!checkNoEmptyVariantGroup()">
+                    @if (isSubmitting) {
+                        <mat-spinner class="mat-spinner-color" [diameter]="20"></mat-spinner>
+                    }
+                    @else {Save Changes}
+                </button>
+
+            } @else {
+                <button type="submit" class="bg-mainGreen rounded-[5px] flex flex-col w-[80px] items-center p-2 font-DMSans font-medium text-white duration-300 hover:duration-300 hover:scale-[102%] hover:shadow-main" 
+                [disabled]="!checkNoEmptyVariantGroup()">
+                    @if (isSubmitting) {
+                        <mat-spinner class="mat-spinner-color" [diameter]="20"></mat-spinner>
+                    }
+                    @else {Submit}
+                </button>
+            }
+        }
+
+    </div>
+</form> 

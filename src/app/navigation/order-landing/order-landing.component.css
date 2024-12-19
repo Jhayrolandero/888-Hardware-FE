@@ -1,0 +1,9 @@
+.selectedButton {
+    border-bottom: 2px solid #2A5C66;
+    color: #2A5C66;
+}
+
+.tab-button {
+    padding: 2px;
+
+}

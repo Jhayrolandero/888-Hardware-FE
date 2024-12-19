@@ -1,0 +1,24 @@
+<div class="bg-white w-full rounded-[10px] flex flex-col px-5 py-2">
+    <p class="text-mainGreen font-DMSans font-bold mobileS:text-[0.8rem]  tablet:text-[1.2rem] py-2">
+        Pending Request (In sequence)
+    </p>
+
+    <hr class="my-2">
+    <div  *ngFor="let request of requestLists$ | async; let i = index" class="flex flex-row items center">
+        <p>{{i+1}}. 
+            @switch(request.requestType){
+                @case("POST"){
+                    Add Product - {{request.package.product_name}}
+                }
+                @case("PATCH"){
+                    Edit Product - {{request.package[0].product_name}}
+                }
+                @case("DELETE"){
+                    Delete Product - Product ID No.{{request.package[0]}}
+                }
+            }
+            
+        </p>
+        <p></p>
+    </div>
+</div>

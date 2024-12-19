@@ -1,0 +1,48 @@
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+      
+      <!-- Name Column -->
+      <ng-container matColumnDef="product-name">
+        <th mat-header-cell *matHeaderCellDef>Product Name</th>
+        <td mat-cell *matCellDef="let element">
+            {{nameFetch(element)}}
+        </td>
+      </ng-container>
+    
+      <!-- Weight Column -->
+      <ng-container matColumnDef="incoming-quantity">
+        <th mat-header-cell *matHeaderCellDef>Incoming Quantity</th>
+        <td mat-cell *matCellDef="let element">
+            {{element.incoming_quantity}}
+        </td>
+      </ng-container>
+    
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="discount">
+        <th mat-header-cell *matHeaderCellDef>Discount</th>
+        <td mat-cell *matCellDef="let element">
+            @if(element.discount == null || element.discount == "") {
+                No Discount
+            }
+            @else {
+                {{parseDiscountDisplay(element.discount)}}
+            }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef>Total Cost</th>
+        <td mat-cell *matCellDef="let element">
+            ₱{{element.final_cost}}
+        </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="['product-name', 'incoming-quantity', 'discount', 'total']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['product-name', 'incoming-quantity', 'discount', 'total'];"></tr>
+    </table>
+      
+    <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+  </div>

@@ -1,0 +1,159 @@
+<div class="w-full flex flex-col relative min-h-[40px] bg-[#EFFAFC] max-h-[80vh]" #container>
+    
+    <div class="bg-mainGreen w-full h-[1rem] cursor-ns-resize text-white font-extrabold flex justify-center items-center" (mousedown)="onMouseDown($event)">
+        <svg width="18" height="4" viewBox="0 0 18 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 3C9.55228 3 10 2.55228 10 2C10 1.44772 9.55228 1 9 1C8.44772 1 8 1.44772 8 2C8 2.55228 8.44772 3 9 3Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 3C16.5523 3 17 2.55228 17 2C17 1.44772 16.5523 1 16 1C15.4477 1 15 1.44772 15 2C15 2.55228 15.4477 3 16 3Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 3C2.55228 3 3 2.55228 3 2C3 1.44772 2.55228 1 2 1C1.44772 1 1 1.44772 1 2C1 2.55228 1.44772 3 2 3Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>   
+    </div>
+    <div class=" bg-[#EFFAFC] w-full" #resizablePane>
+        <div #head class="pr-2 flex justify-between items-center">
+            <div class="flex flex-col">
+                <h4 class="text-[1rem] flex-1 px-4 py-2 font-medium">{{name}}</h4>
+                <div class="bg-mainGreen w-full h-[6px] m-0 rounded-t-full">
+
+                </div>
+            </div>
+            <span 
+            (click)="closePanel()"
+            class="w-[10%] max-w-[32px] max-h-[32px] aspect-square cursor-pointer flex justify-center items-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z" fill="#2A5C66"/>
+            </svg>
+                
+            </span>
+        </div>
+        <div>
+            <div class="hidden tablet:flex tablet:flex-row items-center bg-mainGreen  text-[0.8rem] mobileS:text-[1rem] mb-2 p-2 rounded-tr-[5px]">
+                <div class="rounded-[10px] flex-1 flex items-center p-2 px-5 border-2 border-white border-solid">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.6 21L13.3 14.7C12.8 15.1 12.225 15.4167 11.575 15.65C10.925 15.8833 10.2333 16 9.5 16C7.68333 16 6.146 15.3707 4.888 14.112C3.63 12.8533 3.00067 11.316 3 9.5C2.99933 7.684 3.62867 6.14667 4.888 4.888C6.14733 3.62933 7.68467 3 9.5 3C11.3153 3 12.853 3.62933 14.113 4.888C15.373 6.14667 16.002 7.684 16 9.5C16 10.2333 15.8833 10.925 15.65 11.575C15.4167 12.225 15.1 12.8 14.7 13.3L21 19.6L19.6 21ZM9.5 14C10.75 14 11.8127 13.5627 12.688 12.688C13.5633 11.8133 14.0007 10.7507 14 9.5C13.9993 8.24933 13.562 7.187 12.688 6.313C11.814 5.439 10.7513 5.00133 9.5 5C8.24867 4.99867 7.18633 5.43633 6.313 6.313C5.43967 7.18967 5.002 8.252 5 9.5C4.998 10.748 5.43567 11.8107 6.313 12.688C7.19033 13.5653 8.25267 14.0027 9.5 14Z" fill="white" fill-opacity="1"/>
+                    </svg>
+                        
+                    <input [(ngModel)]="searchParam" (ngModelChange)="onChangeSearch()" type="text" class="outline-none ml-3 font-DMSans font-medium text-white opacity-70 text-[0.9rem] tablet:text-[1.1rem] flex-1" placeholder="Search Supplier">
+                </div>
+                <div class="relative flex items-center p-2 border-mainGray">
+                    <div mat-button [matMenuTriggerFor]="menu">
+                        @if(selectedFilter === ''){
+                            <svg  class="select-none" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.5 12V19.88C14.54 20.18 14.44 20.5 14.21 20.71C14.1175 20.8027 14.0076 20.8762 13.8866 20.9264C13.7657 20.9766 13.636 21.0024 13.505 21.0024C13.374 21.0024 13.2444 20.9766 13.1234 20.9264C13.0024 20.8762 12.8925 20.8027 12.8 20.71L10.79 18.7C10.681 18.5933 10.5981 18.4629 10.5478 18.319C10.4975 18.175 10.4812 18.0213 10.5 17.87V12H10.47L4.71001 4.62C4.54762 4.41153 4.47434 4.14726 4.5062 3.88493C4.53805 3.6226 4.67244 3.38355 4.88001 3.22C5.07001 3.08 5.28001 3 5.50001 3H19.5C19.72 3 19.93 3.08 20.12 3.22C20.3276 3.38355 20.462 3.6226 20.4938 3.88493C20.5257 4.14726 20.4524 4.41153 20.29 4.62L14.53 12H14.5Z" fill="white" fill-opacity="1"/>
+                            </svg>
+                        }
+                        @else {
+                            <div class="border-white text-white border-2 rounded-[10px] p-2 flex flex-row items-center justify-center">
+                                <svg  class="select-none" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14.5 12V19.88C14.54 20.18 14.44 20.5 14.21 20.71C14.1175 20.8027 14.0076 20.8762 13.8866 20.9264C13.7657 20.9766 13.636 21.0024 13.505 21.0024C13.374 21.0024 13.2444 20.9766 13.1234 20.9264C13.0024 20.8762 12.8925 20.8027 12.8 20.71L10.79 18.7C10.681 18.5933 10.5981 18.4629 10.5478 18.319C10.4975 18.175 10.4812 18.0213 10.5 17.87V12H10.47L4.71001 4.62C4.54762 4.41153 4.47434 4.14726 4.5062 3.88493C4.53805 3.6226 4.67244 3.38355 4.88001 3.22C5.07001 3.08 5.28001 3 5.50001 3H19.5C19.72 3 19.93 3.08 20.12 3.22C20.3276 3.38355 20.462 3.6226 20.4938 3.88493C20.5257 4.14726 20.4524 4.41153 20.29 4.62L14.53 12H14.5Z" fill="white" fill-opacity="1"/>
+                                </svg>
+                                <p class="">
+                                    {{selectedFilter}}
+                                </p>
+                            </div>
+                        }
+                    </div>
+                    <mat-menu #menu="matMenu" class="custom-style">
+                      <div class="font-DMSans">
+                        <button mat-menu-item (click)="onFilterChange('DR No.')">DR No.</button>
+                        <button mat-menu-item (click)="onFilterChange('Supplier Name')">Supplier Name</button>
+                      </div>
+                    </mat-menu>
+                </div>
+            </div>
+      
+        </div>
+
+        <div class="mat-elevation-z8">
+            <div *ngIf="isLoading" class="w-full flex flex-row justify-center">
+                <mat-spinner class="mat-progress-spinner" [diameter]="50"></mat-spinner>
+            </div>
+            <div *ngIf="supplierProductPopup.length < 1 && !isLoading" class="w-full flex flex-row justify-center">
+                <!-- <mat-spinner class="mat-progress-spinner" [diameter]="50"></mat-spinner> -->
+                <p class="text-mainGreen font-DMSans font-bold text-[1.7rem] tablet:text-[2rem] py-2">
+                    No Records Found!
+                </p>
+            </div>
+
+            <table *ngIf="supplierProductPopup.length > 0" mat-table [dataSource]="dataSource"  class="">
+        
+              <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+                <!-- Name Column -->
+              <ng-container matColumnDef="supplier_name">
+                <th mat-header-cell *matHeaderCellDef> Supplier Name </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.supplier_name}}
+                </td>
+              </ng-container>
+              
+              <!-- Name Column -->
+              <ng-container matColumnDef="dr_number">
+                <th mat-header-cell *matHeaderCellDef> Receipt No. </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.dr_number}}
+                </td>
+              </ng-container>
+            
+              <!-- Weight Column -->
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+                <td mat-cell *matCellDef="let element">
+                {{element.date}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="unit_price">
+                <th mat-header-cell *matHeaderCellDef> Stock Unit Price </th>
+                <td mat-cell *matCellDef="let element">
+                    ₱{{element.stock_unit_price}}
+                </td>
+              </ng-container>
+            
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="discount">
+                <th mat-header-cell *matHeaderCellDef> Discount </th>
+                <td mat-cell *matCellDef="let element">
+                    @if(element.discount !== null && element.discount !== '0' && element.discount !== ''){
+                        {{parseDiscountDisplay(element.discount)}}
+                    }
+                    @else{
+                        No Discount
+                    }
+                </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="promo_name">
+                <th mat-header-cell *matHeaderCellDef> Promo </th>
+                <td mat-cell *matCellDef="let element">
+                    @if(element.promo_name){
+                        {{element.promo_name}}
+                    }
+                    @else{
+                        No Promo
+                    }
+                </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="incoming_quantity">
+                <th mat-header-cell *matHeaderCellDef> Incoming Quantity </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.incoming_quantity}}       
+                </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="final_cost">
+                <th mat-header-cell *matHeaderCellDef> Total Price </th>
+                <td mat-cell *matCellDef="let element">
+                    ₱{{element.final_cost | number: '1.2-2'}}
+                </td>
+              </ng-container>
+            
+              <tr mat-header-row *matHeaderRowDef="['supplier_name', 'dr_number', 'date', 'unit_price', 'discount', 'promo_name', 'incoming_quantity', 'final_cost']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['supplier_name', 'dr_number', 'date', 'unit_price', 'discount', 'promo_name', 'incoming_quantity', 'final_cost'];"></tr>
+            </table>
+              
+            <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+          </div>
+    </div>
+</div>
+  

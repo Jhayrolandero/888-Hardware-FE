@@ -1,0 +1,165 @@
+<div class="text-[#2A5C66] flex flex-col gap-4 w-full h-screen p-5">
+    <div
+    class="bg-white w-full rounded-[10px] flex flex-row justify-center tablet:justify-start items-center px-5">
+        <p (click)="goTo()" class="cursor-pointer text-mainGreen font-DMSans font-bold text-[1.7rem]  tablet:text-[2.5rem] py-2">
+            Promotions
+        </p>
+        <p class="cursor-default text-mainGreen font-DMSans font-bold text-[1.7rem]  tablet:text-[2.5rem] py-2 mx-5">
+            >
+        </p>
+        <p class="curosr-default text-mainGreen font-DMSans font-bold text-[1.7rem]  tablet:text-[2.5rem] py-2">
+            Add-on Deals
+        </p>
+    </div>
+    <div class="bg-white flex flex-col rounded-[10px] gap-4 px-6 py-4">
+        <h4 class="text-[1.5rem] font-medium">Basic Information</h4>
+        <hr class="h-[1px] bg-[#2A5C66] border-0 ">
+        <div class="flex gap-4 items-center">
+            <div class="w-[18%]">
+                <p class="text-[1rem]">Promotion Type</p>
+            </div>
+            <div class="flex gap-4 items-center bg-[#2A5C66] border-[#2A5C66] border-2 text-white px-6 py-4 rounded-md">
+                <svg width="19" height="21" viewBox="0 0 19 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.93936 4.85762C5.93936 3.93739 6.30492 3.05485 6.95562 2.40415C7.60632 1.75345 8.48886 1.38789 9.40908 1.38789C10.3293 1.38789 11.2119 1.75345 11.8626 2.40415C12.5133 3.05485 12.8788 3.93739 12.8788 4.85762V5.55156H14.2667V4.85762C14.2667 3.5693 13.7549 2.33374 12.8439 1.42276C11.933 0.511783 10.6974 0 9.40908 0C8.12076 0 6.88521 0.511783 5.97423 1.42276C5.06325 2.33374 4.55147 3.5693 4.55147 4.85762V5.55156H5.93936V4.85762ZM1.64245 8.7909C1.69914 8.28175 1.94158 7.81138 2.32337 7.46979C2.70516 7.1282 3.1995 6.93938 3.71179 6.93945H15.1064C15.6184 6.93972 16.1124 7.1287 16.4939 7.47025C16.8754 7.81181 17.1177 8.28199 17.1743 8.7909L18.2555 18.5061C18.2879 18.7972 18.2585 19.0918 18.1693 19.3707C18.0801 19.6497 17.9331 19.9066 17.7378 20.1249C17.5424 20.3431 17.3033 20.5177 17.0359 20.6372C16.7686 20.7567 16.479 20.8184 16.1862 20.8184H2.63201C2.33928 20.8182 2.04986 20.7563 1.78266 20.6367C1.51547 20.5171 1.27649 20.3426 1.08134 20.1244C0.886193 19.9062 0.739255 19.6492 0.650121 19.3704C0.560987 19.0916 0.531661 18.7971 0.564057 18.5061L1.64245 8.7909Z" fill="white"/>
+                </svg>
+                <span>
+                    Add-on Discount
+                </span>
+            </div>
+            <div class="flex gap-4 items-center border-2 border-[#2A5C66] px-6 py-4 rounded-md">
+                <svg width="19" height="21" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.06 2.3394C7.17 2.3294 5.33 4.1494 6.17 6.4094H3C2.46957 6.4094 1.96086 6.62011 1.58579 6.99518C1.21071 7.37026 1 7.87896 1 8.4094V10.4094C1 10.6746 1.10536 10.929 1.29289 11.1165C1.48043 11.304 1.73478 11.4094 2 11.4094H11V8.4094H13V11.4094H22C22.2652 11.4094 22.5196 11.304 22.7071 11.1165C22.8946 10.929 23 10.6746 23 10.4094V8.4094C23 7.87896 22.7893 7.37026 22.4142 6.99518C22.0391 6.62011 21.5304 6.4094 21 6.4094H17.83C19 3.1394 14.6 0.829397 12.57 3.6494L12 4.4094L11.43 3.6294C10.8 2.7394 9.93 2.3494 9.06 2.3394ZM9 4.4094C9.89 4.4094 10.34 5.4894 9.71 6.1194C9.08 6.7494 8 6.2994 8 5.4094C8 5.14418 8.10536 4.88983 8.29289 4.70229C8.48043 4.51475 8.73478 4.4094 9 4.4094ZM15 4.4094C15.89 4.4094 16.34 5.4894 15.71 6.1194C15.08 6.7494 14 6.2994 14 5.4094C14 5.14418 14.1054 4.88983 14.2929 4.70229C14.4804 4.51475 14.7348 4.4094 15 4.4094ZM2 12.4094V20.4094C2 20.9398 2.21071 21.4485 2.58579 21.8236C2.96086 22.1987 3.46957 22.4094 4 22.4094H20C20.5304 22.4094 21.0391 22.1987 21.4142 21.8236C21.7893 21.4485 22 20.9398 22 20.4094V12.4094H13V20.4094H11V12.4094H2Z" fill="#2A5C66"/>
+                </svg>
+                <span>
+                    Gifting
+                </span>
+            </div>
+        </div>
+        <div class="flex gap-2">
+            <div class="space-x-4">
+                <label for="promo-name">Add-on Discount Name</label>
+                <input type="text" id="promo-name" class="border-2 border-black rounded-md px-2 py-1 focus:outline-none ">
+            </div>
+            <div class="flex gap-4 items-center">
+                <label for="promostock_form">Discount Promotional Period</label>
+                <select name="promostock_form" id="promostock_form" class="h-full bg-transparent px-2 py-1 border-2 border-black rounded-md" >
+                    <option value="No Update" selected>No Period</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white flex flex-col rounded-[10px] gap-4 px-6 py-4">
+        <div class="flex justify-between items-center">
+            <h4 class="text-[1.5rem] font-medium">Discount Promotion Products</h4>
+            <button class="border-2 border-[#2A5C66] rounded-md px-2 py-1">+ Add Products</button>
+        </div>
+        <hr class="h-[2px] bg-[#2A5C66] border-0 ">
+        <div class="flex justify-between items-center">
+            <div class="flex gap-4">
+                <div class="space-x-4">
+                    <label for="discount_form">Discount</label>
+                    <input type="text" id="discount_form" class="border-2 border-black rounded-md px-2 py-1 focus:outline-none max-w-[120px]">
+                </div>
+                <div class="flex gap-4 items-center">
+                    <label for="promostock_form">Promotion Stock</label>
+                    <select name="promostock_form" id="promostock_form" class="h-full bg-transparent px-2 py-1 border-2 border-black rounded-md" [(ngModel)]="test" (change)="testChange($event)">
+                        <option value="No Update" selected>No Update</option>
+                        <option value="No Limit">No Limit</option>
+                        <option value="Set Limit">Set Limit</option>
+                    </select>
+                    <input type="text" value="5" class="border-2 border-black rounded-md px-2 py-1 focus:outline-none max-w-[80px]" *ngIf="showLimit">
+                </div>
+            </div>
+            <div class="space-x-4">
+                <button class="bg-gray-400 text-white px-2 py-1 rounded-md font-bold">Update Selected</button>
+                <button class="bg-[#2A5C66] text-white px-2 py-1 rounded-md font-bold">Update All</button>
+                <button class="bg-[#8C4848] text-white px-2 py-1 rounded-md font-bold">Delete</button>
+            </div>
+        </div>
+            <div class="grid grid-cols-[1fr_1fr_1fr_auto_1fr_1fr_auto] gap-2 border-2 border-black rounded-[10px] pb-2">
+                <div class="grid grid-cols-subgrid gap-x-4 gap-y-2 col-span-7 bg-[#2A5C66] text-white px-4 py-1" #header>
+                    <p>Product Name</p>
+                    <p>Original Price</p>
+                    <p>Discounted Price</p>
+                    <p></p>
+                    <p>Discount</p>
+                    <p>Stock</p>
+                    <p>Action</p>
+                </div>
+            
+                <div class="grid grid-cols-subgrid gap-x-4 col-span-7 items-center px-4">
+                    <div class="space-x-2">
+                        <input class="inline-block" type="checkbox">
+                        <p class="inline-block">Tolsen Promo June</p>
+                    </div>
+                    <p>P120</p>
+                    <div class="border-2 border-black rounded-md flex gap-2 items-center px-2 py-1">
+                        <svg class="inline" width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.968 0.0625499C6.18 0.0625499 7.128 0.32055 7.812 0.836551C8.496 1.34055 8.946 2.05455 9.162 2.97855H10.116V4.22055H9.324C9.336 4.29255 9.342 4.36455 9.342 4.43655C9.342 4.49655 9.342 4.55655 9.342 4.61655C9.342 4.73655 9.336 4.85655 9.324 4.97655C9.324 5.08455 9.318 5.18655 9.306 5.28255H10.116V6.52455H9.054C8.874 7.08855 8.586 7.59255 8.19 8.03655C7.794 8.48055 7.272 8.82855 6.624 9.08055C5.976 9.33255 5.178 9.45855 4.23 9.45855H3.888V12.9146H1.206V6.52455H0.18V5.28255H1.206V4.22055H0.18V2.97855H1.206V0.0625499H4.968ZM6.246 6.52455H3.888V7.29855H4.176C4.668 7.29855 5.088 7.23855 5.436 7.11855C5.784 6.99855 6.054 6.80055 6.246 6.52455ZM6.642 4.22055H3.888V5.28255H6.642C6.654 5.18655 6.66 5.09655 6.66 5.01255C6.66 4.91655 6.66 4.81455 6.66 4.70655C6.66 4.62255 6.66 4.54455 6.66 4.47255C6.66 4.38855 6.654 4.30455 6.642 4.22055ZM4.842 2.22255H3.888V2.97855H6.354C6.222 2.73855 6.03 2.55255 5.778 2.42055C5.538 2.28855 5.226 2.22255 4.842 2.22255Z" fill="#AAAAAA" fill-opacity="0.6"/>
+                        </svg>
+                        <span class="inline">|</span>
+                        <input class="inline flex-1 focus:outline-none" type="text">
+                    </div>
+                    <span>Or</span>
+                    <div class="border-2 border-black rounded-md flex gap-2 items-center px-2 py-1">
+                        <input class="inline flex-1 focus:outline-none" type="text">
+                        <span class="inline">|</span>
+                        <p>%OFF</p>
+                    </div>
+                    <p>50</p>
+                    <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M25.1471 5.82646H20.5147L19.1912 4.50293H12.5736L11.25 5.82646H6.61768V8.47352H25.1471M7.94121 25.6794C7.94121 26.3814 8.22009 27.0547 8.71651 27.5512C9.21293 28.0476 9.88622 28.3265 10.5883 28.3265H21.1765C21.8785 28.3265 22.5518 28.0476 23.0483 27.5512C23.5447 27.0547 23.8236 26.3814 23.8236 25.6794V9.79705H7.94121V25.6794Z" fill="#8C4848"/>
+                    </svg>
+                </div>
+                <div class="grid grid-cols-subgrid gap-x-4 col-span-7 items-center px-4">
+                    <div class="space-x-2">
+                        <input class="inline-block" type="checkbox">
+                        <p class="inline-block">Tolsen Promo June</p>
+                    </div>
+                    <p>P120</p>
+                    <div class="border-2 border-black rounded-md flex gap-2 items-center px-2 py-1">
+                        <svg class="inline" width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.968 0.0625499C6.18 0.0625499 7.128 0.32055 7.812 0.836551C8.496 1.34055 8.946 2.05455 9.162 2.97855H10.116V4.22055H9.324C9.336 4.29255 9.342 4.36455 9.342 4.43655C9.342 4.49655 9.342 4.55655 9.342 4.61655C9.342 4.73655 9.336 4.85655 9.324 4.97655C9.324 5.08455 9.318 5.18655 9.306 5.28255H10.116V6.52455H9.054C8.874 7.08855 8.586 7.59255 8.19 8.03655C7.794 8.48055 7.272 8.82855 6.624 9.08055C5.976 9.33255 5.178 9.45855 4.23 9.45855H3.888V12.9146H1.206V6.52455H0.18V5.28255H1.206V4.22055H0.18V2.97855H1.206V0.0625499H4.968ZM6.246 6.52455H3.888V7.29855H4.176C4.668 7.29855 5.088 7.23855 5.436 7.11855C5.784 6.99855 6.054 6.80055 6.246 6.52455ZM6.642 4.22055H3.888V5.28255H6.642C6.654 5.18655 6.66 5.09655 6.66 5.01255C6.66 4.91655 6.66 4.81455 6.66 4.70655C6.66 4.62255 6.66 4.54455 6.66 4.47255C6.66 4.38855 6.654 4.30455 6.642 4.22055ZM4.842 2.22255H3.888V2.97855H6.354C6.222 2.73855 6.03 2.55255 5.778 2.42055C5.538 2.28855 5.226 2.22255 4.842 2.22255Z" fill="#AAAAAA" fill-opacity="0.6"/>
+                        </svg>
+                        <span class="inline">|</span>
+                        <input class="inline flex-1 focus:outline-none" type="text">
+                    </div>
+                    <span>Or</span>
+                    <div class="border-2 border-black rounded-md flex gap-2 items-center px-2 py-1">
+                        <input class="inline flex-1 focus:outline-none" type="text">
+                        <span class="inline">|</span>
+                        <p>%OFF</p>
+                    </div>
+                    <p>50</p>
+                    <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M25.1471 5.82646H20.5147L19.1912 4.50293H12.5736L11.25 5.82646H6.61768V8.47352H25.1471M7.94121 25.6794C7.94121 26.3814 8.22009 27.0547 8.71651 27.5512C9.21293 28.0476 9.88622 28.3265 10.5883 28.3265H21.1765C21.8785 28.3265 22.5518 28.0476 23.0483 27.5512C23.5447 27.0547 23.8236 26.3814 23.8236 25.6794V9.79705H7.94121V25.6794Z" fill="#8C4848"/>
+                    </svg>
+                </div>
+                <div class="grid grid-cols-subgrid gap-x-4 col-span-7 items-center px-4">
+                    <div class="space-x-2">
+                        <input class="inline-block" type="checkbox">
+                        <p class="inline-block">Tolsen Promo June</p>
+                    </div>
+                    <p>P120</p>
+                    <div class="border-2 border-black rounded-md flex gap-2 items-center px-2 py-1">
+                        <svg class="inline" width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.968 0.0625499C6.18 0.0625499 7.128 0.32055 7.812 0.836551C8.496 1.34055 8.946 2.05455 9.162 2.97855H10.116V4.22055H9.324C9.336 4.29255 9.342 4.36455 9.342 4.43655C9.342 4.49655 9.342 4.55655 9.342 4.61655C9.342 4.73655 9.336 4.85655 9.324 4.97655C9.324 5.08455 9.318 5.18655 9.306 5.28255H10.116V6.52455H9.054C8.874 7.08855 8.586 7.59255 8.19 8.03655C7.794 8.48055 7.272 8.82855 6.624 9.08055C5.976 9.33255 5.178 9.45855 4.23 9.45855H3.888V12.9146H1.206V6.52455H0.18V5.28255H1.206V4.22055H0.18V2.97855H1.206V0.0625499H4.968ZM6.246 6.52455H3.888V7.29855H4.176C4.668 7.29855 5.088 7.23855 5.436 7.11855C5.784 6.99855 6.054 6.80055 6.246 6.52455ZM6.642 4.22055H3.888V5.28255H6.642C6.654 5.18655 6.66 5.09655 6.66 5.01255C6.66 4.91655 6.66 4.81455 6.66 4.70655C6.66 4.62255 6.66 4.54455 6.66 4.47255C6.66 4.38855 6.654 4.30455 6.642 4.22055ZM4.842 2.22255H3.888V2.97855H6.354C6.222 2.73855 6.03 2.55255 5.778 2.42055C5.538 2.28855 5.226 2.22255 4.842 2.22255Z" fill="#AAAAAA" fill-opacity="0.6"/>
+                        </svg>
+                        <span class="inline">|</span>
+                        <input class="inline flex-1 focus:outline-none" type="text">
+                    </div>
+                    <span>Or</span>
+                    <div class="border-2 border-black rounded-md flex gap-2 items-center px-2 py-1">
+                        <input class="inline flex-1 focus:outline-none" type="text">
+                        <span class="inline">|</span>
+                        <p>%OFF</p>
+                    </div>
+                    <p>50</p>
+                    <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M25.1471 5.82646H20.5147L19.1912 4.50293H12.5736L11.25 5.82646H6.61768V8.47352H25.1471M7.94121 25.6794C7.94121 26.3814 8.22009 27.0547 8.71651 27.5512C9.21293 28.0476 9.88622 28.3265 10.5883 28.3265H21.1765C21.8785 28.3265 22.5518 28.0476 23.0483 27.5512C23.5447 27.0547 23.8236 26.3814 23.8236 25.6794V9.79705H7.94121V25.6794Z" fill="#8C4848"/>
+                    </svg>
+                </div>
+               
+            </div>
+    </div>
+</div>

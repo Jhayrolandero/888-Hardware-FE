@@ -1,0 +1,67 @@
+<div class="flex flex-col div1 md:flex-row w-full h-full tablet:h-screen">
+    <div class="flex flex-col  md:min-w-[50%] h-[50%] tablet:h-full justify-center items-center ">
+        <div class="flex justify-center items-center h-full">
+            <img src="/logo/logo-no-bg.png" class="w-[70%] lg:w-50 xl:w-80" alt="hardware-logo">
+        </div>
+    </div>
+
+    <div class="flex flex-col justify-start tablet:justify-center items-center h-[50%] rounded-tl-[20px] rounded-tr-[20px] tablet:rounded-tr-[0px] tablet:rounded-bl-[20px] tablet:h-full w-full bg-slate-100"> 
+        <div>
+            <h1 class="block text-center tablet:my-5 my-10 text-3xl lg:text-5xl font-DMSans font-semibold text-mainGreen">Welcome Back!</h1>
+        </div>
+        <div class="p-3 hidden lg:block">
+            <h4 class="text-center text-sm lg:text-lg font-DMSans">
+                <span style="color: #2A5C66;">We carry almost all kinds of Hardware and Plumbing Supplies</span>
+            </h4>
+        </div>
+        <div class="pt-10 pl-10 pr-10 hidden lg:block font-light">
+            <h6 class="text-center">
+                <i>
+                    “Blessed are all who fear the Lord, who walk in obedience to him. You will eat the fruit of your labor;  blessings and prosperity will be yours.”
+                </i>
+                <footer>Psalm 128:1-2</footer>
+            </h6>
+        </div>
+        <div class="tablet:pt-10 w-full">
+            <form class="w-full" method="POST" [formGroup]="form" (ngSubmit)="onLogin()">
+                <div class="px-5 mobileM:px-[3rem] laptopL:px-[10rem]">
+                    <div class="flex flex-row items-center justify-center">
+                        <svg class="mr-3" width="22" height="22" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.5 14.5C12.5062 14.5 10.7995 13.7901 9.37969 12.3703C7.95989 10.9505 7.25 9.24375 7.25 7.25C7.25 5.25625 7.95989 3.54948 9.37969 2.12969C10.7995 0.709896 12.5062 0 14.5 0C16.4937 0 18.2005 0.709896 19.6203 2.12969C21.0401 3.54948 21.75 5.25625 21.75 7.25C21.75 9.24375 21.0401 10.9505 19.6203 12.3703C18.2005 13.7901 16.4937 14.5 14.5 14.5ZM0 29V23.925C0 22.8979 0.264625 21.9542 0.793875 21.0939C1.32313 20.2335 2.02517 19.5762 2.9 19.1219C4.77292 18.1854 6.67604 17.4834 8.60937 17.0157C10.5427 16.5481 12.5062 16.3137 14.5 16.3125C16.4937 16.3113 18.4573 16.5457 20.3906 17.0157C22.324 17.4858 24.2271 18.1878 26.1 19.1219C26.976 19.575 27.6787 20.2323 28.2079 21.0939C28.7372 21.9554 29.0012 22.8991 29 23.925V29H0ZM3.625 25.375H25.375V23.925C25.375 23.5927 25.2922 23.2906 25.1267 23.0188C24.9611 22.7469 24.7418 22.5354 24.4687 22.3844C22.8375 21.5688 21.1911 20.9573 19.5297 20.5501C17.8682 20.1429 16.1917 19.9387 14.5 19.9375C12.8083 19.9363 11.1318 20.1405 9.47031 20.5501C7.80885 20.9598 6.1625 21.5712 4.53125 22.3844C4.25937 22.5354 4.04006 22.7469 3.87331 23.0188C3.70656 23.2906 3.62379 23.5927 3.625 23.925V25.375ZM14.5 10.875C15.4969 10.875 16.3506 10.5204 17.0611 9.81106C17.7716 9.10177 18.1262 8.24808 18.125 7.25C18.1238 6.25192 17.7691 5.39883 17.0611 4.69075C16.353 3.98267 15.4993 3.62742 14.5 3.625C13.5007 3.62258 12.6476 3.97783 11.9407 4.69075C11.2339 5.40367 10.8786 6.25675 10.875 7.25C10.8714 8.24325 11.2266 9.09694 11.9407 9.81106C12.6549 10.5252 13.508 10.8798 14.5 10.875Z" fill="#2A5C66"/>
+                        </svg>
+                            
+
+                        <input class="mobileInput" placeholder="Enter Username" type="text" id="username" formControlName="username" (keydown.enter)="$event.stopPropagation(); $event.preventDefault()">
+                    </div>
+
+                    <div class="pt-3 flex flex-row relative items-center justify-center">
+                        <svg class="mr-3" width="22" height="22" viewBox="0 0 27 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 22.0952C12.638 22.0952 11.8114 21.8043 11.2019 21.2863C10.5924 20.7683 10.25 20.0658 10.25 19.3333C10.25 17.8005 11.6962 16.5714 13.5 16.5714C14.362 16.5714 15.1886 16.8624 15.7981 17.3804C16.4076 17.8983 16.75 18.6008 16.75 19.3333C16.75 20.0658 16.4076 20.7683 15.7981 21.2863C15.1886 21.8043 14.362 22.0952 13.5 22.0952ZM23.25 26.2381V12.4286H3.75V26.2381H23.25ZM23.25 9.66667C24.112 9.66667 24.9386 9.95765 25.5481 10.4756C26.1576 10.9936 26.5 11.6961 26.5 12.4286V26.2381C26.5 26.9706 26.1576 27.6731 25.5481 28.1911C24.9386 28.709 24.112 29 23.25 29H3.75C2.88805 29 2.0614 28.709 1.4519 28.1911C0.84241 27.6731 0.5 26.9706 0.5 26.2381V12.4286C0.5 10.8957 1.94625 9.66667 3.75 9.66667H5.375V6.90476C5.375 5.07351 6.23102 3.31725 7.75476 2.02236C9.27849 0.727464 11.3451 0 13.5 0C14.567 0 15.6235 0.178597 16.6093 0.525594C17.5951 0.87259 18.4908 1.38119 19.2452 2.02236C19.9997 2.66352 20.5982 3.4247 21.0065 4.26242C21.4148 5.10015 21.625 5.99802 21.625 6.90476V9.66667H23.25ZM13.5 2.7619C12.2071 2.7619 10.9671 3.19838 10.0529 3.97532C9.13861 4.75226 8.625 5.80601 8.625 6.90476V9.66667H18.375V6.90476C18.375 5.80601 17.8614 4.75226 16.9471 3.97532C16.0329 3.19838 14.7929 2.7619 13.5 2.7619Z" fill="#2A5C66"/>
+                            </svg>
+                            
+                        <input placeholder="Enter Password"  [type]="hide ? 'password' : 'text'" matInput formControlName="password" class="mobileInput" (keydown.enter)="onLogin(); $event.stopPropagation(); $event.preventDefault()">
+                        <button type="button" class="absolute right-0 mr-4 mb-0 mt-2" matSuffix (click)="toggleVisibility($event)" style="top: 50%; transform: translateY(-50%);">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </div>
+
+
+                    <div *ngIf="this.errorMessage" class="text-red-500 text-xs pt-3">
+                        {{ this.errorMessage }}
+                    </div>
+
+
+                    <div class="flex justify-end pt-3 pb-3 font-DMSans ">
+                        <button type="submit" class="px-10" style="height: 35px; background-color: #2A5C66; color: white; border-radius: 5px;" [disabled]="!form.valid">
+                            <div *ngIf="isLoading; else loginText" class="flex justify-center items-center w-full">
+                                <mat-spinner [diameter]="30"></mat-spinner>
+                            </div>
+                            <ng-template #loginText>Login</ng-template>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,598 @@
+<form [formGroup]="variantForm" class="rounded-[10px] bg-mainBlue mb-3">
+    <div class=" max-w-full">
+
+        <!-- Code for making it accordion, but this complicates things. -->
+
+        <!-- <mat-accordion>
+            <mat-expansion-panel hideToggle class="mainPanel" (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+              <mat-expansion-panel-header class="mainHeader">
+                <mat-panel-title>
+                    <p class="text-white w-full">{{ varG.groupName}} </p>
+                </mat-panel-title>
+                
+                <div [ngClass]="isAddingVariant ? 'col-start-9' : ''" class="flex gap-4">
+                    <div (click)="deleteVariant(varG.groupName)" class="cursor-pointer hover:scale-[105%] hover:duration-300 duration-300 bg-white rounded-[8px] p-2">
+                        <svg  width="15" height="15" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#8C4848" d="M20.25 4.5H16.875V3.375C16.875 2.67881 16.5984 2.01113 16.1062 1.51884C15.6139 1.02656 14.9462 0.75 14.25 0.75H9.75C9.05381 0.75 8.38613 1.02656 7.89384 1.51884C7.40156 2.01113 7.125 2.67881 7.125 3.375V4.5H3.75C3.45163 4.5 3.16548 4.61853 2.9545 4.8295C2.74353 5.04048 2.625 5.32663 2.625 5.625C2.625 5.92337 2.74353 6.20952 2.9545 6.4205C3.16548 6.63147 3.45163 6.75 3.75 6.75H4.125V19.5C4.125 19.9973 4.32254 20.4742 4.67417 20.8258C5.02581 21.1775 5.50272 21.375 6 21.375H18C18.4973 21.375 18.9742 21.1775 19.3258 20.8258C19.6775 20.4742 19.875 19.9973 19.875 19.5V6.75H20.25C20.5484 6.75 20.8345 6.63147 21.0455 6.4205C21.2565 6.20952 21.375 5.92337 21.375 5.625C21.375 5.32663 21.2565 5.04048 21.0455 4.8295C20.8345 4.61853 20.5484 4.5 20.25 4.5ZM9.375 3.375C9.375 3.27554 9.41451 3.18016 9.48483 3.10984C9.55516 3.03951 9.65054 3 9.75 3H14.25C14.3495 3 14.4448 3.03951 14.5152 3.10984C14.5855 3.18016 14.625 3.27554 14.625 3.375V4.5H9.375V3.375ZM17.625 19.125H6.375V6.75H17.625V19.125ZM10.875 9.75V15.75C10.875 16.0484 10.7565 16.3345 10.5455 16.5455C10.3345 16.7565 10.0484 16.875 9.75 16.875C9.45163 16.875 9.16548 16.7565 8.9545 16.5455C8.74353 16.3345 8.625 16.0484 8.625 15.75V9.75C8.625 9.45163 8.74353 9.16548 8.9545 8.9545C9.16548 8.74353 9.45163 8.625 9.75 8.625C10.0484 8.625 10.3345 8.74353 10.5455 8.9545C10.7565 9.16548 10.875 9.45163 10.875 9.75ZM15.375 9.75V15.75C15.375 16.0484 15.2565 16.3345 15.0455 16.5455C14.8345 16.7565 14.5484 16.875 14.25 16.875C13.9516 16.875 13.6655 16.7565 13.4545 16.5455C13.2435 16.3345 13.125 16.0484 13.125 15.75V9.75C13.125 9.45163 13.2435 9.16548 13.4545 8.9545C13.6655 8.74353 13.9516 8.625 14.25 8.625C14.5484 8.625 14.8345 8.74353 15.0455 8.9545C15.2565 9.16548 15.375 9.45163 15.375 9.75Z"/>
+                        </svg>
+                    </div>
+                    <div (click)="addVariantSub(varG)" class="cursor-pointer hover:scale-[105%] hover:duration-300 duration-300 bg-white rounded-[8px] p-2">
+                        <svg  width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 6.65733C0 6.39212 0.105357 6.13776 0.292893 5.95023C0.480429 5.76269 0.734784 5.65733 1 5.65733H5.65733V1C5.65733 0.734784 5.76269 0.480429 5.95023 0.292893C6.13776 0.105357 6.39212 0 6.65733 0C6.92255 0 7.1769 0.105357 7.36444 0.292893C7.55198 0.480429 7.65733 0.734784 7.65733 1V5.65733H12.3147C12.5799 5.65733 12.8342 5.76269 13.0218 5.95023C13.2093 6.13776 13.3147 6.39212 13.3147 6.65733C13.3147 6.92255 13.2093 7.1769 13.0218 7.36444C12.8342 7.55198 12.5799 7.65733 12.3147 7.65733H7.65733V12.3147C7.65733 12.5799 7.55198 12.8342 7.36444 13.0218C7.1769 13.2093 6.92255 13.3147 6.65733 13.3147C6.39212 13.3147 6.13776 13.2093 5.95023 13.0218C5.76269 12.8342 5.65733 12.5799 5.65733 12.3147V7.65733H1C0.734784 7.65733 0.480429 7.55198 0.292893 7.36444C0.105357 7.1769 0 6.92255 0 6.65733Z" fill="#2A5C66"/>
+                        </svg>
+                    </div>
+                </div>
+              </mat-expansion-panel-header>
+
+
+              
+            </mat-expansion-panel>
+          </mat-accordion> -->
+
+
+        <div class="rounded-tr-[10px] rounded-tl-[10px] bg-mainGreen grid grid-cols-[1fr_auto] tablet:grid-cols-[1fr_1fr_1fr_1fr_1fr_7%_7%_7%_5%_5%_auto] items-center justify-between p-2 px-4 gap-2">
+        <!-- <div class="rounded-[10px] bg-mainGreen flex items-center justify-between p-2 px-4 gap-2"> -->
+            <p class="font-DMSans font-medium text-white">{{ varG.groupName }}</p>
+            @if(!isAddingVariant) {
+            <p class="font-DMSans hidden tablet:flex font-medium text-white ">Code</p>
+            <p class="font-DMSans hidden tablet:flex font-medium text-white">Variant Type</p>
+            <p class="font-DMSans hidden tablet:flex font-medium text-white">Supplier Discount</p>
+            <p class="font-DMSans hidden tablet:flex font-medium text-white">Unit Discount</p>
+            <p class="font-DMSans hidden tablet:block font-medium text-white">Stock</p>
+            <p class="font-DMSans hidden tablet:block font-medium text-white ">Stock Price</p>
+            <p class="font-DMSans hidden tablet:block font-medium text-white ">Unit Price</p>
+            <p class="font-DMSans hidden tablet:block font-medium text-white">LSL <span title="Low Stock Level">
+                <svg class="w-[16px] h-[16px] inline-block" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <rect width="100" height="100" fill="url(#pattern0_1375_4)"/>
+                <defs>
+                <pattern id="pattern0_1375_4" patternContentUnits="objectBoundingBox" width="1" height="1">
+                <use xlink:href="#image0_1375_4" transform="scale(0.01)"/>
+                </pattern>
+                <image id="image0_1375_4" width="100" height="100" xlink:href="data:image/png;base64,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"/>
+                </defs>
+                </svg></span>
+            </p>
+            <p class="font-DMSans hidden tablet:block font-medium text-white">CSL <span title="Critical Stock Level"><svg class="w-[16px] h-[16px] inline-block" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <rect width="100" height="100" fill="url(#pattern0_1375_4)"/>
+                <defs>
+                <pattern id="pattern0_1375_4" patternContentUnits="objectBoundingBox" width="1" height="1">
+                <use xlink:href="#image0_1375_4" transform="scale(0.01)"/>
+                </pattern>
+                <image id="image0_1375_4" width="100" height="100" xlink:href="data:image/png;base64,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"/>
+                </defs>
+                </svg></span></p>
+            }
+            <!-- [ngClass]="((i % 2 === 0) || (i == 0)) ? 'bg-[#f8f8f8]' : 'bg-white'" -->
+
+            <div [ngClass]="isAddingVariant ? 'col-start-9' : ''" class="flex gap-4">
+                <div (click)="deleteVariant(varG.groupName)" class="cursor-pointer hover:scale-[105%] hover:duration-300 duration-300 bg-white rounded-[8px] p-2">
+                    <svg  width="15" height="15" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#8C4848" d="M20.25 4.5H16.875V3.375C16.875 2.67881 16.5984 2.01113 16.1062 1.51884C15.6139 1.02656 14.9462 0.75 14.25 0.75H9.75C9.05381 0.75 8.38613 1.02656 7.89384 1.51884C7.40156 2.01113 7.125 2.67881 7.125 3.375V4.5H3.75C3.45163 4.5 3.16548 4.61853 2.9545 4.8295C2.74353 5.04048 2.625 5.32663 2.625 5.625C2.625 5.92337 2.74353 6.20952 2.9545 6.4205C3.16548 6.63147 3.45163 6.75 3.75 6.75H4.125V19.5C4.125 19.9973 4.32254 20.4742 4.67417 20.8258C5.02581 21.1775 5.50272 21.375 6 21.375H18C18.4973 21.375 18.9742 21.1775 19.3258 20.8258C19.6775 20.4742 19.875 19.9973 19.875 19.5V6.75H20.25C20.5484 6.75 20.8345 6.63147 21.0455 6.4205C21.2565 6.20952 21.375 5.92337 21.375 5.625C21.375 5.32663 21.2565 5.04048 21.0455 4.8295C20.8345 4.61853 20.5484 4.5 20.25 4.5ZM9.375 3.375C9.375 3.27554 9.41451 3.18016 9.48483 3.10984C9.55516 3.03951 9.65054 3 9.75 3H14.25C14.3495 3 14.4448 3.03951 14.5152 3.10984C14.5855 3.18016 14.625 3.27554 14.625 3.375V4.5H9.375V3.375ZM17.625 19.125H6.375V6.75H17.625V19.125ZM10.875 9.75V15.75C10.875 16.0484 10.7565 16.3345 10.5455 16.5455C10.3345 16.7565 10.0484 16.875 9.75 16.875C9.45163 16.875 9.16548 16.7565 8.9545 16.5455C8.74353 16.3345 8.625 16.0484 8.625 15.75V9.75C8.625 9.45163 8.74353 9.16548 8.9545 8.9545C9.16548 8.74353 9.45163 8.625 9.75 8.625C10.0484 8.625 10.3345 8.74353 10.5455 8.9545C10.7565 9.16548 10.875 9.45163 10.875 9.75ZM15.375 9.75V15.75C15.375 16.0484 15.2565 16.3345 15.0455 16.5455C14.8345 16.7565 14.5484 16.875 14.25 16.875C13.9516 16.875 13.6655 16.7565 13.4545 16.5455C13.2435 16.3345 13.125 16.0484 13.125 15.75V9.75C13.125 9.45163 13.2435 9.16548 13.4545 8.9545C13.6655 8.74353 13.9516 8.625 14.25 8.625C14.5484 8.625 14.8345 8.74353 15.0455 8.9545C15.2565 9.16548 15.375 9.45163 15.375 9.75Z"/>
+                    </svg>
+                </div>
+                @if(!isAddingVariant) {
+
+                    <div (click)="addVariantSub(varG)" class="cursor-pointer hover:scale-[105%] hover:duration-300 duration-300 bg-white rounded-[8px] p-2">
+                        <svg  width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 6.65733C0 6.39212 0.105357 6.13776 0.292893 5.95023C0.480429 5.76269 0.734784 5.65733 1 5.65733H5.65733V1C5.65733 0.734784 5.76269 0.480429 5.95023 0.292893C6.13776 0.105357 6.39212 0 6.65733 0C6.92255 0 7.1769 0.105357 7.36444 0.292893C7.55198 0.480429 7.65733 0.734784 7.65733 1V5.65733H12.3147C12.5799 5.65733 12.8342 5.76269 13.0218 5.95023C13.2093 6.13776 13.3147 6.39212 13.3147 6.65733C13.3147 6.92255 13.2093 7.1769 13.0218 7.36444C12.8342 7.55198 12.5799 7.65733 12.3147 7.65733H7.65733V12.3147C7.65733 12.5799 7.55198 12.8342 7.36444 13.0218C7.1769 13.2093 6.92255 13.3147 6.65733 13.3147C6.39212 13.3147 6.13776 13.2093 5.95023 13.0218C5.76269 12.8342 5.65733 12.5799 5.65733 12.3147V7.65733H1C0.734784 7.65733 0.480429 7.55198 0.292893 7.36444C0.105357 7.1769 0 6.92255 0 6.65733Z" fill="#2A5C66"/>
+                        </svg>
+                    </div>
+                }
+            </div>
+                
+        </div>  
+
+        <!-- Main Display of subvariants -->
+        <!-- <div *ngFor="let vari of variants" class="rounded-[10px] flex items-center justify-between p-2 px-4 gap-2"> -->
+        <div *ngFor="let vari of variants" class="rounded-[10px] grid grid-cols-1 tablet:grid-cols-[1fr_1fr_1fr_1fr_1fr_7%_7%_7%_5%_5%_auto] col-span-full items-center justify-between py-2 px-4 gap-2">
+            @if(isEditingVariant && (vari.name + vari.variant_type) === currentVariantEditing){
+                <div class="rounded-[10px] grid grid-cols-subgrid col-span-full items-center justify-between gap-2">
+                <!-- <div class="rounded-[10px] w-full flex flex-col tablet:flex-row items-center justify-between p-2 px-4 gap-2"> -->
+                    <div class="flex flex-col tablet:flex-row  items-center gap-2">
+                        <label class="w-full tablet:w-auto" for="{{id}}">
+                            <div
+                                class="border-2 border-formBorder rounded-[5px] w-full tablet:w-[50px] h-[50px] flex flex-col justify-center items-center overflow-hidden"
+                            >
+                                <img
+                                class="object-cover"
+                                [src]="variantImageURL"
+                                onerror="this.onerror=null; this.src=variantImageURL"
+                                />
+                                @if(variantImageURL === ''){
+                                    <svg width="20" height="20" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M35.7969 52.152V26.0475L27.4691 34.3753L22.9849 29.731L38.9999 13.7159L55.015 29.731L50.5308 34.3753L42.2029 26.0475V52.152H35.7969ZM19.7819 64.9641C18.0202 64.9641 16.5127 64.3373 15.2592 63.0839C14.0058 61.8305 13.378 60.3218 13.3759 58.558V48.949H19.7819V58.558H58.218V48.949H64.624V58.558C64.624 60.3197 63.9973 61.8283 62.7438 63.0839C61.4904 64.3395 59.9818 64.9662 58.218 64.9641H19.7819Z" fill="#AAAAAA"/>
+                                    </svg>
+                                }
+                            </div>
+                        </label>
+                        <input
+                        id="{{id}}"
+                        type="file"
+                        class="hidden"
+                        (change)="PreviewVariantImage($event)"
+                        accept="image/*"
+                        />
+                        <div class="w-full block tablet:hidden">
+                            <p class="font-medium text-mainGreen">Name</p>
+                            <input formControlName="variant_name" type="text" class=" outline-none bg-mainBlue border-b-2 w-full  flex-1" placeholder="Variant Name">
+                        </div>
+                        <input formControlName="variant_name" type="text" class="hidden tablet:block outline-none bg-mainBlue border-b-2 w-full  flex-1" placeholder="Variant Name">
+
+                    </div>
+
+                    <div class="w-full block tablet:hidden">
+                        <p class="font-medium text-mainGreen">Code</p>
+                        <input formControlName="variant_code" type="text" class="outline-none bg-mainBlue border-b-2 w-full" placeholder="Variant Code">
+                    </div>
+                    <input formControlName="variant_code" type="text" class="hidden tablet:block outline-none bg-mainBlue border-b-2 w-full" placeholder="Variant Code">
+
+                    <div class="w-full block tablet:hidden">
+                        <p class="font-medium text-mainGreen">Variant Type</p>
+                        <input formControlName="variant_type" type="text" class="outline-none bg-mainBlue border-b-2 w-full" placeholder="Variant Type">
+                    </div>
+                    <input formControlName="variant_type" type="text" class="hidden tablet:block outline-none bg-mainBlue border-b-2 w-full" placeholder="Variant Code">
+
+
+                    <!-- <div class="flex flex-row justify-between items-center">
+                        <div class="flex flex-row items-center overflow-x-scroll">
+                            @for (disc of discountArrVar; track $index) {
+                                <div class="hover:duration-300 duration-300 flex flex-row items-center border-2 px-1 border-mainGreen rounded-[5px] gap-2">
+                                    <span 
+                                        class="font-semibold text-[0.8rem]  select-none"
+                                        [ngClass]="{'text-mainRed': disc.includes('-'), 'text-mainGreen': !disc.includes('-')}">
+                                        {{disc}}%
+                                    </span>
+                                </div>
+                            }
+                        </div>
+                    </div> -->
+                    <p class="block tablet:hidden font-medium text-mainGreen">Supplier Discount</p>
+                    <div class="flex flex-col justify-between border-[#acacac] border-b-2">
+                        <div class="flex gap-2 w-full">
+                            <div class="flex flex-row items-center overflow-x-auto max-w-[40%]">
+                                <div 
+                                *ngFor="let disc of discountArrVar; let i = index" 
+                                [ngClass]="{'border-mainGreen': +disc > 0, 'border-mainRed': +disc < 0}"
+                                class="flex flex-row items-center border px-1 rounded-[5px] gap-1">
+                                    <span [ngClass]="{'text-mainGreen': +disc > 0, 'text-mainRed': +disc < 0}"
+                                            class="font-semibold select-none text-[0.7rem]">
+                                        {{disc}}%
+                                    </span> 
+
+                                    @if(+disc > 0) {
+                                        <svg (click)="deleteDiscount(i)" class="duration-300 hover:duration-300 hover:scale-[110%]" width="9" height="9" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#2A5C66"/>
+                                        </svg>
+                                    } @else {
+                                        <svg (click)="deleteDiscount(i)" class="duration-300 hover:duration-300 hover:scale-[110%]" width="9" height="9" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#8C4848"/>
+                                        </svg>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-row justify-between items-center">
+                            <div (click)="addDiscount()"  class="cursor-pointer mr-2 hover:scale-[105%] hover:duration-300 duration-300 bg-mainGreen flex w-[25px] h-[25px] items-center justify-center rounded-[8px] text-white p-1 px-2 mb-1">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 8H0V6H6V0H8V6H14V8H8V14H6V8Z" fill="white"/>
+                                </svg> 
+                            </div>
+                            <input id="discountInputVar" type="number" class="discountVariantInput" (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); " >
+                            <p>%</p>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="flex flex-row justify-between items-center">
+                        <div class="flex flex-row items-center overflow-x-scroll">
+                            @for (disc of unitDiscountArrVar; track $index) {
+                                <div class="hover:duration-300 duration-300 flex flex-row items-center border-2 px-1 border-mainGreen rounded-[5px] gap-2">
+                                    <span 
+                                        class="font-semibold text-[0.8rem]  select-none"
+                                        [ngClass]="{'text-mainRed': disc.includes('-'), 'text-mainGreen': !disc.includes('-')}">
+                                        {{disc}}%
+                                    </span>
+                                </div>
+                            }
+                        </div>
+                    </div> -->
+                    <p class="block tablet:hidden font-medium text-mainGreen">Unit Discount</p>
+                    <div class="flex flex-col justify-between flex-1 border-[#acacac] border-b-2">
+                        <div class="flex gap-2 w-full">
+                            <div class="flex flex-row items-center overflow-x-auto max-w-[60%]">
+                                <div 
+                                *ngFor="let disc of unitDiscountArrVar; let i = index" 
+                                [ngClass]="{'border-mainGreen': +disc > 0, 'border-mainRed': +disc < 0}"
+                                class="flex flex-row items-center border px-1 rounded-[5px] gap-1">
+                                    <span [ngClass]="{'text-mainGreen': +disc > 0, 'text-mainRed': +disc < 0}"
+                                            class="font-semibold select-none text-[0.7rem]">
+                                        {{disc}}%
+                                    </span> 
+
+                                    @if(+disc > 0) {
+                                        <svg (click)="deleteUnitDiscount(i)" class="duration-300 hover:duration-300 hover:scale-[110%]" width="9" height="9" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#2A5C66"/>
+                                        </svg>
+                                    } @else {
+                                        <svg (click)="deleteUnitDiscount(i)" class="duration-300 hover:duration-300 hover:scale-[110%]" width="9" height="9" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#8C4848"/>
+                                        </svg>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-row justify-between items-center">
+                            <div (click)="addUnitDiscount()"  class="cursor-pointer mr-2 hover:scale-[105%] hover:duration-300 duration-300 bg-mainGreen flex w-[25px] h-[25px] items-center justify-center rounded-[8px] text-white p-1 px-2 mb-1">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 8H0V6H6V0H8V6H14V8H8V14H6V8Z" fill="white"/>
+                                </svg> 
+                            </div>
+                            <input id="unitDiscountInputVar" type="number" class="discountVariantInput z-0" (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); " >
+                            <p>%</p>
+                        </div>
+                    </div>
+
+
+                    <div class="w-full block tablet:hidden">
+                        <p class="font-medium text-mainGreen">Variant Stock</p>
+                        <input formControlName="variant_stock" type="number" class="outline-none bg-mainBlue border-b-2 w-full" placeholder="Stock">
+                    </div>
+                    <input formControlName="variant_stock" type="number" class="hidden tablet:block outline-none bg-mainBlue border-b-2 w-full" placeholder="Stock">
+
+                    <div class="w-full block tablet:hidden">
+                        <p class="font-medium text-mainGreen">Variant Stock Price</p>
+                        <input formControlName="variant_stock_price" type="number" class="outline-none bg-mainBlue border-b-2 w-full " placeholder="PHP">
+                    </div>
+                    <input formControlName="variant_stock_price" type="number" class="hidden tablet:block outline-none bg-mainBlue border-b-2 w-full " placeholder="PHP">
+
+                    <div class="w-full block tablet:hidden">
+                        <p class="font-medium text-mainGreen">Variant Sell Price</p>
+                        <input formControlName="variant_unit_price" type="number" class="outline-none bg-mainBlue border-b-2 w-full " placeholder="PHP">
+                    </div>
+                    <input formControlName="variant_unit_price" type="number" class="hidden tablet:block outline-none bg-mainBlue border-b-2 w-full " placeholder="PHP">
+
+                    <div class="w-full block tablet:hidden">
+                        <p class="font-medium text-mainGreen">Low Stock Level</p>
+                        <input formControlName="low_stock_level" type="number" class="outline-none bg-mainBlue border-b-2 w-full " >
+                    </div>
+                    <input placeholder="Enter LSL" formControlName="low_stock_level" type="number" class="hidden mobileL:block outline-none bg-mainBlue border-b-2 w-full " >
+
+                    <div class="w-full block tablet:hidden">
+                        <p class="font-medium text-mainGreen">Critical Stock Level</p>
+                        <input formControlName="critical_stock_level" type="number" class="outline-none bg-mainBlue border-b-2 w-full " >
+                    </div>
+                    <input placeholder="Enter CSL" formControlName="critical_stock_level" type="number" class="hidden mobileL:block outline-none bg-mainBlue border-b-2 w-full " >
+                    
+                    
+                    <div class="flex flex-row justify-end gap-4 w-full">
+                        <svg class="cursor-pointer hover:scale-[115%] hover:duration-300 duration-300" title="cancel" (click)="cancelEditVariant()" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19.5459 17.9541C19.7572 18.1654 19.876 18.452 19.876 18.7509C19.876 19.0498 19.7572 19.3365 19.5459 19.5478C19.3346 19.7592 19.0479 19.8779 18.749 19.8779C18.4501 19.8779 18.1635 19.7592 17.9521 19.5478L12 13.5937L6.0459 19.5459C5.83455 19.7573 5.54791 19.876 5.24902 19.876C4.95014 19.876 4.66349 19.7573 4.45215 19.5459C4.2408 19.3346 4.12207 19.0479 4.12207 18.7491C4.12207 18.4502 4.2408 18.1635 4.45215 17.9522L10.4062 12L4.45402 6.04593C4.24268 5.83459 4.12395 5.54795 4.12395 5.24906C4.12395 4.95017 4.24268 4.66353 4.45402 4.45218C4.66537 4.24084 4.95201 4.12211 5.2509 4.12211C5.54978 4.12211 5.83643 4.24084 6.04777 4.45218L12 10.4062L17.954 4.45125C18.1654 4.2399 18.452 4.12117 18.7509 4.12117C19.0498 4.12117 19.3364 4.2399 19.5478 4.45125C19.7591 4.66259 19.8778 4.94924 19.8778 5.24812C19.8778 5.54701 19.7591 5.83365 19.5478 6.045L13.5937 12L19.5459 17.9541Z" fill="#8C4848"/>
+                        </svg>
+                        
+                        <svg class="cursor-pointer hover:scale-[115%] hover:duration-300 duration-300" title="confirm" (click)="confirmEditVariant(vari)" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12L10 17L20 7" stroke="#2A5C66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                        
+                </div>
+            }
+            @else{
+                <div class="grid grid-cols-subgrid col-span-full items-center">
+                    <div class="flex flex-row items-center flex-1">
+                        <div class="mr-2 border-2 border-formBorder rounded-[5px] w-full tablet:w-[50px] h-[50px] flex flex-col justify-center items-center overflow-hidden">
+                            @if(vari.image === null || vari.image === ''){
+                                <svg width="20" height="20" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15 16.0428H9C8.60218 16.0428 8.22064 15.8847 7.93934 15.6034C7.65804 15.3221 7.5 14.9406 7.5 14.5428V13.0428C7.5 12.6449 7.65804 12.2634 7.93934 11.9821C8.22064 11.7008 8.60218 11.5428 9 11.5428H15C15.3978 11.5428 15.7794 11.7008 16.0607 11.9821C16.342 12.2634 16.5 12.6449 16.5 13.0428V14.5428C16.5 14.9406 16.342 15.3221 16.0607 15.6034C15.7794 15.8847 15.3978 16.0428 15 16.0428ZM9 13.0428V14.5428H15V13.0428H9Z" fill="#AAAAAA"/>
+                                    <path d="M21 3.29276H3C2.60218 3.29276 2.22064 3.4508 1.93934 3.7321C1.65804 4.01341 1.5 4.39494 1.5 4.79276V7.79276C1.5 8.19059 1.65804 8.57212 1.93934 8.85342C2.22064 9.13473 2.60218 9.29276 3 9.29276V21.2928C3 21.6906 3.15804 22.0721 3.43934 22.3534C3.72064 22.6347 4.10218 22.7928 4.5 22.7928H19.5C19.8978 22.7928 20.2794 22.6347 20.5607 22.3534C20.842 22.0721 21 21.6906 21 21.2928V9.29276C21.3978 9.29276 21.7794 9.13473 22.0607 8.85342C22.342 8.57212 22.5 8.19059 22.5 7.79276V4.79276C22.5 4.39494 22.342 4.01341 22.0607 3.7321C21.7794 3.4508 21.3978 3.29276 21 3.29276ZM19.5 21.2928H4.5V9.29276H19.5V21.2928ZM21 7.79276H3V4.79276H21V7.79276Z" fill="#AAAAAA"/>
+                                </svg>
+                    
+                            }
+                            @else{
+                                <img
+                                class="object-cover"
+                                [src]="vari.image"
+                                (error)="onImageError($event, vari)"
+                            />
+                            }
+                        </div>
+                        <p class="font-DMSans hidden tablet:flex font-medium text-mainGreen flex-1">{{vari.name}}</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2  tablet:hidden">
+                        <p class="font-medium text-mainGreen">Name</p>
+                        <p class=" text-mainGreen">{{vari.name}}</p>
+                        <p class="font-medium text-mainGreen">Code</p>
+                        <p class=" text-mainGreen">{{vari.variant_code}}</p>
+                        <p class="font-medium text-mainGreen">Variant Type</p>
+                        <p class=" text-mainGreen">{{vari.variant_type}}</p>
+                        <p class="font-medium text-mainGreen">Supplier Discount</p>
+                        <p class=" text-mainGreen">{{vari.variant_stock_discount}}</p>
+                        <p class="font-medium text-mainGreen">Unit Discount</p>
+                        <p class=" text-mainGreen">{{vari.variant_unit_discount}}</p>
+                        <p class="font-medium text-mainGreen">Stock</p>
+                        <p class=" text-mainGreen">{{vari.stock}}</p>
+                        <p class="font-medium text-mainGreen">Stock Price</p>
+                        <p class=" text-mainGreen">&#8369;{{vari.stock_price}}</p>
+                        <p class="font-medium text-mainGreen">Unit Price</p>
+                        <p class=" text-mainGreen">&#8369;{{vari.sell_price}}</p>
+                        <p class="font-medium text-mainGreen">LSL</p>
+                        <p class=" text-mainGreen">{{vari.low_stock_level}}</p>
+                        <p class="font-medium text-mainGreen">CSL</p>
+                        <p class=" text-mainGreen">{{vari.critical_stock_level}}</p>
+
+                        
+                        <!-- <div class="flex w-full tablet:hidden  flex-row justify-between">
+                            <p>{{vari.name}}</p>
+                            <p>{{vari.stock}}</p>
+                        </div>
+                        <div class="flex w-full tablet:hidden flex-row justify-between mb-1">
+                            <div class="flex flex-row">
+                                <p>{{vari.description}}</p>
+                            </div>
+                            <div class="flex flex-row">
+                                <p>₱{{vari.stock_price}} - ₱{{vari.sell_price}}</p>
+                            </div>
+                        </div> -->
+                    </div>
+                    
+                    <p class="font-DMSans font-medium text-mainGreen hidden tablet:flex flex-1">{{vari.variant_code}}</p>
+                    <p class="font-DMSans font-medium text-mainGreen hidden tablet:flex flex-1">{{vari.variant_type}}</p>
+                    <p class="font-DMSans font-medium text-mainGreen hidden tablet:flex">{{vari.variant_stock_discount}}</p>
+                    <p class="font-DMSans font-medium text-mainGreen hidden tablet:flex">{{vari.variant_unit_discount }}</p>
+                    <p class="font-DMSans font-medium text-mainGreen hidden tablet:flex">{{vari.stock}}</p>
+                    <p class="font-DMSans font-medium text-mainGreen hidden tablet:flex">&#8369;{{vari.stock_price}}</p>
+                    <p class="font-DMSans font-medium text-mainGreen hidden tablet:flex">&#8369;{{vari.sell_price}}</p>
+                    <p class="font-DMSans font-medium text-mainGreen hidden tablet:flex">{{vari.low_stock_level}}</p>
+                    <p class="font-DMSans font-medium text-mainGreen hidden tablet:flex">{{vari.critical_stock_level}}</p>
+                    <div class="flex gap-4">
+                        <svg class="cursor-pointer hover:scale-[105%] hover:duration-300 duration-300" (click)="editIndividualVariant(vari)" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 7H6C5.46957 7 4.96086 7.21071 4.58579 7.58579C4.21071 7.96086 4 8.46957 4 9V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H15C15.5304 20 16.0391 19.7893 16.4142 19.4142C16.7893 19.0391 17 18.5304 17 18V17" stroke="#2A5C66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 5L19 8M20.385 6.585C20.7788 6.19115 21.0001 5.65698 21.0001 5.1C21.0001 4.54302 20.7788 4.00885 20.385 3.615C19.9912 3.22115 19.457 2.99989 18.9 2.99989C18.343 2.99989 17.8088 3.22115 17.415 3.615L9 12V15H12L20.385 6.585Z" stroke="#2A5C66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        
+                        <svg class="cursor-pointer hover:scale-[105%] hover:duration-300 duration-300" (click)="delete(vari.name)" width="24" height="24" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#8C4848" d="M20.25 4.5H16.875V3.375C16.875 2.67881 16.5984 2.01113 16.1062 1.51884C15.6139 1.02656 14.9462 0.75 14.25 0.75H9.75C9.05381 0.75 8.38613 1.02656 7.89384 1.51884C7.40156 2.01113 7.125 2.67881 7.125 3.375V4.5H3.75C3.45163 4.5 3.16548 4.61853 2.9545 4.8295C2.74353 5.04048 2.625 5.32663 2.625 5.625C2.625 5.92337 2.74353 6.20952 2.9545 6.4205C3.16548 6.63147 3.45163 6.75 3.75 6.75H4.125V19.5C4.125 19.9973 4.32254 20.4742 4.67417 20.8258C5.02581 21.1775 5.50272 21.375 6 21.375H18C18.4973 21.375 18.9742 21.1775 19.3258 20.8258C19.6775 20.4742 19.875 19.9973 19.875 19.5V6.75H20.25C20.5484 6.75 20.8345 6.63147 21.0455 6.4205C21.2565 6.20952 21.375 5.92337 21.375 5.625C21.375 5.32663 21.2565 5.04048 21.0455 4.8295C20.8345 4.61853 20.5484 4.5 20.25 4.5ZM9.375 3.375C9.375 3.27554 9.41451 3.18016 9.48483 3.10984C9.55516 3.03951 9.65054 3 9.75 3H14.25C14.3495 3 14.4448 3.03951 14.5152 3.10984C14.5855 3.18016 14.625 3.27554 14.625 3.375V4.5H9.375V3.375ZM17.625 19.125H6.375V6.75H17.625V19.125ZM10.875 9.75V15.75C10.875 16.0484 10.7565 16.3345 10.5455 16.5455C10.3345 16.7565 10.0484 16.875 9.75 16.875C9.45163 16.875 9.16548 16.7565 8.9545 16.5455C8.74353 16.3345 8.625 16.0484 8.625 15.75V9.75C8.625 9.45163 8.74353 9.16548 8.9545 8.9545C9.16548 8.74353 9.45163 8.625 9.75 8.625C10.0484 8.625 10.3345 8.74353 10.5455 8.9545C10.7565 9.16548 10.875 9.45163 10.875 9.75ZM15.375 9.75V15.75C15.375 16.0484 15.2565 16.3345 15.0455 16.5455C14.8345 16.7565 14.5484 16.875 14.25 16.875C13.9516 16.875 13.6655 16.7565 13.4545 16.5455C13.2435 16.3345 13.125 16.0484 13.125 15.75V9.75C13.125 9.45163 13.2435 9.16548 13.4545 8.9545C13.6655 8.74353 13.9516 8.625 14.25 8.625C14.5484 8.625 14.8345 8.74353 15.0455 8.9545C15.2565 9.16548 15.375 9.45163 15.375 9.75Z"/>
+                        </svg>
+                    </div>
+                </div>
+            }
+
+                
+        </div>
+
+        @if(varG.variants.length === 0 && isAddingVariant === false){
+            <!-- Placeholder empty variant -->
+            <div class="rounded-[10px] grid grid-cols-[1fr_1fr_1fr_1fr_1fr_7%_7%_7%_5%_5%_auto] items-center justify-between p-2 px-4 gap-2">
+                <p class="font-DMSans hidden tablet:flex font-medium text-mainGreen">-</p>
+                <p class="font-DMSans hidden tablet:flex font-medium text-mainGreen">-</p>
+                <p class="font-DMSans hidden tablet:flex font-medium text-mainGreen">-</p>
+                <p class="font-DMSans hidden tablet:flex font-medium text-mainGreen">-</p>
+                <p class="font-DMSans hidden tablet:flex font-medium text-mainGreen">-</p>
+                <p class="font-DMSans hidden tablet:flex font-medium text-mainGreen">-</p>
+                <p class="font-DMSans hidden tablet:flex font-medium text-mainGreen">-</p>
+                <p class="font-DMSans hidden tablet:flex font-medium text-mainGreen">-</p>
+                <p class="font-DMSans hidden tablet:flex font-medium text-mainGreen">-</p>
+                <p class="font-DMSans font-medium text-mainGreen">-</p>
+                <div [ngClass]="isAddingVariant ? 'col-start-9' : ''" class="opacity-0 flex gap-4">
+                    <div class="cursor-pointer hover:scale-[105%] hover:duration-300 duration-300 bg-white rounded-[8px] p-2">
+                        <svg  width="15" height="15" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#8C4848" d="M20.25 4.5H16.875V3.375C16.875 2.67881 16.5984 2.01113 16.1062 1.51884C15.6139 1.02656 14.9462 0.75 14.25 0.75H9.75C9.05381 0.75 8.38613 1.02656 7.89384 1.51884C7.40156 2.01113 7.125 2.67881 7.125 3.375V4.5H3.75C3.45163 4.5 3.16548 4.61853 2.9545 4.8295C2.74353 5.04048 2.625 5.32663 2.625 5.625C2.625 5.92337 2.74353 6.20952 2.9545 6.4205C3.16548 6.63147 3.45163 6.75 3.75 6.75H4.125V19.5C4.125 19.9973 4.32254 20.4742 4.67417 20.8258C5.02581 21.1775 5.50272 21.375 6 21.375H18C18.4973 21.375 18.9742 21.1775 19.3258 20.8258C19.6775 20.4742 19.875 19.9973 19.875 19.5V6.75H20.25C20.5484 6.75 20.8345 6.63147 21.0455 6.4205C21.2565 6.20952 21.375 5.92337 21.375 5.625C21.375 5.32663 21.2565 5.04048 21.0455 4.8295C20.8345 4.61853 20.5484 4.5 20.25 4.5ZM9.375 3.375C9.375 3.27554 9.41451 3.18016 9.48483 3.10984C9.55516 3.03951 9.65054 3 9.75 3H14.25C14.3495 3 14.4448 3.03951 14.5152 3.10984C14.5855 3.18016 14.625 3.27554 14.625 3.375V4.5H9.375V3.375ZM17.625 19.125H6.375V6.75H17.625V19.125ZM10.875 9.75V15.75C10.875 16.0484 10.7565 16.3345 10.5455 16.5455C10.3345 16.7565 10.0484 16.875 9.75 16.875C9.45163 16.875 9.16548 16.7565 8.9545 16.5455C8.74353 16.3345 8.625 16.0484 8.625 15.75V9.75C8.625 9.45163 8.74353 9.16548 8.9545 8.9545C9.16548 8.74353 9.45163 8.625 9.75 8.625C10.0484 8.625 10.3345 8.74353 10.5455 8.9545C10.7565 9.16548 10.875 9.45163 10.875 9.75ZM15.375 9.75V15.75C15.375 16.0484 15.2565 16.3345 15.0455 16.5455C14.8345 16.7565 14.5484 16.875 14.25 16.875C13.9516 16.875 13.6655 16.7565 13.4545 16.5455C13.2435 16.3345 13.125 16.0484 13.125 15.75V9.75C13.125 9.45163 13.2435 9.16548 13.4545 8.9545C13.6655 8.74353 13.9516 8.625 14.25 8.625C14.5484 8.625 14.8345 8.74353 15.0455 8.9545C15.2565 9.16548 15.375 9.45163 15.375 9.75Z"/>
+                        </svg>
+                    </div>
+                    <div class="cursor-pointer hover:scale-[105%] hover:duration-300 duration-300 bg-white rounded-[8px] p-2">
+                        <svg  width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 6.65733C0 6.39212 0.105357 6.13776 0.292893 5.95023C0.480429 5.76269 0.734784 5.65733 1 5.65733H5.65733V1C5.65733 0.734784 5.76269 0.480429 5.95023 0.292893C6.13776 0.105357 6.39212 0 6.65733 0C6.92255 0 7.1769 0.105357 7.36444 0.292893C7.55198 0.480429 7.65733 0.734784 7.65733 1V5.65733H12.3147C12.5799 5.65733 12.8342 5.76269 13.0218 5.95023C13.2093 6.13776 13.3147 6.39212 13.3147 6.65733C13.3147 6.92255 13.2093 7.1769 13.0218 7.36444C12.8342 7.55198 12.5799 7.65733 12.3147 7.65733H7.65733V12.3147C7.65733 12.5799 7.55198 12.8342 7.36444 13.0218C7.1769 13.2093 6.92255 13.3147 6.65733 13.3147C6.39212 13.3147 6.13776 13.2093 5.95023 13.0218C5.76269 12.8342 5.65733 12.5799 5.65733 12.3147V7.65733H1C0.734784 7.65733 0.480429 7.55198 0.292893 7.36444C0.105357 7.1769 0 6.92255 0 6.65733Z" fill="#2A5C66"/>
+                        </svg>
+                    </div>
+                </div>
+                <!-- Placeholder -->
+            </div>
+        } @else if (isAddingVariant) {
+            <div class="rounded-[10px] flex-col tablet:flex-row px-4 py-2 gap-4 flex">
+                <div>
+                    <p>Image (Optional)</p>
+                    <label for="{{id}}">
+                        <div
+                            class="w-full tablet:w-[220px] h-[50px] tablet:h-[220px] mr-2 border-2 border-formBorder rounded-[5px] flex flex-col justify-center items-center overflow-hidden"
+                        >
+                            <img [src]="variantImageURL"/>
+                            @if(variantImageURL === ''){
+                                <svg width="20" height="20" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M35.7969 52.152V26.0475L27.4691 34.3753L22.9849 29.731L38.9999 13.7159L55.015 29.731L50.5308 34.3753L42.2029 26.0475V52.152H35.7969ZM19.7819 64.9641C18.0202 64.9641 16.5127 64.3373 15.2592 63.0839C14.0058 61.8305 13.378 60.3218 13.3759 58.558V48.949H19.7819V58.558H58.218V48.949H64.624V58.558C64.624 60.3197 63.9973 61.8283 62.7438 63.0839C61.4904 64.3395 59.9818 64.9662 58.218 64.9641H19.7819Z" fill="#AAAAAA"/>
+                                </svg>
+                            }
+                        </div>
+                    </label>
+                    <input
+                    id="{{id}}"
+                    type="file"
+                    class="hidden"
+                    (change)="PreviewVariantImage($event)"
+                    accept="image/*"
+                    />
+                </div>
+                <div class="flex-1 grid grid-cols-4 grid-rows-3">
+                    <div class="grid col-span-4 grid-cols-4 gap-3">
+                        <div class="w-full col-span-3 tablet:col-span-1">
+                            <p>Product Name</p>
+                            <input formControlName="variant_name" type="text" class="outline-none bg-mainBlue border-[#acacac] border-b-2 w-full flex-1" [placeholder]="' Enter Product Name'">
+                        </div>
+                        <div class="w-full col-span-3 tablet:col-span-1">
+                            <p>Product Code</p>
+                            <input formControlName="variant_code" type="text" class="outline-none bg-mainBlue border-[#acacac] border-b-2 w-full  flex-1" placeholder="Enter Product Code">
+                        </div>
+                        <div class="w-full col-span-3 tablet:col-span-1">
+                            <div class="flex items-center">
+                                <p class="">Variant Type</p>
+                                <svg class="ml-2" matTooltip="Color, Size, Brand, etc."  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                                </svg>
+
+                            </div>
+                            <input formControlName="variant_type" type="text" class="outline-none bg-mainBlue border-[#acacac] border-b-2 w-full  flex-1" placeholder="Enter Variant Type">
+                        </div>
+                        <div class="col-span-3 tablet:col-span-1">
+                            <p>Stock Quantity</p>
+                            <input formControlName="variant_stock" type="number" class="outline-none bg-mainBlue border-[#acacac] border-b-2 w-full" placeholder="Stock">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-4 tablet:grid-cols-subgrid col-span-4 gap-3">
+
+                        <!-- <div class="col-span-4 tablet:col-span-1">
+                            <div class="flex flex-row items-center w-full">
+                                <p class="mr-2 min-w-[50%] max-w-[50%]">Supplier Discount</p>
+
+                                <div class="flex flex-row items-center overflow-x-auto min-w-[50%] max-w-[50%]">
+                                    @for (disc of discountArrVar; track $index) {
+                                        <div class="cursor-pointer hover:duration-300 duration-300 flex flex-row items-center border-2 px-1 border-black rounded-[5px] mr-1">
+                                            <span class="font-semibold text-mainGreen text-[0.7rem] mr-2 select-none">%{{disc}}</span>
+                                            <svg (click)="deleteDiscount($index)" class="duration-300 hover:duration-300 hover:scale-[110%]" width="9" height="9" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#8C4848"/>
+                                            </svg>
+                            
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="flex flex-row justify-between items-center w-full">
+                                <div class="flex flex-row">
+                                    <p class="mr-1">%</p>
+                                    <input type="number" id="discountInputVar" class="outline-none bg-mainBlue border-[#acacac] border-b-2 w-full">
+                                </div>
+
+                                <div (click)="addDiscount()" class="cursor-pointer hover:scale-[105%] hover:duration-300 duration-300 bg-mainGreen rounded-[8px] text-white p-2 mr-3">
+                                    <svg  width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0 6.65733C0 6.39212 0.105357 6.13776 0.292893 5.95023C0.480429 5.76269 0.734784 5.65733 1 5.65733H5.65733V1C5.65733 0.734784 5.76269 0.480429 5.95023 0.292893C6.13776 0.105357 6.39212 0 6.65733 0C6.92255 0 7.1769 0.105357 7.36444 0.292893C7.55198 0.480429 7.65733 0.734784 7.65733 1V5.65733H12.3147C12.5799 5.65733 12.8342 5.76269 13.0218 5.95023C13.2093 6.13776 13.3147 6.39212 13.3147 6.65733C13.3147 6.92255 13.2093 7.1769 13.0218 7.36444C12.8342 7.55198 12.5799 7.65733 12.3147 7.65733H7.65733V12.3147C7.65733 12.5799 7.55198 12.8342 7.36444 13.0218C7.1769 13.2093 6.92255 13.3147 6.65733 13.3147C6.39212 13.3147 6.13776 13.2093 5.95023 13.0218C5.76269 12.8342 5.65733 12.5799 5.65733 12.3147V7.65733H1C0.734784 7.65733 0.480429 7.55198 0.292893 7.36444C0.105357 7.1769 0 6.92255 0 6.65733Z" fill="#FFFFFF"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="col-span-4 tablet:col-span-1 flex flex-row justify-between flex-1 border-[#acacac] border-b-2 h-[70px]">
+                            <div class="flex flex-col flex-1">
+                                <div class="flex gap-2 w-full">
+                                    <div class="flex flex-row items-center max-w-[60%]">
+                                        <p class="mr-2 font-DMSans font-medium text-formText">Supplier Discount</p>
+                                    </div>
+                                    <div class="flex flex-row items-center overflow-x-auto max-w-[40%] flex-shrink-0">
+                                        <div 
+                                        *ngFor="let disc of discountArrVar; let i = index" 
+                                        [ngClass]="{'border-mainGreen': +disc > 0, 'border-mainRed': +disc < 0}"
+                                        class="flex flex-row items-center border px-1 rounded-[5px] gap-1">
+                                            <span [ngClass]="{'text-mainGreen': +disc > 0, 'text-mainRed': +disc < 0}"
+                                                    class="font-semibold select-none text-[0.85rem]">
+                                                {{disc}}%
+                                            </span> 
+    
+                                            @if(+disc > 0) {
+                                                <svg (click)="deleteDiscount(i)" class="duration-300 hover:duration-300 hover:scale-[110%]" width="9" height="9" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#2A5C66"/>
+                                                </svg>
+                                            } @else {
+                                                <svg (click)="deleteDiscount(i)" class="duration-300 hover:duration-300 hover:scale-[110%]" width="9" height="9" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#8C4848"/>
+                                                </svg>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-row justify-between items-center">
+                                    <div (click)="addDiscount()"  class="cursor-pointer mr-2 hover:scale-[105%] hover:duration-300 duration-300 bg-mainGreen flex w-[28px] h-[28px] items-center justify-center rounded-[8px] text-white p-1 px-2 mb-1">
+                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M6 8H0V6H6V0H8V6H14V8H8V14H6V8Z" fill="white"/>
+                                        </svg> 
+                                    </div>
+                                    <input id="discountInputVar" type="number" class="defaultInputPrimary" (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); " >
+                                    <p>%</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-4 tablet:col-span-1 border-[#acacac] border-b-2 h-[70px]">
+                            <p>Stock Price</p>
+                            <input formControlName="variant_stock_price" type="number" class="outline-none bg-mainBlue  w-full" placeholder="PHP">
+                        </div>
+
+                        <div class="col-span-4 tablet:col-span-1 flex flex-row justify-between flex-1 border-[#acacac] border-b-2 h-[70px]">
+                            <div class="flex flex-col flex-1">
+                                <div class="flex gap-2 w-full">
+                                    <div class="flex flex-row items-center max-w-[40%]">
+                                        <p class="mr-2 font-DMSans font-medium text-formText">Unit Discount</p>
+                                    </div>
+                                    <div class="flex flex-row items-center overflow-x-auto max-w-[60%] flex-shrink-0">
+                                        <div 
+                                        *ngFor="let disc of unitDiscountArrVar; let i = index" 
+                                        [ngClass]="{'border-mainGreen': +disc > 0, 'border-mainRed': +disc < 0}"
+                                        class="flex flex-row items-center border px-1 rounded-[5px] gap-1">
+                                            <span [ngClass]="{'text-mainGreen': +disc > 0, 'text-mainRed': +disc < 0}"
+                                                    class="font-semibold select-none text-[0.85rem]">
+                                                {{disc}}%
+                                            </span> 
+    
+                                            @if(+disc > 0) {
+                                                <svg (click)="deleteUnitDiscount(i)" class="duration-300 hover:duration-300 hover:scale-[110%]" width="9" height="9" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#2A5C66"/>
+                                                </svg>
+                                            } @else {
+                                                <svg (click)="deleteUnitDiscount(i)" class="duration-300 hover:duration-300 hover:scale-[110%]" width="9" height="9" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#8C4848"/>
+                                                </svg>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-row justify-between items-center">
+                                    <div (click)="addUnitDiscount()"  class="cursor-pointer mr-2 hover:scale-[105%] hover:duration-300 duration-300 bg-mainGreen flex w-[28px] h-[28px] items-center justify-center rounded-[8px] text-white p-1 px-2 mb-1">
+                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M6 8H0V6H6V0H8V6H14V8H8V14H6V8Z" fill="white"/>
+                                        </svg> 
+                                    </div>
+                                    <input id="unitDiscountInputVar" type="number" class="defaultInputPrimary z-0" (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); " >
+                                    <p>%</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-4 tablet:col-span-1 border-[#acacac] border-b-2 h-[70px]">
+                            <p>Unit Price</p>
+                            <input formControlName="variant_unit_price" type="number" class="outline-none bg-mainBlue w-full " placeholder="PHP">        
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 tablet:grid-cols-2 col-span-4 gap-4">
+                        <div class="min-w-[50%] border-[#acacac] border-b-2 h-[55px]">
+                            <p>Low Stock Level</p>
+                            <input
+                            placeholder="Enter LSL"
+                            formControlName="low_stock_level" 
+                            type="number" 
+                            class="outline-none bg-mainBlue  w-full ">
+                        </div>
+                        <div class="min-w-[20%] border-[#acacac] border-b-2 h-[55px]">
+                            <p>Critical Stock Level</p>
+                            <input
+                            placeholder="Enter CSL"
+                            formControlName="critical_stock_level"
+                            type="number" 
+                            class="outline-none bg-mainBlue  w-full ">
+                        </div>
+                    </div>
+                    <div class="grid-cols-subgrid col-span-3 flex justify-end items-center gap-6">
+                        <button
+                        (click)="cancel()" 
+                        type="button"
+                        class="hover:scale-[115%] hover:duration-300 duration-300 text-mainRed border-2 p-2 rounded-md text-[0.8rem] border-mainRed">
+                            Cancel
+                        </button>
+                        <button
+                        (click)="confirm()"
+                        class="hover:scale-[115%] hover:duration-300 duration-300 text-mainGreen border-2 p-2 rounded-md text-[0.8rem] border-mainGreen"
+                        >
+                            Confirm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</form>

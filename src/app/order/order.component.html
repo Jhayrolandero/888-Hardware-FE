@@ -1,0 +1,654 @@
+@if(!offlineService.isOnline()) {
+    <div class="flex flex-col justify-center items-center h-full">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" size-12 text-mainGreen">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m3 3 8.735 8.735m0 0a.374.374 0 1 1 .53.53m-.53-.53.53.53m0 0L21 21M14.652 9.348a3.75 3.75 0 0 1 0 5.304m2.121-7.425a6.75 6.75 0 0 1 0 9.546m2.121-11.667c3.808 3.807 3.808 9.98 0 13.788m-9.546-4.242a3.733 3.733 0 0 1-1.06-2.122m-1.061 4.243a6.75 6.75 0 0 1-1.625-6.929m-.496 9.05c-3.068-3.067-3.664-7.67-1.79-11.334M12 12h.008v.008H12V12Z" />
+        </svg>
+        <p
+        class="text-center text-mainGreen font-DMSans font-bold text-[1.7rem] tablet:text-[2rem] py-2"
+        >
+            You are offline!
+        </p>
+    </div>
+} @else {
+<mat-sidenav-container [hasBackdrop]="false" class="orderGlobalCont flex w-full tablet:p-5 gap-3 h-[calc(100vh-60px)] justify-center font-DMSans overflow-y-hidden ">
+    <mat-sidenav
+        #sidenav
+        class="half-screen"
+        [mode]="'side'"
+        
+        [opened]="false"
+        [position]="'end'"
+        [fixedInViewport]="options.value.fixed"
+        [fixedTopGap]="options.value.top"
+        [fixedBottomGap]="options.value.bottom"
+
+    >  
+        <div class="relative mainSideOrder shadow-md w-full h-full bg-[#fcfcfc] overflow-y-hidden">
+            
+            <!-- <button class="absolute top-1/2 -left-1">
+                Close
+            </button> -->
+            <div class="bg-white shadow-md p-3 flex items-center tablet:hidden">
+                <button (click)="sidenav.toggle()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                      </svg>
+                </button>
+            </div>
+            <div class="flex-grow flex flex-1 h-full gap-3 flex-col rounded-[10px] parent-container p-3 ">
+                <mat-accordion class="rounded-[10px] w-full flex-row border shadow-md customerPanel">
+                    <mat-expansion-panel class="mainPanel px-3" (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                        <mat-expansion-panel-header>
+    
+                            <div class="customerHeader">
+                                <h1 class="text-mainGreen font-bold pl-1 text-xl pb-2 truncate pt-1">Customer Details</h1>                                    
+                            </div>
+                        </mat-expansion-panel-header>
+                        
+                        <hr> 
+                      
+                        <div class="mt-4 p-4 w-full">
+    
+                            <div class="flex flex-row flex-1 mb-1 relative">
+                                @if(this.selectedClient !== null) {
+                                    <div class="flex flex-col flex-1">
+                                        <label class="text-gray-700">Client Search</label>
+                                        <div class="flex flex-row flex-1 gap-3">
+                                            <input type="text" 
+                                                placeholder="Client Name"
+                                                value="{{this.selectedClient.client_name}}"
+                                                [readOnly]="true"
+                                                class="flex px-2 border-2 rounded-[5px] flex-1" 
+                                                (input)="searchForClient()"
+                                                [ngClass]="{'border-gray-400': !clientAdded, 'border-mainGreen': clientAdded}" 
+                                                >
+                                                <button class="text-[0.9rem] border-2 border-mainRed text-white bg-mainRed p-1 px-3 rounded-lg" title="Clear Inputs" (click)="clearSearch()">
+                                                    Clear All
+                                                </button>
+                                        </div>
+                                    </div>
+                                } @else {
+                                    <div class="flex flex-col flex-1">
+                                        <label class="text-gray-700">Client Search</label>
+                                        <div class="flex flex-row flex-1 gap-3">
+                                            <input type="text" 
+                                                placeholder="Client Name"
+                                                class="flex px-2 border-2 rounded-[5px] flex-1" 
+                                                (input)="searchForClient()"
+                                                [ngClass]="{'border-gray-400': !clientAdded, 'border-mainGreen': clientAdded}" 
+                                                [(ngModel)]="clientSearchTerm">
+                                                <button class="border-2 border-mainRed text-white bg-mainRed p-1 px-3 rounded-lg" title="Clear Inputs" (click)="clearSearch()">
+                                                    Clear All
+                                                </button>
+                                        </div>
+                                    </div>
+    
+                                    <span class="absolute top-full mt-1 w-full z-40" *ngIf="clientSearchTerm && !userSelected">
+                                        <table mat-table [dataSource]="filteredClients">
+                                            <ng-container matColumnDef="client_name">
+                                                <td mat-cell *matCellDef="let client" (click)="selectUser(client)" class="cursor-pointer">
+                                                {{ client.client_name }}
+                                                </td>
+                                            </ng-container>
+                                    
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    
+                                            <tr class="mat-row" *matNoDataRow>
+                                            <td class="mat-cell p-4" colspan="4">Client Name Not Found.</td>
+                                            </tr>
+                                        </table>
+                                    </span>
+                                }
+                            </div>
+    
+                            <hr class="my-4"> 
+                            <div>
+                                <form [formGroup]="clientForm">
+                                    <label class="text-gray-700">Name</label>
+                                    <input #clientNameInput id="client_name" type="text" 
+                                        class="w-full px-2 border-2 rounded-[5px] mb-2" 
+                                        [ngClass]="{'border-gray-400': !clientAdded, 'border-mainGreen': clientAdded}" 
+                                        formControlName="client_name" 
+                                        [disabled]="clientAdded"
+                                        [readonly]="clientAdded">
+                                    <label class="text-gray-700">Address</label>
+                                    <input #clientAddressInput id="client_address" type="text" 
+                                        class="w-full px-2 border-2 rounded-[5px] mb-2" 
+                                        [ngClass]="{'border-gray-400': !clientAdded, 'border-mainGreen': clientAdded}" 
+                                        formControlName="client_address" 
+                                        [disabled]="clientAdded"
+                                        [readonly]="clientAdded">
+                                    <label class="text-gray-700">Contact Number</label>
+                                    <input #clientContactInput id="client_contact" type="text" 
+                                        class="w-full px-2 border-2 rounded-[5px] mb-2" 
+                                        [ngClass]="{'border-gray-400': !clientAdded, 'border-mainGreen': clientAdded}" 
+                                        formControlName="client_contact" 
+                                        [disabled]="clientAdded"
+                                        [readonly]="clientAdded">
+                                </form>
+                            </div>
+                            <div class="flex flex-row gap-3 justify-end">
+
+                                <div *ngIf="!this.clientAdded" (click)="addClient()" class="text-center justify-center flex flex-1 text-[0.9rem] border-2 bg-mainBlueB border-mainBlueB p-1 px-4 rounded-lg hover:shadow-md text-white cursor-pointer" title="Add Customer">
+                                    + Add New Customer
+                                </div>
+
+
+                                @if(!this.clientAdded) {
+
+                                    <div (click)="confirmCustomerDetails()" class="text-center justify-center items-center flex flex-1 text-[0.9rem] border-2 border-mainGreen bg-mainGreen p-1 px-4 text-white rounded-lg cursor-pointer">
+                                        Confirm
+                                    </div>
+
+                                }
+
+                            </div>
+                            
+                        </div> 
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <div class="flex flex-col flex-1 container overflow-y-auto mb-2 mt-4">
+                    <div class="w-full product-cart  h-full pt-1">
+                        @if(orders.length === 0) {
+                            <div class="flex flex-col justify-center items-center">
+                                <h1 class="text-center text-mainRed lg:text-xl font-semibold">Cart is Empty!</h1>
+                                <img class="low-opacity" src="/icons/empty.png" alt="Empty Cart" class="min-h-[200px] max-h-[300px]">
+                            </div>
+                        } @else {
+                            <div *ngFor="let group of bundleGroup | keyvalue" [ngClass]="group.key != '-1' ? 'border-2 mb-2 border-mainGreen rounded-[5px] border-solid' : ''">
+                                <div *ngIf="group.key != '-1'" class="bg-mainGreen flex flex-row items-center">
+                                    <div class="border-[2px] border-solid border-white m-2 px-2">
+                                        <p class="text-[0.8rem] text-white font-medium ">{{group.value[0].deal_name}}</p>
+                                    </div>
+                                    @if(group.value[0].order.percentage_discount != 0){
+                                        <p class="font-medium text-white">{{group.value[0].order.percentage_discount}}% off</p>
+                                    }
+                                    @else if(group.value[0].order.flat_discount != 0){
+                                        <p class="font-medium text-white">₱{{group.value[0].order.flat_discount}} off</p>
+                                    }
+                                </div>
+                                <ng-container *ngFor="let products of group.value">
+                                    <mat-accordion [togglePosition]="'before'" class="shadow-md">
+                                        <mat-expansion-panel class="orderPanel" (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                                            <mat-expansion-panel-header class="headerPanel" collapsedHeight="*" expandedHeight="*">
+                                                <mat-panel-title class="orderTitle w-full">
+                                                    <div class="flex-row mr-4">
+                                                        <h1 class="font-bold text-sm text-bold truncate">{{ products.order.quantity }}</h1>
+                                                    </div>
+                                                    <div class="w-full items-center">
+                                                        <app-order-details [product]="products.order"></app-order-details> 
+                                                    </div>
+                                                    <div class="ml-3 bg-gray-300 h-[20px] w-[20px] p-1 rounded-full flex flex-row justify-center items-center" (click)="removeFromCart(products.order)">
+                                                        <svg width="8" height="8" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="white"/>
+                                                        </svg>
+                                                            
+                                                    </div>  
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="w-full flex flex-row pl-12 pr-[32px]">
+                                                <div class="flex flex-col w-full gap-3">
+                                                    <div class="flex flex-row justify-between">
+                                                        <p class="font-bold text-[0.8rem] opacity-70">In Stock: {{getOrderInventoryQuantity(products.order)}}</p>
+                                                        <p class="font-bold text-[0.8rem] opacity-70">Selling Price: ₱{{getOrderInventoryPrice(products.order)}}</p>
+                                                    </div>
+                                                    <div class="flex flex-col tablet:flex-row gap-3">
+                                                        <div class="flex flex-col flex-1">
+                                                            <p class="text-[0.8rem] mr-2">Quantity</p>
+                                                            <div class="flex items-center w-full">
+                                                                <input [value]="products.order.quantity" [id]="'input-'+products.order.product_ID+'-'+products.order.variant_ID" #input (input)="updateQuantity(products.order.product_ID, products.order.variant_ID, input.value)" type="number" class="h-[30px] font-medium border-gray-400 border-2 rounded-[5px] p-1 w-full">
+                                                            </div>
+                                                        </div>
+
+
+
+                                                            <div class="flex flex-col flex-1 h-[25px] justify-between">
+                                                                <p class="text-[0.8rem] mr-2">Discount</p>
+                                                                <div class="flex flex-row w-full rounded-[5px] h-[30px]">
+                                                                    <div class="bg-mainGreen px-3 h-full border-mainGreen border-2 rounded-tl-[5px] rounded-bl-[5px] flex justify-center items-center" (click)="submitProductDiscount(products.order.product_ID, products.order.variant_ID, +discountInput.value, discountInput, true)">
+                                                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <path d="M6 8H0V6H6V0H8V6H14V8H8V14H6V8Z" fill="white"/>
+                                                                        </svg>
+                                                                    </div>
+
+                                                                    <div class="flex flex-row gap-2">
+                                                                         <div class="flex flex-col h-full">
+                                                                            <input #discountInput id="discountInput" type="number" class="border-2 border-gray-400 rounded-tr-[5px] rounded-br-[5px] pl-2 w-full h-[35px]" (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); submitProductDiscount(products.order.product_ID, products.order.variant_ID, +discountInput.value, discountInput)">
+                                                                        </div>
+                                                                        <div class="flex flex-col items-center justify-end">
+                                                                            <!-- <button class="grid col-start-2 max-w-fit max-h-fit h-[32px]"  [matMenuTriggerFor]="discountEntry">
+                                                                                <svg width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path d="M10 8.99998C10.5523 8.99998 11 9.44769 11 9.99998C11 10.5523 10.5523 11 10 11C9.44775 11 9.00004 10.5523 9.00004 9.99998C9.00004 9.44769 9.44775 8.99998 10 8.99998Z" fill="#000000"/>
+                                                                                <path d="M13 14C13 14.5523 13.4478 15 14 15C14.5523 15 15 14.5523 15 14C15 13.4477 14.5523 13 14 13C13.4478 13 13 13.4477 13 14Z" fill="#000000"/>
+                                                                                <path d="M10.7071 14.7071L14.7071 10.7071C15.0977 10.3166 15.0977 9.6834 14.7071 9.29287C14.3166 8.90235 13.6835 8.90235 13.2929 9.29287L9.29293 13.2929C8.90241 13.6834 8.90241 14.3166 9.29293 14.7071C9.68346 15.0976 10.3166 15.0976 10.7071 14.7071Z" fill="#000000"/>
+                                                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.3117 4.07145L15.1708 4.34503L14.5575 3.34485C13.3869 1.43575 10.6131 1.43575 9.44254 3.34485L8.82926 4.34503L7.68836 4.07145C5.51069 3.54925 3.54931 5.51063 4.07151 7.6883L4.34509 8.8292L3.34491 9.44248C1.43581 10.6131 1.43581 13.3869 3.34491 14.5575L4.34509 15.1708L4.07151 16.3117C3.54931 18.4893 5.51069 20.4507 7.68836 19.9285L8.82926 19.6549L9.44254 20.6551C10.6131 22.5642 13.3869 22.5642 14.5575 20.6551L15.1708 19.6549L16.3117 19.9285C18.4894 20.4507 20.4508 18.4893 19.9286 16.3117L19.655 15.1708L20.6552 14.5575C22.5643 13.3869 22.5643 10.6131 20.6552 9.44248L19.655 8.8292L19.9286 7.6883C20.4508 5.51063 18.4894 3.54925 16.3117 4.07145ZM11.1475 4.3903C11.5377 3.75393 12.4623 3.75393 12.8525 4.3903L13.8454 6.00951C14.0717 6.37867 14.51 6.56019 14.9311 6.45922L16.7781 6.01631C17.504 5.84225 18.1578 6.49604 17.9837 7.22193L17.5408 9.06894C17.4398 9.49003 17.6213 9.92827 17.9905 10.1546L19.6097 11.1475C20.2461 11.5377 20.2461 12.4623 19.6097 12.8525L17.9905 13.8453C17.6213 14.0717 17.4398 14.5099 17.5408 14.931L17.9837 16.778C18.1578 17.5039 17.504 18.1577 16.7781 17.9836L14.9311 17.5407C14.51 17.4398 14.0717 17.6213 13.8454 17.9904L12.8525 19.6097C12.4623 20.246 11.5377 20.246 11.1475 19.6097L10.1547 17.9904C9.92833 17.6213 9.49009 17.4398 9.069 17.5407L7.22199 17.9836C6.4961 18.1577 5.84231 17.5039 6.01637 16.778L6.45928 14.931C6.56026 14.5099 6.37873 14.0717 6.00957 13.8453L4.39036 12.8525C3.75399 12.4623 3.75399 11.5377 4.39036 11.1475L6.00957 10.1546C6.37873 9.92827 6.56026 9.49003 6.45928 9.06894L6.01637 7.22193C5.84231 6.49604 6.4961 5.84225 7.22199 6.01631L9.069 6.45922C9.49009 6.56019 9.92833 6.37867 10.1547 6.00951L11.1475 4.3903Z" fill="#000000"/>
+                                                                                </svg>
+                                                                            </button> -->
+                                                                            <button class="grid col-start-2 max-w-fit max-h-fit h-[32px]" [disabled]="stockDiscountEntry.length < 1" [matMenuTriggerFor]="discountEntry">
+    
+                                                                                <svg width="30"  height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.82934 4.81902C8.62434 1.02902 14.7943 1.06902 18.6123 4.88802C22.4323 8.70802 22.4723 14.881 18.6763 18.676C14.8803 22.471 8.70834 22.432 4.88834 18.612C3.81371 17.542 3.00177 16.2375 2.51629 14.8008C2.03081 13.3642 1.88501 11.8345 2.09034 10.332C2.11726 10.1348 2.22141 9.95641 2.37988 9.83602C2.53835 9.71562 2.73815 9.6631 2.93534 9.69002C3.13253 9.71694 3.31095 9.82109 3.43134 9.97956C3.55174 10.138 3.60426 10.3378 3.57734 10.535C3.40302 11.8083 3.52642 13.1047 3.93782 14.3223C4.34923 15.5399 5.03744 16.6454 5.94834 17.552C9.19334 20.796 14.4163 20.815 17.6163 17.616C20.8153 14.416 20.7963 9.19302 17.5523 5.94802C14.3093 2.70602 9.08934 2.68502 5.88934 5.88002L6.63734 5.88302C6.73583 5.88348 6.83327 5.90334 6.92409 5.94145C7.0149 5.97957 7.09733 6.0352 7.16664 6.10517C7.23596 6.17514 7.29082 6.25807 7.32809 6.34924C7.36536 6.44041 7.3843 6.53803 7.38384 6.63652C7.38338 6.73501 7.36353 6.83245 7.32541 6.92327C7.28729 7.01409 7.23166 7.09651 7.16169 7.16583C7.09173 7.23515 7.00879 7.29 6.91762 7.32727C6.82645 7.36454 6.72883 7.38348 6.63034 7.38302L4.08434 7.37102C3.88664 7.36997 3.69735 7.2909 3.55765 7.15101C3.41795 7.01112 3.33913 6.82172 3.33834 6.62402L3.32534 4.08002C3.32481 3.98153 3.34369 3.8839 3.3809 3.7927C3.4181 3.70151 3.47291 3.61854 3.54218 3.54852C3.61145 3.4785 3.69384 3.42282 3.78463 3.38464C3.87542 3.34647 3.97285 3.32655 4.07134 3.32602C4.16983 3.3255 4.26746 3.34438 4.35866 3.38158C4.44985 3.41879 4.53283 3.47359 4.60284 3.54286C4.67286 3.61214 4.72854 3.69452 4.76672 3.78531C4.80489 3.87611 4.82481 3.97353 4.82534 4.07202L4.82934 4.81902Z" fill="#2A5C66"/>
+                                                                                    <path d="M8.96875 8C7.88313 8 7 8.785 7 9.75C7 10.715 7.88313 11.5 8.96875 11.5C10.0544 11.5 10.9375 10.715 10.9375 9.75C10.9375 8.785 10.0544 8 8.96875 8ZM8.96875 10.5C8.50188 10.5 8.125 10.165 8.125 9.75C8.125 9.335 8.50188 9 8.96875 9C9.43562 9 9.8125 9.335 9.8125 9.75C9.8125 10.165 9.43562 10.5 8.96875 10.5ZM14.0312 12.5C12.9456 12.5 12.0625 13.285 12.0625 14.25C12.0625 15.215 12.9456 16 14.0312 16C15.1169 16 16 15.215 16 14.25C16 13.285 15.1169 12.5 14.0312 12.5ZM14.0312 15C13.5644 15 13.1875 14.665 13.1875 14.25C13.1875 13.835 13.5644 13.5 14.0312 13.5C14.4981 13.5 14.875 13.835 14.875 14.25C14.875 14.665 14.4981 15 14.0312 15ZM15.6006 8.355C15.82 8.55 15.82 8.865 15.6006 9.06L8.1925 15.645C8.14042 15.6913 8.0786 15.728 8.01056 15.7531C7.94251 15.7781 7.86959 15.791 7.79594 15.791C7.72229 15.791 7.64936 15.7781 7.58132 15.7531C7.51328 15.728 7.45145 15.6913 7.39938 15.645C7.3473 15.5987 7.30599 15.5438 7.2778 15.4833C7.24962 15.4228 7.23511 15.358 7.23511 15.2925C7.23511 15.227 7.24962 15.1622 7.2778 15.1017C7.30599 15.0412 7.3473 14.9863 7.39938 14.94L14.8075 8.355C14.8595 8.30865 14.9214 8.27187 14.9894 8.24678C15.0574 8.22169 15.1304 8.20878 15.2041 8.20878C15.2777 8.20878 15.3507 8.22169 15.4187 8.24678C15.4868 8.27187 15.5486 8.30865 15.6006 8.355Z" fill="#2A5C66"/>
+                                                                                </svg>
+                                                                                    
+
+                                                                            </button>
+                                                                            <!-- here -->
+                                                                            <mat-menu #discountEntry="matMenu">
+                                                                                @for (entry of parseDiscountEntry(products.order.product_ID, stockDiscountEntry, products.order.variant_ID); track $index) {
+                                                                                    <button
+                                                                                    (click)="changeProductUnitDiscount(entry.normalized_discount.split(','), (entry.product_id ? entry.product_id : products.order.product_ID), (entry.variant_id ? entry.variant_id : null), entry.lowest_id)"
+                                                                                    class="w-full flex justify-between px-2 py-4 space-x-4" >
+                                                                                        <span>{{parseDiscountDisplay(entry.normalized_discount, products.order.product_ID)}}</span>
+                                                                                        <span>x{{entry.total_quantity}}</span>
+                                                                                    </button>
+                                                                                } @empty {
+                                                                                    <p class="text-center text-[0.7rem]">
+                                                                                        No Discount History
+                                                                                    </p>
+                                                                                }
+                                                                            </mat-menu>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+    
+
+
+
+                                                    </div>
+                                                    <!-- Default unit discount -->
+                                                    <div class="flex flex-row overflow-x-scroll">
+                                                        <div class="cursor-pointer" *ngFor="let disc of getFilteredDiscounts(products.order.product_ID, products.order.variant_ID); let i = index" [ngClass]="{'border-mainGreen': disc.discount >= 0, 'border-mainRed': disc.discount < 0}" class="flex flex-row items-center border px-2 border-mainGreen rounded-[5px] mr-1 mb-1">
+                                                            <p class="font-semibold text-[0.7rem] mr-1" [ngClass]="{'text-mainGreen': disc.discount >= 0, 'text-mainRed': disc.discount < 0}">{{ disc.discount }}%</p>
+                                                            <svg (click)="deleteProductDiscount(products.order.product_ID, disc.variant_ID, disc.discount, i)" class="cursor-pointer duration-300 hover:duration-300 hover:scale-[110%]" width="8" height="8" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                @if(disc.discount >= 0) {
+                                                                    <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#2A5C66"/>
+                                                                } @else {
+                                                                    <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#8C4848"/>
+                                                                }
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </ng-container>
+                            </div>
+    
+                        }
+                    </div>
+                </div>
+
+                <!-- i mived this. put in the div immediately below it -->
+    
+                <div class="bottomOrder bg-white rounded-[10px] flex flex-col gap-3 p-2 pt-3 mb-8 tablet:mb-1">
+                        <div class="text-[0.9rem] font-bold flex flex-row justify-between px-4">
+                            <p class="text-mainGreen">Subtotal</p>
+                            <p>₱{{ subtotalAmount | number: '1.2-2' }}</p>
+                            
+                        </div>
+                        <mat-accordion *ngIf="calculateTotalBundleDiscount() > 0" class="shadow-md rounded-[10px] bg-mainGray">
+                            <mat-expansion-panel hidetoggle class="discountPanel" (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                                <mat-expansion-panel-header class="headerExpand">
+        
+                                <div class="text-[0.9rem] font-DMSans w-full font-bold flex flex-row justify-between">
+                                    <p class="text-mainGreen mr-2">Promo Discount Total</p>
+                                    <p class="mr-2">-₱{{ calculateTotalBundleDiscount() | number: '1.2-2' }}</p>
+                                </div>
+        
+                                </mat-expansion-panel-header>
+                                <ng-container *ngFor="let group of bundleGroup | keyvalue">
+                                <div class="text-[0.9rem] my-2 font-DMSans  font-bold flex flex-row justify-between px-4">
+                                    <p class="text-mainGreen">{{group.value[0].deal_name}}</p>
+                                    @if(group.value[0].order.percentage_discount){
+                                        <p>-₱{{ calculateDiscountBundle(group) | number: '1.2-2' }}</p>
+                                    } @else if(group.value[0].order.flat_discount){
+                                        <p>-₱{{ group.value[0].order.flat_discount | number: '1.2-2' }}</p>
+                                    }
+                                </div>
+                            </ng-container>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+    
+                        <div class="text-[0.9rem]  font-bold flex flex-row justify-between px-4 ">
+                            <p class="text-mainGreen">Discount</p>
+                            <p>₱{{ calculateDiscount() | number: '1.2-2' }}</p>
+                        </div>
+                        <div class="px-4">
+                            <hr class="border-[1.5px] border-black">
+                        </div>
+                        <div class="text-[0.9rem]  font-bold flex flex-row justify-between px-4">
+                            <p class="text-mainGreen">Payable Amount</p>
+                            <p>₱{{ totalAmount | number: '1.2-2' }}</p>
+                        </div>
+
+ 
+    
+                        <div class="cursor-pointer text-medium text-center bg-mainGreen p-2 px-4 rounded-[10px] text-[0.9rem] font-medium text-white" (click)="onSubmitOrder()">
+                            @if(isSubmitting) {
+                                <mat-spinner class="" [diameter]="20"></mat-spinner>
+                            } @else {
+                                Submit
+                            }
+                        </div>
+                </div>
+            </div>
+
+        </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="drag-boundary">
+        <div class=" w-full justify-center"> 
+            <div class="flex flex-col gap-3 h-full">
+                <div *ngIf="isEditing" (click)="exitEdit()" class="cursor-pointer hover:scale-[105%] hover:duration-300 duration-300 rounded-[50%] w-[50px] h-[50px] bg-white flex justify-center items-center shadow-md">
+                    <svg width="30" height="30" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.1562 23.9062H43.0312C43.4539 23.9062 43.8593 24.0742 44.1582 24.373C44.4571 24.6719 44.625 25.0773 44.625 25.5C44.625 25.9227 44.4571 26.3281 44.1582 26.627C43.8593 26.9258 43.4539 27.0938 43.0312 27.0938H11.1562C10.7336 27.0938 10.3282 26.9258 10.0293 26.627C9.73041 26.3281 9.5625 25.9227 9.5625 25.5C9.5625 25.0773 9.73041 24.6719 10.0293 24.373C10.3282 24.0742 10.7336 23.9062 11.1562 23.9062Z" fill="#2A5C66"/>
+                        <path d="M11.816 25.5L25.0345 38.7154C25.3338 39.0146 25.5019 39.4205 25.5019 39.8437C25.5019 40.267 25.3338 40.6729 25.0345 40.9721C24.7353 41.2714 24.3294 41.4395 23.9062 41.4395C23.4829 41.4395 23.0771 41.2714 22.7778 40.9721L8.43404 26.6284C8.28562 26.4803 8.16787 26.3045 8.08752 26.1108C8.00718 25.9172 7.96582 25.7096 7.96582 25.5C7.96582 25.2904 8.00718 25.0828 8.08752 24.8892C8.16787 24.6955 8.28562 24.5197 8.43404 24.3716L22.7778 10.0279C23.0771 9.72861 23.4829 9.56049 23.9062 9.56049C24.3294 9.56049 24.7353 9.72861 25.0345 10.0279C25.3338 10.3271 25.5019 10.733 25.5019 11.1562C25.5019 11.5795 25.3338 11.9854 25.0345 12.2846L11.816 25.5Z" fill="#2A5C66"/>
+                    </svg>
+                </div>
+                <div
+                    class="bg-white border shadow-md w-full rounded-[10px] flex flex-row justify-center tablet:justify-between items-center px-5">
+                    <p class="text-mainGreen font-DMSans font-bold text-[1.7rem] tablet:text-[2.5rem] py-2">
+                        @if(isEditing){
+                            <span class="cursor-pointer" (click)="exitEdit()">Order Drafts</span> > Edit Order
+                        } @else {
+                            <span (click)="goTo('')" class="cursor-pointer" >Orders</span> > Add Order
+                        }
+                    </p>
+
+
+                    <div class="space-x-5 hidden lg:flex ml-auto w-[50%]">
+                        <div class="w-full gap-3 flex flex-row tablet:justify-between items-center">
+                            <div class="rounded-[10px] flex flex-1 items-center p-2 px-5 border-2 border-mainGray border-solid">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19.6 21L13.3 14.7C12.8 15.1 12.225 15.4167 11.575 15.65C10.925 15.8833 10.2333 16 9.5 16C7.68333 16 6.146 15.3707 4.888 14.112C3.63 12.8533 3.00067 11.316 3 9.5C2.99933 7.684 3.62867 6.14667 4.888 4.888C6.14733 3.62933 7.68467 3 9.5 3C11.3153 3 12.853 3.62933 14.113 4.888C15.373 6.14667 16.002 7.684 16 9.5C16 10.2333 15.8833 10.925 15.65 11.575C15.4167 12.225 15.1 12.8 14.7 13.3L21 19.6L19.6 21ZM9.5 14C10.75 14 11.8127 13.5627 12.688 12.688C13.5633 11.8133 14.0007 10.7507 14 9.5C13.9993 8.24933 13.562 7.187 12.688 6.313C11.814 5.439 10.7513 5.00133 9.5 5C8.24867 4.99867 7.18633 5.43633 6.313 6.313C5.43967 7.18967 5.002 8.252 5 9.5C4.998 10.748 5.43567 11.8107 6.313 12.688C7.19033 13.5653 8.25267 14.0027 9.5 14Z" fill="black" fill-opacity="0.7"/>
+                                </svg>
+                                    
+                                <input [(ngModel)]="searchParam" (ngModelChange)="onChangeSearch()"  type="text" class="outline-none ml-3 font-DMSans font-medium text-black opacity-70 text-[0.9rem] tablet:text-[1.1rem] flex-1" placeholder="Search Inventory">
+                            </div>
+                            <div class="relative flex flex-row items-center p-2 border-mainGray">
+                                <div class="cursor-pointer flex flex-col items-center justify-center w-[100px] flex-1 px-3" mat-button [matMenuTriggerFor]="menu">
+                                    @if(selectedFilter === ''){
+                                        <div class="flex flex-row items-center justify-center text-center w-full">
+                                            <p class="text-[0.60rem] text-formText">Filter Search</p>
+                                        </div>
+                                        <div class="flex flex-row justify-center  w-full">
+                                            <svg   class="select-none" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14.5 12V19.88C14.54 20.18 14.44 20.5 14.21 20.71C14.1175 20.8027 14.0076 20.8762 13.8866 20.9264C13.7657 20.9766 13.636 21.0024 13.505 21.0024C13.374 21.0024 13.2444 20.9766 13.1234 20.9264C13.0024 20.8762 12.8925 20.8027 12.8 20.71L10.79 18.7C10.681 18.5933 10.5981 18.4629 10.5478 18.319C10.4975 18.175 10.4812 18.0213 10.5 17.87V12H10.47L4.71001 4.62C4.54762 4.41153 4.47434 4.14726 4.5062 3.88493C4.53805 3.6226 4.67244 3.38355 4.88001 3.22C5.07001 3.08 5.28001 3 5.50001 3H19.5C19.72 3 19.93 3.08 20.12 3.22C20.3276 3.38355 20.462 3.6226 20.4938 3.88493C20.5257 4.14726 20.4524 4.41153 20.29 4.62L14.53 12H14.5Z" fill="#2A5C66" fill-opacity="1"/>
+                                            </svg>
+                                        </div>
+            
+                                    }
+                                    @else {
+                                        <div class="cursor-pointer border-white text-white border-2 rounded-[10px]  flex flex-col items-center justify-center">
+                                            <p class="font-medium text-mainGreen text-[0.6rem] w-full">
+                                                {{selectedFilter}}
+                                            </p>
+                                            <svg  class="select-none" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14.5 12V19.88C14.54 20.18 14.44 20.5 14.21 20.71C14.1175 20.8027 14.0076 20.8762 13.8866 20.9264C13.7657 20.9766 13.636 21.0024 13.505 21.0024C13.374 21.0024 13.2444 20.9766 13.1234 20.9264C13.0024 20.8762 12.8925 20.8027 12.8 20.71L10.79 18.7C10.681 18.5933 10.5981 18.4629 10.5478 18.319C10.4975 18.175 10.4812 18.0213 10.5 17.87V12H10.47L4.71001 4.62C4.54762 4.41153 4.47434 4.14726 4.5062 3.88493C4.53805 3.6226 4.67244 3.38355 4.88001 3.22C5.07001 3.08 5.28001 3 5.50001 3H19.5C19.72 3 19.93 3.08 20.12 3.22C20.3276 3.38355 20.462 3.6226 20.4938 3.88493C20.5257 4.14726 20.4524 4.41153 20.29 4.62L14.53 12H14.5Z" fill="#2A5C66" fill-opacity="1"/>
+                                            </svg>
+                                        </div>
+                                    }
+                                </div>
+
+
+
+                                <div class="flex flex-col justify-center items-center w-[100px] min-h-full px-3">
+                                    <div class="bg-white overscroll-none justify-between items-center py-2  flex flex-col">
+                                        @if(!sidenav.opened) {
+                                            <div class="flex flex-row  w-full">
+                                                <p class="text-[0.60rem] text-formText">View Cart ({{this.orders.length}})</p>
+                                            </div>
+                                            <div class="cursor-pointer flex flex-row flex-1 justify-between items-center">
+                                                <svg (click)="sidenav.toggle()" width="22" height="24" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.96116 15.9501C1.00915 12.1367 0.533145 10.2312 1.53287 8.94897C2.53259 7.66675 4.49542 7.66675 8.41998 7.66675H13.5573C17.483 7.66675 19.4447 7.66675 20.4444 8.94897C21.4441 10.2312 20.9681 12.1379 20.0161 15.9501C19.4103 18.3756 19.1085 19.5879 18.2053 20.2945C17.3021 21.0001 16.0538 21.0001 13.5573 21.0001H8.41998C5.92344 21.0001 4.67517 21.0001 3.77198 20.2945C2.86879 19.5879 2.56588 18.3756 1.96116 15.9501Z" stroke="#2A5C66" stroke-width="1.5"/>
+                                                    <path opacity="0.5" d="M19.3104 8.2222L18.5226 5.32775C18.2186 4.21108 18.0666 3.65331 17.7548 3.23219C17.4439 2.81382 17.0217 2.49153 16.5365 2.3022C16.0483 2.11108 15.4713 2.11108 14.3173 2.11108M2.66684 8.2222L3.45464 5.32775C3.75866 4.21108 3.91067 3.65331 4.22246 3.23219C4.53333 2.81382 4.95554 2.49153 5.44077 2.3022C5.92898 2.11108 6.50596 2.11108 7.65991 2.11108" stroke="#2A5C66" stroke-width="1.5"/>
+                                                    <path d="M7.65991 2.11111C7.65991 1.81643 7.77681 1.53381 7.9849 1.32544C8.19298 1.11706 8.47521 1 8.76948 1H13.2078C13.502 1 13.7843 1.11706 13.9924 1.32544C14.2004 1.53381 14.3173 1.81643 14.3173 2.11111C14.3173 2.4058 14.2004 2.68841 13.9924 2.89678C13.7843 3.10516 13.502 3.22222 13.2078 3.22222H8.76948C8.47521 3.22222 8.19298 3.10516 7.9849 2.89678C7.77681 2.68841 7.65991 2.4058 7.65991 2.11111Z" stroke="#2A5C66" stroke-width="1.5"/>
+                                                    <path opacity="0.5" d="M6.55035 12.1111V16.5555M15.4269 12.1111V16.5555M10.9886 12.1111V16.5555" stroke="#2A5C66" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                    
+                                            </div>
+                                        } @else {
+                                            <div class="flex flex-row  w-full">
+                                                <p class="text-[0.60rem] text-formText">Close Cart</p>
+                                            </div>
+                                            <div class="cursor-pointer flex flex-row flex-1 justify-between items-center">
+                                                <svg (click)="sidenav.toggle()" width="35" height="28" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M21.1748 6.54977C21.4037 6.32081 21.5324 6.01028 21.5324 5.68649C21.5324 5.36269 21.4037 5.05216 21.1748 4.8232C20.9458 4.59425 20.6353 4.46562 20.3115 4.46562C19.9877 4.46562 19.6772 4.59425 19.4482 4.8232L13 11.2734L6.54978 4.82523C6.32083 4.59628 6.01029 4.46765 5.6865 4.46765C5.36271 4.46765 5.05218 4.59628 4.82322 4.82523C4.59426 5.05419 4.46564 5.36472 4.46564 5.68852C4.46564 6.01231 4.59426 6.32284 4.82322 6.5518L11.2735 13L4.82525 19.4502C4.59629 19.6792 4.46767 19.9897 4.46767 20.3135C4.46767 20.6373 4.59629 20.9478 4.82525 21.1768C5.05421 21.4058 5.36474 21.5344 5.68853 21.5344C6.01233 21.5344 6.32286 21.4058 6.55181 21.1768L13 14.7266L19.4502 21.1778C19.6792 21.4068 19.9897 21.5354 20.3135 21.5354C20.6373 21.5354 20.9479 21.4068 21.1768 21.1778C21.4058 20.9489 21.5344 20.6383 21.5344 20.3145C21.5344 19.9907 21.4058 19.6802 21.1768 19.4513L14.7266 13L21.1748 6.54977Z" fill="#8C4848"/>
+                                                </svg>
+                                    
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <mat-menu #menu="matMenu" class="custom-style">
+                              <div class="font-DMSans">
+                                <button mat-menu-item (click)="onFilterChange('Product Code')">Product Code</button>
+                                <button mat-menu-item (click)="onFilterChange('Product Name')">Product Name</button>
+                                <button mat-menu-item (click)="onFilterChange('Product Brand')">Product Brand</button>
+                                <button mat-menu-item (click)="onFilterChange('In Stock')">In Stock</button>
+                              </div>
+                            </mat-menu>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-row px-4 tablet:px-0">
+                    <div class="flex flex-row justify-center mr-2 overflow-auto">
+                        <div class="flex flex-row items-center" #tierOneTrigger="matMenuTrigger" (click)="setSelectedCategory('', 1)" mat-button [matMenuTriggerFor]="tierOne" >
+                            <svg class="mr-1" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.5 11.5L12 2.5L17.5 11.5H6.5ZM17.5 22.5C16.25 22.5 15.1877 22.0627 14.313 21.188C13.4383 20.3133 13.0007 19.2507 13 18C12.9993 16.7493 13.437 15.687 14.313 14.813C15.189 13.939 16.2513 13.5013 17.5 13.5C18.7487 13.4987 19.8113 13.9363 20.688 14.813C21.5647 15.6897 22.002 16.752 22 18C21.998 19.248 21.5607 20.3107 20.688 21.188C19.8153 22.0653 18.7527 22.5027 17.5 22.5ZM3 22V14H11V22H3ZM17.5 20.5C18.2 20.5 18.7917 20.2583 19.275 19.775C19.7583 19.2917 20 18.7 20 18C20 17.3 19.7583 16.7083 19.275 16.225C18.7917 15.7417 18.2 15.5 17.5 15.5C16.8 15.5 16.2083 15.7417 15.725 16.225C15.2417 16.7083 15 17.3 15 18C15 18.7 15.2417 19.2917 15.725 19.775C16.2083 20.2583 16.8 20.5 17.5 20.5ZM5 20H9V16H5V20ZM10.05 9.5H13.95L12 6.35L10.05 9.5Z" fill="#2A5C66"/>
+                            </svg>
+                            @if(categSelectedBread[0] == ''){
+                                <span class="text-mainGreen cursor-pointer" (click)="revertBreadCrumb(); categSelectedBread[0] = ''; categSelectedBread[1] = ''; categSelectedBread[2] = ''; categSelectedBread[3] = '';">Select Category</span>
+                            }
+                        </div>
+
+                        <mat-menu #tierOne="matMenu">
+                            <button (mouseenter)="setSelectedCategory(categOne, 2)" (click)="selectCategory(categOne); tierOneTrigger.closeMenu();" mat-menu-item [matMenuTriggerFor]="tierTwo" *ngFor="let categOne of tierOpen[0]">{{categOne}}</button>
+                        </mat-menu>
+                        <mat-menu #tierTwo="matMenu">
+                            @for(categTwo of tierOpen[1]; track $index) {
+                                @if(categHasTier(categTwo, 2)){
+                                    <button (mouseenter)="setSelectedCategory(categTwo, 3)" (click)="selectCategory(categTwo); tierOneTrigger.closeMenu();" mat-menu-item [matMenuTriggerFor]="tierThree">{{categTwo}}</button>
+                                } @else {
+                                    <button (mouseenter)="setSelectedCategory(categTwo, 3)" (click)="selectCategory(categTwo); tierOneTrigger.closeMenu();" mat-menu-item>{{categTwo}}</button>
+                                }
+                                
+                            }
+                        </mat-menu>
+                        <mat-menu #tierThree="matMenu">
+                            @for (categThree of tierOpen[2]; track $index) {
+                                @if(categHasTier(categThree, 3)){
+                                    <button (mouseenter)="setSelectedCategory(categThree, 4)" (click)="selectCategory(categThree); tierOneTrigger.closeMenu();" mat-menu-item [matMenuTriggerFor]="tierFour">{{categThree}}</button>
+                                } @else {
+                                    <button (mouseenter)="setSelectedCategory(categThree, 4)" (click)="selectCategory(categThree); tierOneTrigger.closeMenu();" mat-menu-item>{{categThree}}</button>
+                                }
+                            }
+                        </mat-menu>
+                        <mat-menu #tierFour="matMenu">
+                            <button (mouseenter)="categBread[3]=categFour" (click)="selectCategory(categFour); tierOneTrigger.closeMenu();" mat-menu-item *ngFor="let categFour of tierOpen[3]">{{categFour}}</button>
+                        </mat-menu>
+                    </div>
+                    <p>
+                        
+                        @if(categSelectedBread[0] !== ''){
+                            <span class="text-mainGreen cursor-pointer" (click)="revertBreadCrumb();">Home</span> > 
+                            <span class="text-mainGreen cursor-pointer" (click)="categBread[1] = ''; categBread[2] = ''; categBread[3] = ''; selectCategory(categBread[0]);">{{categSelectedBread[0]}}</span>
+                            @if(categSelectedBread[1] !== ''){
+                                > <span  class="text-mainGreen cursor-pointer" (click)="categBread[2] = ''; categBread[3] = ''; selectCategory(categBread[1]);">{{categSelectedBread[1]}}</span>
+                                @if(categSelectedBread[2] !== ''){
+                                    > <span  class="text-mainGreen cursor-pointer" (click)="categBread[3] = ''; selectCategory(categBread[2]);">{{categSelectedBread[2]}}</span>
+                                    @if(categSelectedBread[3] !== ''){
+                                        > <span class="text-mainGreen cursor-pointer">{{categSelectedBread[3]}} </span>   
+                                    }
+                                }
+                            }
+                        }
+                    </p>
+                </div>
+                
+                <div class=" flex flex-col h-[90%] overflow-hidden">
+                    <div class="rounded-[10px] flex flex-row overflow-y-auto no-scrollbar">
+                                @if(!isLoading){
+                                    <div class="gap-3 mobileS:grid-cols-2 tablet:grid-cols-6 grid flex-wrap">
+                                    <!-- <div class="mobileS:grid-cols-2 tablet:grid-cols-6 grid flex-wrap items-center"> -->
+                                        @if(products.length < 1) {
+                                            <p class="text-center text-mainGreen font-DMSans font-bold text-[1.7rem] tablet:text-[2rem] py-2 col-span-full col-start-3">
+                                                No Records Found!
+                                            </p>
+                                        } @else {
+
+                                        <ng-container *ngFor="let product of products">
+
+                                            <div class="bg-white border h-[300px] flex flex-col border-opacity-60 rounded-[10px] overflow-hidden hover:border-mainGreen hover:border-2 transition-all duration-300 ease-in-out shadow-md">
+                                                <div class="w-[full] h-[50%] p-3">
+                                                    @if(product.product_image) {
+                                                        <img class="h-full w-full rounded-[5px] overflow-hidden  object-center" 
+                                                        loading="lazy" 
+                                                        [src]="port + product.product_image" 
+                                                        (error)="'/icons/default_product_icon.svg'"
+                                                        alt="{{ product.product_name }}"
+                                                        >
+                                                        
+                                                    } @else {
+                                                        <div class="w-full flex justify-center items-center h-full">
+                                                            <span class="w-full text-mainGreen size-10 tablet:size-28 aspect-square flex items-center justify-center rounded">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                
+                                                <div class="p-2 pl-3 flex flex-col flex-1">
+                                                    <div class="flex flex-row h-[23px]">
+                                                        <h6 class="text-black text-[0.9rem] font-semibold text-medium truncate">{{ product.product_name }}</h6>
+                                                    </div>
+                                                    <div class="flex flex-row">
+
+                                                        <!-- If product have variant -->
+                                                        @if(product.has_variant) { 
+
+                                                            <!-- Selected variant to display -->
+                                                            @if(variantIDs[product.product_ID] && variantIDs[product.product_ID] != -1) {
+                                                                <!-- If selected variant have discount -->
+                                                                @if(findVariantDiscount(variantIDs[product.product_ID])) {
+                                                                    <!-- displayVariantPriceIDs -->
+                                                                    <h6 class="text-medium tablet:text-[1.1rem] font-DMSans font-semibold text-mainGreen text-[0.9rem] lg:block">
+                                                                        <span class="line-through text-[0.75rem]">₱{{findVariantPrice(variantIDs[product.product_ID])}}</span> 
+                                                                        ₱{{findVariantDiscount(variantIDs[product.product_ID])}} 
+                                                                        <span class="bg-[#2A5C66] text-[0.70rem] p-1 text-white rounded-sm ">{{findVariantDiscountPercent(variantIDs[product.product_ID])}}% <span class="font-bold">OFF</span></span>
+                                                                    </h6>
+                                                                } 
+                                                                
+                                                                <!-- No Discount -->
+                                                                @else {
+                                                                    <h6 class="text-medium tablet:text-[1.1rem] font-DMSans font-semibold text-mainGreen text-[0.9rem] lg:block">₱{{findVariantPrice(variantIDs[product.product_ID])}}</h6>
+                                                                }                                                                
+                                                            } 
+                                                            <!-- Nein selected -->
+                                                            @else {
+
+                                                                <!-- Got discount -->
+                                                                @if(findVariantDiscountPriceRange(product.product_ID) !== false) {
+                                                                    <h6 class="text-medium tablet:text-[1.1rem] font-DMSans font-semibold text-mainGreen text-[0.9rem] lg:block">
+                                                                        <span class="line-through text-[0.75rem]">{{findVariantPriceRange(product.product_ID)}}</span> 
+                                                                        {{ findVariantDiscountPriceRange(product.product_ID)}} 
+                                                                        <span class="bg-[#2A5C66] text-[0.70rem] p-1 text-white rounded-sm ">{{findLowestPercentageDiscount(product.product_ID)}}% <span class="font-bold">OFF</span></span>
+                                                                    </h6>
+                                                                } 
+                                                                <!-- Nein -->
+                                                                @else {
+                                                                    <h6 class="text-medium tablet:text-[1.1rem] font-DMSans font-semibold text-mainGreen text-[0.9rem] lg:block">{{ findVariantPriceRange(product.product_ID)}}</h6>
+                                                                }
+                                                            }
+                                                        } 
+                                                        <!-- No bitches -->
+                                                        @else {
+                                                            <!-- But have discount -->
+                                                            @if(findProductDiscount(product.product_ID )) {
+                                                                <h6 class="text-wrap text-medium tablet:text-[1.1rem]font-DMSans font-semibold text-mainGreen text-[0.9rem] lg:block">
+                                                                    <span class="line-through text-[0.75rem]">₱{{product.unit_price}}</span> 
+                                                                    ₱{{findProductDiscount(product.product_ID)}} 
+                                                                    <span class="text-wrap bg-[#2A5C66] text-[0.70rem] p-1 text-white rounded-sm ">{{findProductDiscountPercent(product.product_ID)}}% <span class="font-bold">OFF</span>
+                                                                    </span>
+                                                                </h6>
+                                                            } 
+                                                            <!-- neither bitches or discount -->
+                                                            @else {
+                                                                <h6 class="text-medium tablet:text-[1.1rem] font-DMSans font-semibold text-mainGreen text-[0.9rem] lg:block">₱{{ product.unit_price }}</h6>
+                                                            }
+                                                    }
+                                                    </div>
+                                                    
+                                                    <div class="flex flex-col mb-1 flex-1 justify-end">
+                                                        <button (click)="getGroupedVariants(product.product_ID)" *ngIf="product.has_variant" mat-button [matMenuTriggerFor]="variant" class="border-2 border-gray-400 font-semibold p-1 px-2 my-1 rounded-lg text-[0.7rem] hover:text-mainGreen hover:border-mainGreen lg:block">
+                                                            {{ selectedGroupAndNames[product.product_ID] ? selectedGroupAndNames[product.product_ID].variant_group_name + ' - ' + selectedGroupAndNames[product.product_ID].variant_name : 'Select Variant' }}
+                                                        </button>
+                                                        <mat-menu #variant="matMenu" class="">
+                                                            <ng-container *ngFor="let group of groupedVariants | keyvalue">
+                                                                <div class="p-5">
+                                                                    <mat-label>{{group.key}}</mat-label>
+                                                                    <mat-select 
+                                                                    name="variant" 
+                                                                    id="#" 
+                                                                    [(ngModel)]="variantIDs[product.product_ID]" 
+                                                                    (ngModelChange)="logValues(product.product_ID)" 
+                                                                    (click)="$event.stopPropagation()">
+                                                                        <mat-option class="p-5 text-medium" 
+                                                                        *ngFor="let variant of group.value" 
+                                                                        [value]="variant.variant_id">{{variant.variant_name}}</mat-option>
+                                                                    </mat-select>
+                                                                </div>
+                                                            </ng-container>
+                                                        </mat-menu>
+                                                    </div>
+                                                </div>
+                                                <div class="flex">
+                                                    @if((selectedGroupAndNames[product.product_ID] === undefined || selectedGroupAndNames[product.product_ID] === null) && product.has_variant) {
+                                                    } @else if (product.product_stock !== 0 && !product.has_variant) {
+                                                        <!-- No Variant -->
+                                                        <button [disabled]="isSubmitting" (click)="addToCart(product)" class="disabled:cursor-not-allowed disabled:text-slate-500 w-full bg-mainGreen text-white p-2">Add to Cart</button>
+                                                    } @else if (product.has_variant && getSelectedVariantStock(product.product_ID) > 0) {
+                                                        <!-- Got Variant -->
+                                                        <button [disabled]="isSubmitting" (click)="addToCart(mergeSelectedVariantToProduct(product))" class="disabled:cursor-not-allowed disabled:text-slate-500 w-full bg-mainGreen text-white p-2">Add to Cart</button>
+                                                    } @else {
+                                                        <button class="w-full bg-mainRed text-white p-2">Out of Stock</button>
+                                                    }
+                                                </div>
+
+                                            </div>
+
+                                        </ng-container>
+                                        }
+                                    </div>
+                                } @else {
+                                    <!-- <h4>Loading.......</h4> -->
+                                    <div class="w-full flex justify-center items-center">
+                                        <mat-spinner class="mat-progress-spinner" [diameter]="50"></mat-spinner>
+                                    </div>
+                                }
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+        <div class="tablet:hidden fixed bottom-10 right-10" cdkDragBoundary=".drag-boundary" cdkDrag>
+            <span class="absolute top-0 -left-1 bg-mainRed text-white text-[0.8rem] w-[20px] h-[20px] text-center rounded-full">
+                {{this.orders.length}}
+            </span>
+            <button (click)="sidenav.toggle()" class="flex justify-center items-center w-[54px] h-[54px] bg-[#C1EBF0] rounded-full">
+                <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 fill-white">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                </svg>                  
+            </button>
+        </div>
+        </mat-sidenav-content>
+</mat-sidenav-container>
+}

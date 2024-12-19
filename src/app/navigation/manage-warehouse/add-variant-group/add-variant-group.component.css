@@ -1,0 +1,51 @@
+input.discountInput{
+    background: #2A5C66;
+    width: 20px;
+}
+
+.mainPanel{
+    background-color: #2A5C66 !important;
+}
+
+.mainHeader{
+    background-color: #2A5C66 !important;
+    display: flex;
+    flex-direction: row;
+    padding-left: 10px !important;
+    padding-right: 2px !important;
+}
+
+.defaultInputPrimary{
+	flex: 1 1 0%;
+    outline: none;
+    background-color: #EFFAFC !important;
+}
+
+.discountVariantInput{
+    width: calc(100% - 23px) !important;
+    outline: none;
+    background-color: #EFFAFC !important;
+}
+
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 3px;
+    height: 5px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+background: #f1f1f1;
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #888;
+}
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555;
+}

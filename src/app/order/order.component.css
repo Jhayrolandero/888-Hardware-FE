@@ -1,0 +1,154 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.mainPanel{
+  border-radius: 10px !important;
+  border-width: 1px !important;
+}
+
+.customerPanel{
+  background-color: azure !important;
+}
+
+.orderPanel{
+  border: solid rgb(229, 231, 235) 2px !important;
+  margin-bottom: 5px !important;
+  border-radius: 10px !important;
+  padding-left: 3% !important;
+  padding-right: 3% !important;
+}
+
+mat-expansion-panel {
+  mat-expansion-panel-header {
+    padding-bottom: 7px !important;
+    padding-top: 7px !important;
+    height: auto!important; 
+  }
+}
+mat-expansion-panel.mat-expanded {
+  border-left: solid #2A5C66  5px !important;
+}
+
+.orderTitle{
+  margin: 0% !important;
+}
+
+.headerPanel{
+  padding-left: 0% !important;
+  padding-right: 0% !important;
+}
+
+.customerHeader{
+
+}
+.customerHeader:hover{
+}
+
+.mainAccordion{
+  margin-bottom: 10px !important;
+}
+
+.discountPanel{
+  border-radius: 5px !important;
+  background-color: #fcfcfc !important;
+  /* border: 1px solid black !important; */
+}
+
+.headerExpand{
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.product-cart .mat-expansion-panel:not([class*='mat-elevation-z']) {
+  box-shadow: none;
+  background-color: white;
+  border-radius: 0%;
+} 
+
+.customer-details .mat-expansion-panel:not([class*='mat-elevation-z']) {
+  box-shadow: none;
+  background-color: white;
+
+} 
+
+::ng-deep mat-aacordion {
+  padding: 0 !important
+}
+
+::-webkit-scrollbar {
+  display: none; 
+}
+
+.hidden-header {
+  visibility: hidden;
+  height: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.right-aligned {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.mat-sidenav-container {
+  position: relative;
+  z-index: 1000; 
+}
+.mat-sidenav {
+  z-index: 1001;
+}
+
+.half-screen {
+  width: 100%;
+}
+
+.mainSideOrder .bottomOrder{
+  border-width: 1px !important;
+}
+
+@media (min-width: 1024px) {
+.half-screen {
+  width: 30%;
+}
+}
+
+.orderGlobalCont{
+  background-color:#EFFAFC !important;
+}
+
+/* .parent-container {
+  position: relative;
+  overflow: visible; 
+  z-index: 1000;
+}
+
+
+.accordion-content {
+  
+  position: absolute;
+  z-index: 1001; 
+
+} */
+.uploader-status ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #ffffff !important;
+}
+.custom-input:focus {
+  outline: none;
+  border-color: inherit; /* or specify a custom border color */
+  box-shadow: none;
+}
+
+button[disabled] .discount-svg path {
+  fill: #fdfdfd;
+}
+
+.fallback-img {
+  background-image: url('/icons/default_product_icon.svg');
+}

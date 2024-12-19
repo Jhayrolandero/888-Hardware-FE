@@ -1,0 +1,26 @@
+<form action="" [formGroup]="bundleForm" (submit)="test()">
+    <div class="grid grid-cols-[auto_1fr_auto] gap-2 border-2 border-[#AAAAAA] rounded-[10px] pb-2"  formArrayName="incoming_tiers">
+        <div class="grid grid-cols-subgrid col-span-3 gap-x-4 gap-y-2 justify-items-center bg-[#2A5C66] text-white px-4 py-1 rounded-tl-lg rounded-tr-lg">
+            <h4>Tier</h4>
+            <h4></h4>
+            <h4>Actions</h4>
+        </div>
+        <div *ngFor="let tier of [].constructor(tierCount); let i = index" class="grid grid-cols-subgrid col-span-3 gap-x-4 gap-y-2  px-4 py-1 justify-items-center items-center">
+            <p>#{{ i + 1}}</p>
+            <div class="flex items-center gap-2" formGroupName="{{i}}">Buy 
+                    <input type="number" formControlName="requiredQty"  class="border-2 border-black rounded-md px-2 py-1 focus:outline-none"> Items & get
+                    <div class="border-2 border-black rounded-md flex gap-2 items-center px-2 py-1">
+                        <input formControlName="promoValue" class="inline flex-1 focus:outline-none " type="number">
+                        <span class="inline">|</span>
+                        <p>{{textDisplay}}</p>
+                    </div>
+            </div>
+            <svg *ngIf="tierCount > 1" (click)="deleteTier(i)" width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25.1471 5.82646H20.5147L19.1912 4.50293H12.5736L11.25 5.82646H6.61768V8.47352H25.1471M7.94121 25.6794C7.94121 26.3814 8.22009 27.0547 8.71651 27.5512C9.21293 28.0476 9.88622 28.3265 10.5883 28.3265H21.1765C21.8785 28.3265 22.5518 28.0476 23.0483 27.5512C23.5447 27.0547 23.8236 26.3814 23.8236 25.6794V9.79705H7.94121V25.6794Z" fill="#8C4848"/>
+            </svg>
+        </div>
+        <div class="grid grid-cols-subgrid col-span-3 gap-x-4 gap-y-2  px-4 py-1 justify-items-center items-center">
+        <button *ngIf="tierCount <= 2" (click)="addTier()">+ Add Tier</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,446 @@
+<form  class="tablet:p-5 grid gap-3 text-[#2A5C66]" [formGroup]="addMassForm">
+
+    <div (click)="goHome()" class="cursor-pointer rounded-[50%] w-[50px] h-[50px] bg-white flex justify-center items-center shadow-main">
+        <svg width="30" height="30" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.1562 23.9062H43.0312C43.4539 23.9062 43.8593 24.0742 44.1582 24.373C44.4571 24.6719 44.625 25.0773 44.625 25.5C44.625 25.9227 44.4571 26.3281 44.1582 26.627C43.8593 26.9258 43.4539 27.0938 43.0312 27.0938H11.1562C10.7336 27.0938 10.3282 26.9258 10.0293 26.627C9.73041 26.3281 9.5625 25.9227 9.5625 25.5C9.5625 25.0773 9.73041 24.6719 10.0293 24.373C10.3282 24.0742 10.7336 23.9062 11.1562 23.9062Z" fill="#2A5C66"/>
+            <path d="M11.816 25.5L25.0345 38.7154C25.3338 39.0146 25.5019 39.4205 25.5019 39.8437C25.5019 40.267 25.3338 40.6729 25.0345 40.9721C24.7353 41.2714 24.3294 41.4395 23.9062 41.4395C23.4829 41.4395 23.0771 41.2714 22.7778 40.9721L8.43404 26.6284C8.28562 26.4803 8.16787 26.3045 8.08752 26.1108C8.00718 25.9172 7.96582 25.7096 7.96582 25.5C7.96582 25.2904 8.00718 25.0828 8.08752 24.8892C8.16787 24.6955 8.28562 24.5197 8.43404 24.3716L22.7778 10.0279C23.0771 9.72861 23.4829 9.56049 23.9062 9.56049C24.3294 9.56049 24.7353 9.72861 25.0345 10.0279C25.3338 10.3271 25.5019 10.733 25.5019 11.1562C25.5019 11.5795 25.3338 11.9854 25.0345 12.2846L11.816 25.5Z" fill="#2A5C66"/>
+        </svg>
+    </div>
+
+    <div class="bg-white border shadow-md w-full rounded-[10px] flex flex-col p-5 gap-[0.5rem]">
+        <h1 class="text-mainGreen font-DMSans font-bold text-[1.5rem] tablet:text-[2.3rem] pb-2">
+            Add New Stocks
+        </h1>  
+        <p class="font-DMSans font-medium text-mainGreen text-[1rem] tablet:text-[1.3rem]">Supplier Details</p>
+        <hr class="border-[1.5px] my-2 border-slate-400" />
+        <div class="flex flex-col gap-2 mb-2">
+            <div class="flex flex-col tablet:flex-row gap-3">
+                <div class="rounded-[5px] flex-1 flex items-center p-1 px-5 border-2 border-mainGray border-solid">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.6 21L13.3 14.7C12.8 15.1 12.225 15.4167 11.575 15.65C10.925 15.8833 10.2333 16 9.5 16C7.68333 16 6.146 15.3707 4.888 14.112C3.63 12.8533 3.00067 11.316 3 9.5C2.99933 7.684 3.62867 6.14667 4.888 4.888C6.14733 3.62933 7.68467 3 9.5 3C11.3153 3 12.853 3.62933 14.113 4.888C15.373 6.14667 16.002 7.684 16 9.5C16 10.2333 15.8833 10.925 15.65 11.575C15.4167 12.225 15.1 12.8 14.7 13.3L21 19.6L19.6 21ZM9.5 14C10.75 14 11.8127 13.5627 12.688 12.688C13.5633 11.8133 14.0007 10.7507 14 9.5C13.9993 8.24933 13.562 7.187 12.688 6.313C11.814 5.439 10.7513 5.00133 9.5 5C8.24867 4.99867 7.18633 5.43633 6.313 6.313C5.43967 7.18967 5.002 8.252 5 9.5C4.998 10.748 5.43567 11.8107 6.313 12.688C7.19033 13.5653 8.25267 14.0027 9.5 14Z" fill="black" fill-opacity="0.7"/>
+                    </svg>
+            
+                    <input
+                    [(ngModel)]="supplierInput"
+                    [value]="supplierInput ? supplierInput.supplier_name ?  supplierInput.supplier_name : '' : ''"
+                    [ngModelOptions]="{standalone: true}"
+                    type="text"
+                    class="outline-none ml-3 font-DMSans font-medium text-black opacity-70 text-[0.9rem] tablet:text-[1rem] flex-1"
+                    placeholder="Supplier Search"
+                    [matAutocomplete]="autoSupplier"
+                    (ngModelChange)="_supplierFilter($event)"
+
+                    >
+                    <mat-autocomplete #autoSupplier="matAutocomplete">
+                        <mat-option *ngFor="let supplier of filteredSuppliers | async" [value]="supplier" (click)="setSupplier(supplier.supplier_ID)">
+                            <span>{{supplier.supplier_name}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </div>
+                <div class="flex flex-row justify-between gap-3">
+                    <button 
+                    type="button"
+                    class="bg-mainRed text-white justify-center flex flex-1 text-center py-2 tablet:py-0 tablet:flex-none tablet:block font-medium text-[0.8rem] tablet:text-[1rem] px-[1.2em] rounded-[5px]"
+                    (click)="clearSupplierSelection()"
+                    >Clear Selection</button>
+                    <!-- <button
+                    type="button"
+    
+                    (click)="openSupplierDialog()"
+                    class="bg-mainGreen text-white justify-center flex flex-1 text-center py-2 tablet:py-0 tablet:flex-none tablet:block font-medium text-[0.8rem] tablet:text-[1rem] px-[1.2em] rounded-[5px]">
+                        + Add New Supplier 
+                    </button> -->
+                </div>
+            </div>
+            <p *ngIf="selectedSupplier" class="text-[1.25rem] text-[#2A5C66] font-medium">Supplier Selected: {{selectedSupplier}}</p>
+        </div>
+
+        <p class="mt-8 font-DMSans font-medium text-mainGreen text-[1rem] tablet:text-[1.3rem]">Incoming Stock Details</p>
+        <hr class="border-[1.5px] my-2 border-slate-400" />
+        
+        <div class="flex flex-col tablet:flex-row gap-[1rem] mb-2">
+            <div class="rounded-[5px] flex-1 flex items-center p-1 px-5 border-2 border-mainGray border-solid">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19.6 21L13.3 14.7C12.8 15.1 12.225 15.4167 11.575 15.65C10.925 15.8833 10.2333 16 9.5 16C7.68333 16 6.146 15.3707 4.888 14.112C3.63 12.8533 3.00067 11.316 3 9.5C2.99933 7.684 3.62867 6.14667 4.888 4.888C6.14733 3.62933 7.68467 3 9.5 3C11.3153 3 12.853 3.62933 14.113 4.888C15.373 6.14667 16.002 7.684 16 9.5C16 10.2333 15.8833 10.925 15.65 11.575C15.4167 12.225 15.1 12.8 14.7 13.3L21 19.6L19.6 21ZM9.5 14C10.75 14 11.8127 13.5627 12.688 12.688C13.5633 11.8133 14.0007 10.7507 14 9.5C13.9993 8.24933 13.562 7.187 12.688 6.313C11.814 5.439 10.7513 5.00133 9.5 5C8.24867 4.99867 7.18633 5.43633 6.313 6.313C5.43967 7.18967 5.002 8.252 5 9.5C4.998 10.748 5.43567 11.8107 6.313 12.688C7.19033 13.5653 8.25267 14.0027 9.5 14Z" fill="black" fill-opacity="0.7"/>
+                </svg>
+                    
+                <input 
+                type="text" 
+                class="outline-none ml-3 font-DMSans font-medium text-black opacity-70 text-[0.9rem] tablet:text-[1rem] flex-1" 
+                [(ngModel)]="cre"
+                [value]="cre ? cre.product_name ? cre.product_name: '' : ''"
+                [matAutocomplete]="auto"
+                (ngModelChange)="_productFilter($event)"
+                placeholder="Product Search"
+                [ngModelOptions]="{standalone: true}"
+                >
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+                    <div class="flex gap-2">
+                        <img class="aspect-square w-[24px]" [lazyLoad]="port + product.product_image" [alt]="product.product_name">
+                        <span>{{product.product_name}}</span>
+                    </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </div>
+            <button
+            type="button"
+            class="bg-mainGreen text-white font-medium px-[1.2em] py-1 tablet:py-0 rounded-[5px]" (click)="addProduct()">+ Add Product</button>
+        </div>
+        <!-- <div class=" min-w-[160px] max-w-[240px] rounded-[5px] text-[1rem] flex-1 flex items-center p-1 px-5 border-2 border-mainGray border-solid w-[20%]">
+            <input
+            formControlName="DR_Number"
+            class="w-full outline-none ml-3 font-DMSans font-medium text-black opacity-70 text-[0.9rem] tablet:text-[1.1rem] flex-1"
+            placeholder="DR Number"
+            >
+        </div> -->
+        @if(addProductArr.length !== 0) {
+            <form [formGroup]="addMassForm" action="" class="mt-[15px]">
+                <div formArrayName="incoming_Products">
+                <!-- @for (item of addProductArr; track $index; let idx = $index) { -->
+                    <div class="flex flex-col gap-2"  *ngFor="let item of addProductArr; let idx = index">
+                        <div class="flex flex-col tablet:flex-row justify-between cursor-pointer">
+                                <p class="text-mainGreen font-medium mobileS:text-[1rem] mobileM:text-[1.5rem] tablet:text-[1.3rem] py-1">{{item.product_name}}</p>
+                            @if(item.has_variant) {
+                                <div class="flex flex-row gap-3 items-center">
+                                    <div mat-button [matMenuTriggerFor]="menu" class="border-2 border-mainGreen text-center flex-1 tablet:flex-none tablet:block font-xs rounded-[5px] text-mainGreenline-flex justify-center items-center px-2 py-1"><p>Select Variant</p></div>
+                                    <mat-menu #menu="matMenu">
+                                        @for (varItem of _filterVariant(item.product_ID); track $index) {
+                                            <button 
+                                            mat-menu-item (click)="selectVariant(varItem, item.product_ID, idx)">{{varItem.variant_group_name}} {{varItem.variant_name}}</button>
+                                        }
+                                    </mat-menu>
+                                    <div (click)="deleteOrder(item.product_ID, idx)" class="border-2 border-mainRed flex-1 tablet:flex-none tablet:block rounded-[5px] text-mainRed inline-flex justify-center items-center px-4 py-1"><p>Delete</p></div>
+                                </div>
+                            }
+                            @else {
+                                <div (click)="deleteOrder(item.product_ID, idx)" class="border-2 border-mainRed flex-1 tablet:flex-none tablet:block rounded-[5px] text-mainRed inline-flex justify-center items-center px-4 py-1"><p>Delete</p></div>
+                            }
+                        </div>
+                        <form action="" class="flex flex-col gap-2 text-formText font-medium font-DMSans" formGroupName="{{idx}}">
+                            @if(item.has_variant) {
+                                <div *ngIf="variantsStock !== undefined" formArrayName="variant_Incoming" class="flex flex-col gap-2">
+                                    <mat-accordion class="shadow-md rounded-[5px] border" *ngFor="let xVar of variantsStock[item.product_ID]; let varIdx = index" formGroupName="{{varIdx}}">
+                                        <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title><h4>{{xVar.variant_group_name}} {{xVar.variant_name}}</h4></mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="flex flex-col gap-6 px-6 w-full">
+                                                <div class="flex gap-4 items-center text-formText flex-col tablet:flex-row font-medium font-DMSans justify-between">
+                                                    <div class="w-full flex flex-1 flex-col gap-2">
+                                                            <div class="flex gap-2">
+                                                                <p>Unit Discount: </p>
+                                                                    @for (discount of this.variant_Incoming_Idx(idx).at(varIdx).get('unit_discount')?.value; track $index; let discountIdx = $index) {
+                                                                        <span
+                                                                        [ngClass]="(discount < 0) ? 'border-mainRed text-mainRed' : 'border-mainGreen text-[#2A5C66]'" 
+                                                                        class="text-[0.75rem]  border-2  rounded-[5px] ml-[0.5em] px-1" >{{discount}}% <button type="button" (click)="removeVariantUnitDiscount(idx, varIdx, discountIdx)">X</button></span>
+                                                                    }
+                                                            </div>
+                                                            <div class="flex gap-1">
+                                                                <input type="number" formControlName="currUnitDiscount" placeholder="Discount" 
+                                                                class="font-Roboto font-normal focus:outline-none border-b-2 border-black px-1 py-[2px] w-full">
+                                                                <button
+        
+                                                                type="button"
+                                                                class="bg-[#2A5C66] rounded-[5px] text-white px-2 py-1 min-w-max"
+                                                                (click)="pushVariantUnitDiscount(idx, varIdx,1)">
+                                                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M6 8H0V6H6V0H8V6H14V8H8V14H6V8Z" fill="white"/>
+                                                                    </svg> 
+                                                                </button>
+                                                            </div>
+
+                                                        
+                                                    </div>
+                                                    <div class="flex w-full flex-1 flex-col border-b-2 border-black gap-2">
+                                                        <div class="flex gap-2">
+                                                            <p>Sell Price</p>
+                                                            <div class="flex gap-2">
+                                                                @if(xVar.variant_stock_price > getSellVariantPrice(idx, varIdx).get('sell_Price')?.value) {
+                                                                    <svg alt="Sell price in form is lower than current sell price of product!" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2ZM12 4C9.87827 4 7.84344 4.84285 6.34315 6.34315C4.84285 7.84344 4 9.87827 4 12C4 14.1217 4.84285 16.1566 6.34315 17.6569C7.84344 19.1571 9.87827 20 12 20C14.1217 20 16.1566 19.1571 17.6569 17.6569C19.1571 16.1566 20 14.1217 20 12C20 9.87827 19.1571 7.84344 17.6569 6.34315C16.1566 4.84285 14.1217 4 12 4ZM12 15C12.2652 15 12.5196 15.1054 12.7071 15.2929C12.8946 15.4804 13 15.7348 13 16C13 16.2652 12.8946 16.5196 12.7071 16.7071C12.5196 16.8946 12.2652 17 12 17C11.7348 17 11.4804 16.8946 11.2929 16.7071C11.1054 16.5196 11 16.2652 11 16C11 15.7348 11.1054 15.4804 11.2929 15.2929C11.4804 15.1054 11.7348 15 12 15ZM12 6C12.2652 6 12.5196 6.10536 12.7071 6.29289C12.8946 6.48043 13 6.73478 13 7V13C13 13.2652 12.8946 13.5196 12.7071 13.7071C12.5196 13.8946 12.2652 14 12 14C11.7348 14 11.4804 13.8946 11.2929 13.7071C11.1054 13.5196 11 13.2652 11 13V7C11 6.73478 11.1054 6.48043 11.2929 6.29289C11.4804 6.10536 11.7348 6 12 6Z" fill="#8C4848"/>
+                                                                    </svg>
+                                                                }
+                                                                <p class="text-mainRed" *ngIf="getSellVariantPrice(idx, varIdx).get('sell_Price')?.value < xVar.variant_stock_price && getSellVariantPrice(idx, varIdx).dirty">Sell price is lower than stock price</p>        
+                                                            </div>
+                                                        </div>
+                                                        <input type="number" formControlName="sell_Price" placeholder="Sell Price" [ngClass]="xVar.variant_stock_price > getSellVariantPrice(idx, varIdx).get('sell_Price')?.value ? 'border-mainRed' : ''" class="font-Roboto font-normal focus:outline-none border-b-2 text-red rounded px-1 py-[2px] flex-1">
+                                                    </div>
+                                                    <div class="flex w-full flex-1 flex-col gap-2">
+                                                        <div class="flex gap-4 justify-between">
+                                                            <div class="flex gap-2">
+                                                                <p>Supplier Discount: </p>
+                                                                @for (discount of this.variant_Incoming_Idx(idx).at(varIdx).get('discount')?.value; track $index; let discountIdx = $index) {
+                                                                    <span
+                                                                    [ngClass]="(discount < 0) ? 'border-mainRed text-mainRed' : 'border-mainGreen text-[#2A5C66]'" 
+                                                                    class="text-[0.75rem]  border-2  rounded-[5px] ml-[0.5em] px-1" >{{discount}}% <button type="button" (click)="removeVariantDiscount(idx, varIdx, discountIdx)">X</button></span>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex gap-1">
+                                                            <input type="number" formControlName="currDiscount" placeholder="Discount" 
+                                                            class="font-Roboto font-normal focus:outline-none border-b-2 border-black px-1 py-[2px] w-full">
+                                                            <button
+
+                                                            type="button"
+                                                            class="bg-[#2A5C66] rounded-[5px] text-white px-2 py-1 min-w-max"
+                                                            (click)="pushVariantDiscount(idx, varIdx,1)">
+                                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M6 8H0V6H6V0H8V6H14V8H8V14H6V8Z" fill="white"/>
+                                                            </svg> </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex w-full flex-1 flex-col border-b-2 border-black gap-2">
+                                                        <p>Stock Price</p>
+                                                        <input type="number" formControlName="stock_price" placeholder="Stock Price" class="font-Roboto font-normal focus:outline-none  rounded px-1 py-[2px] w-full">
+                                                    </div>
+                                                </div>
+                                                <div class="font-Roboto w-full text-formText flex-col tablet:flex-row form-medium flex gap-4 items-center justify-between">
+                                                    <div class="flex flex-1 w-full flex-col border-b-2 border-black gap-2">
+                                                        <p>Incoming Quantity</p>
+                                                        <input type="number" formControlName="quantity" placeholder="Incoming Quantity" class="font-Roboto font-normal focus:outline-none  rounded px-1 py-[2px] w-full">
+                                                    </div>
+
+                                                    <div class="flex w-full flex-1 flex-col border-b-2 border-black gap-2">
+                                                        <p>Supplier Promo</p>
+                                                        <div mat-button [matMenuTriggerFor]="menu" class="font-Roboto font-normal rounded px-1 py-[2px] w-full flex flex-row justify-between items-center">
+                                                            @if(getCurrentPromo(idx, varIdx) === undefined) {
+                                                                <p class="text-[#888888]">Select Promo</p>
+                                                            } @else {
+                                                                <p class="text-[#888888]">{{getCurrentPromo(idx, varIdx)}}</p>
+                                                            }
+                                                            <div class="flex flex-row items-center">
+                                                                <p class="mr-1 text-black">|</p>
+                                                                <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.06232 8.06086C7.8748 8.24833 7.62049 8.35364 7.35532 8.35364C7.09016 8.35364 6.83585 8.24833 6.64832 8.06086L0.991324 2.40386C0.895813 2.31161 0.819631 2.20127 0.767222 2.07926C0.714813 1.95726 0.687227 1.82604 0.686073 1.69326C0.684919 1.56048 0.710221 1.4288 0.760502 1.3059C0.810783 1.18301 0.885036 1.07136 0.978929 0.977463C1.07282 0.883571 1.18447 0.809318 1.30737 0.759037C1.43027 0.708756 1.56195 0.683454 1.69472 0.684608C1.8275 0.685762 1.95872 0.713348 2.08073 0.765757C2.20273 0.818166 2.31308 0.894348 2.40532 0.989858L7.35532 5.93986L12.3053 0.989858C12.4939 0.8077 12.7465 0.706906 13.0087 0.709184C13.2709 0.711463 13.5217 0.816631 13.7071 1.00204C13.8925 1.18745 13.9977 1.43826 14 1.70046C14.0023 1.96265 13.9015 2.21526 13.7193 2.40386L8.06232 8.06086Z" fill="#888888" fill-opacity="0.533333"/>
+                                                                </svg>
+                                                        
+                                                            </div>
+                                                        </div>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button 
+                                                            type="button"
+                                                            (click)="addPromo(idx, varIdx, -1, '')" mat-menu-item >None</button>
+                                                            @for(promo of supplierPromo; track promo.promo_name){
+                                                                <button 
+                                                                type="button"
+                                                                (click)="addPromo(idx, varIdx, promo.supplier_promo_ID, promo.promo_name)" mat-menu-item >{{promo.promo_name}}</button>
+                                                            }
+                                                        </mat-menu>
+                                                    </div>
+                                                    <div class="flex w-full flex-1 flex-col border-b-2 border-black gap-2">
+                                                        <p>Free Quantity</p>
+                                                        <input 
+                                                        type="number" 
+                                                        class="font-Roboto font-normal focus:outline-none"
+                                                        formControlName="free"
+                                                        >
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex flex-col tablet:flex-row w-full gap-4 items-center justify-end py-2">
+
+                                                    <div class="flex flex-col tablet:flex-row items-center">
+                                                        <p class="flex-1 font-medium">Final Stock Cost: &#x20B1;</p>
+                                                        <input           
+                                                        type="number" 
+                                                        formControlName="final_Cost" 
+                                                        placeholder="Cost" class=" rounded px-1 py-[2px] focus:outline-none">
+                                                    </div>
+                                                    <button 
+                                                    type="button"
+                                                    (click)="deleteVariant(xVar.variant_ID,item.product_ID,varIdx,idx)" class="border-2 border-mainRed rounded-[4px] text-mainRed px-2 py-1 w-full tablet:w-auto">
+                                                        Cancel Variant
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
+                            } @else {
+                                <mat-accordion class="shadow-md rounded-[5px] border">
+                                    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-description>
+                                        View Details
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                    <div class="flex flex-col gap-6 px-6 w-full">
+                                        <div class="w-full flex flex-col tablet:flex-row gap-4 items-center text-formText font-medium font-DMSans justify-between">
+                                            <div class="flex w-full flex-col flex-1">
+                                                <div class="flex gap-2 justify-between">
+                                                    <div class="flex gap-2">
+                                                        <p>Unit Discount: </p>
+                                                        <span 
+                                                        [ngClass]="(discount < 0) ? 'border-mainRed text-mainRed' : 'border-mainGreen text-[#2A5C66]'" 
+                                                        class="text-[0.75rem] text-[#2A5C66] border-2 border-[#2A5C66] rounded-[5px] ml-[0.5em] px-1" *ngFor="let discount of incoming_Products.at(idx).get('unit_discount')?.value; let discountIdx = index">
+                                                        {{discount}}% <button type="button" (click)="removeProductUnitDiscount(idx, discountIdx)">&#x2715;</button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="flex gap-1">
+                                                    <input 
+                                                    type="number"  
+                                                    placeholder="Unit Discount" 
+                                                    class="font-Roboto font-normal border-b-2 border-black focus:outline-none px-1 py-[2px] w-full" 
+                                                    formControlName="currUnitDiscount">
+                                                    <button
+                                                    type="button"
+
+                                                    class="bg-[#2A5C66] min-w-max px-2 py-1 rounded-[5px] text-white "
+                                                    (click)="pushUnitDiscount(idx, 1)">
+                                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M6 8H0V6H6V0H8V6H14V8H8V14H6V8Z" fill="white"/>
+                                                    </svg> 
+                                                </button>
+                                                </div>
+                                            </div>
+                                            <div class="flex w-full flex-col flex-1 border-b-2 border-black">
+                                                <div class="flex gap-4">
+                                                    <p>Sell Price</p>
+                                                    <div class="flex gap-2">
+                                                        @if(getSellProductPrice(idx).get('sell_Price')!.value < item.default_stock_price && getSellProductPrice(idx).dirty) {
+                                                            <svg alt="Sell price in form is lower than current sell price of product!" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2ZM12 4C9.87827 4 7.84344 4.84285 6.34315 6.34315C4.84285 7.84344 4 9.87827 4 12C4 14.1217 4.84285 16.1566 6.34315 17.6569C7.84344 19.1571 9.87827 20 12 20C14.1217 20 16.1566 19.1571 17.6569 17.6569C19.1571 16.1566 20 14.1217 20 12C20 9.87827 19.1571 7.84344 17.6569 6.34315C16.1566 4.84285 14.1217 4 12 4ZM12 15C12.2652 15 12.5196 15.1054 12.7071 15.2929C12.8946 15.4804 13 15.7348 13 16C13 16.2652 12.8946 16.5196 12.7071 16.7071C12.5196 16.8946 12.2652 17 12 17C11.7348 17 11.4804 16.8946 11.2929 16.7071C11.1054 16.5196 11 16.2652 11 16C11 15.7348 11.1054 15.4804 11.2929 15.2929C11.4804 15.1054 11.7348 15 12 15ZM12 6C12.2652 6 12.5196 6.10536 12.7071 6.29289C12.8946 6.48043 13 6.73478 13 7V13C13 13.2652 12.8946 13.5196 12.7071 13.7071C12.5196 13.8946 12.2652 14 12 14C11.7348 14 11.4804 13.8946 11.2929 13.7071C11.1054 13.5196 11 13.2652 11 13V7C11 6.73478 11.1054 6.48043 11.2929 6.29289C11.4804 6.10536 11.7348 6 12 6Z" fill="#8C4848"/>
+                                                            </svg>
+                                                            <p class="text-mainRed">Sell price is lower than stock price</p>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <input 
+                                                type="number" 
+                                                formControlName="sell_Price" 
+                                                placeholder="Sell Price" 
+                                                [ngClass]="item.default_stock_price > getSellProductPrice(idx).get('sell_Price')!.value ? 'border-mainRed' : ''"
+                                                class="font-Roboto font-normal text-red rounded px-1 py-[2px] flex-1 focus:outline-none">
+                                            </div>    
+                                            <div class="flex w-full flex-col flex-1 border-b-2 border-black">
+                                                <p>Stock Price</p>
+                                                <input 
+                                                type="number" 
+                                                formControlName="stock_price" 
+                                                placeholder="Stock Price" 
+                                                class="font-Roboto font-normal rounded px-1 py-[2px] w-full focus:outline-none">
+                                            </div>    
+                                            <div class="flex w-full flex-col flex-1">
+                                                <div class="flex gap-2 justify-between">
+                                                    <div class="flex gap-2">
+                                                        <p>Supplier Discount: </p>
+                                                        <span 
+                                                        [ngClass]="(discount < 0) ? 'border-mainRed text-mainRed' : 'border-mainGreen text-[#2A5C66]'" 
+                                                        class="text-[0.75rem] text-[#2A5C66] border-2 border-[#2A5C66] rounded-[5px] ml-[0.5em] px-1" *ngFor="let discount of incoming_Products.at(idx).get('discount')?.value; let discountIdx = index">
+                                                        {{discount}}% <button type="button" (click)="removeProductDiscount(idx, discountIdx)">&#x2715;</button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="flex gap-1">
+                                                    <input 
+                                                    type="number"  
+                                                    placeholder="Discount" 
+                                                    class="font-Roboto font-normal border-b-2 border-black focus:outline-none px-1 py-[2px] w-full" 
+                                                    formControlName="currDiscount">
+                                                    <button
+                                                    type="button"
+
+                                                    class="bg-[#2A5C66] min-w-max px-2 py-1 rounded-[5px] text-white "
+                                                    (click)="pushDiscount(idx, 1)">
+                                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M6 8H0V6H6V0H8V6H14V8H8V14H6V8Z" fill="white"/>
+                                                    </svg> 
+                                                </button>
+                                                </div>
+                                            </div>                                
+                                            <!-- <div class="flex flex-col flex-1 border-b-2 border-black">
+                                                <p>Incoming Quantity</p>
+                                                <input 
+                                                type="number" 
+                                                formControlName="quantity" 
+                                                placeholder="Incoming Quantity" 
+                                                class="focus:outline-none rounded px-1 py-[2px] w-full ">
+                                            </div> -->
+                                        </div>      
+                                        <div class="w-full font-Roboto flex-col tablet:flex-row text-formText font-normal flex gap-4 items-center justify-between">
+                                            <div class="w-full flex flex-col flex-1 border-b-2 border-black">
+                                                <p>Incoming Quantity</p>
+                                                <input 
+                                                type="number" 
+                                                formControlName="quantity" 
+                                                placeholder="Incoming Quantity" 
+                                                class="font-Roboto font-normal focus:outline-none rounded px-1 py-[2px] w-full ">
+                                            </div>
+
+                                            <div class="w-full flex flex-col flex-1 border-b-2 border-black">
+                                                <p>Supplier Promo</p>
+                                                <div mat-button [matMenuTriggerFor]="menu" class="font-Roboto font-normal rounded px-1 py-[2px] w-full flex flex-row justify-between items-center">
+                                                    @if(getCurrentPromo(idx, -1) === undefined) {
+                                                        <p class="text-[#888888]">Select Promo</p>
+                                                    } @else {
+                                                        <p class="text-[#888888]">{{getCurrentPromo(idx, -1)}}</p>
+                                                    }
+            
+                                                    <div class="flex flex-row items-center">
+                                                        <p class="mr-1 text-black">|</p>
+                                                        <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.06232 8.06086C7.8748 8.24833 7.62049 8.35364 7.35532 8.35364C7.09016 8.35364 6.83585 8.24833 6.64832 8.06086L0.991324 2.40386C0.895813 2.31161 0.819631 2.20127 0.767222 2.07926C0.714813 1.95726 0.687227 1.82604 0.686073 1.69326C0.684919 1.56048 0.710221 1.4288 0.760502 1.3059C0.810783 1.18301 0.885036 1.07136 0.978929 0.977463C1.07282 0.883571 1.18447 0.809318 1.30737 0.759037C1.43027 0.708756 1.56195 0.683454 1.69472 0.684608C1.8275 0.685762 1.95872 0.713348 2.08073 0.765757C2.20273 0.818166 2.31308 0.894348 2.40532 0.989858L7.35532 5.93986L12.3053 0.989858C12.4939 0.8077 12.7465 0.706906 13.0087 0.709184C13.2709 0.711463 13.5217 0.816631 13.7071 1.00204C13.8925 1.18745 13.9977 1.43826 14 1.70046C14.0023 1.96265 13.9015 2.21526 13.7193 2.40386L8.06232 8.06086Z" fill="#888888" fill-opacity="0.533333"/>
+                                                        </svg>
+                                                            
+                                                    </div>
+                                                </div>
+                                                <mat-menu #menu="matMenu">
+                                                    <button 
+                                                    type="button"
+                                                    (click)="addPromo(idx, -1, -1, '')" mat-menu-item >None</button>
+                                                    @for(promo of supplierPromo; track promo.promo_name){
+                                                        <button 
+                                                        type="button"
+                                                        (click)="addPromo(idx, -1, promo.supplier_promo_ID, promo.promo_name)" mat-menu-item >{{promo.promo_name}}</button>
+                                                    }
+                                                </mat-menu>
+                                            </div>
+                                            <div class="w-full flex flex-col flex-1 border-b-2 border-black">
+                                                <p>Free Quantity</p>
+                                                <input 
+                                                type="number" 
+                                                class="font-Roboto font-normal focus:outline-none" 
+                                                formControlName="free">
+                                            </div>
+                                        </div>      
+                                        <div class="flex gap-4 items-center justify-end">
+                                            <div class="flex gap-2 flex-col tablet:flex-row items-center">
+                                                <p class="w-full font-medium">Final Cost: &#x20B1;</p>
+                                                <input
+                                                type="number" 
+                                                formControlName="final_Cost" 
+                                                placeholder="Cost" class="focus:outline-none rounded px-1 py-[2px]">
+                                            </div>
+                                        </div>                 
+                                    </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>                              
+                            }
+                        </form>
+                        <hr class="my-8">
+                    </div>
+                </div>
+        </form>
+        <h4 class="text-end text-[#2A5C66] text-[1rem] font-bold">Total Stock Cost: &#x20B1;{{total_Cost | number : '1.2-2'}}</h4>
+        <div class="flex justify-end">
+            <!-- <button class="bg-mainBlueB font-medium py-2 px-[1.3em] rounded-[5px] text-mainBlue" (click)="test()"> -->
+            <button class="bg-mainBlueB font-medium py-2 px-[1.3em] rounded-[5px] text-mainBlue" (click)="submitStock()">
+                @if(isSubmitting){
+                    <mat-spinner class="mat-spinner-color" [diameter]="20"></mat-spinner>
+                }
+                @else {
+                    Submit
+                }
+            </button>
+        </div>
+        } @else {
+            <h1 class="text-mainGreen text-center font-DMSans font-bold mobileS:text-[1rem] mobileM:text-[1.5rem] tablet:text-[1.5rem] py-2">
+                Please select a product.
+            </h1>  
+        }
+
+    </div>
+
+</form>

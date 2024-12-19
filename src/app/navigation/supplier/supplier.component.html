@@ -1,0 +1,382 @@
+@if(!offlineService.isOnline()) {
+    <div class="flex flex-col justify-center items-center h-full">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" size-12 text-mainGreen">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m3 3 8.735 8.735m0 0a.374.374 0 1 1 .53.53m-.53-.53.53.53m0 0L21 21M14.652 9.348a3.75 3.75 0 0 1 0 5.304m2.121-7.425a6.75 6.75 0 0 1 0 9.546m2.121-11.667c3.808 3.807 3.808 9.98 0 13.788m-9.546-4.242a3.733 3.733 0 0 1-1.06-2.122m-1.061 4.243a6.75 6.75 0 0 1-1.625-6.929m-.496 9.05c-3.068-3.067-3.664-7.67-1.79-11.334M12 12h.008v.008H12V12Z" />
+        </svg>
+        <p
+        class="text-center text-mainGreen font-DMSans font-bold text-[1.7rem] tablet:text-[2rem] py-2"
+        >
+            You are offline!
+        </p>
+    </div>
+} @else {
+<div class="tablet:p-5 grid gap-3 overflow-hidden">
+    <div
+    class="bg-white border shadow-md w-full rounded-[10px] flex flex-row justify-center tablet:justify-between items-center px-5">
+        <p class="text-mainGreen font-DMSans font-bold text-[1.7rem]  tablet:text-[2.5rem] py-2">
+            Manage Suppliers
+        </p>
+        <button
+        (click)="openSupplierDialog()"
+        class="hidden tablet:flex  rounded-[10px] bg-mainGreen  items-center justify-center p-2 px-5 hover:shadow-main hover:duration-300 duration-300 cursor-pointer">
+            <svg width="28" height="28" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.34265 16.5C9.34265 16.2348 9.44801 15.9804 9.63554 15.7929C9.82308 15.6053 10.0774 15.5 10.3427 15.5H15V10.8427C15 10.5774 15.1053 10.3231 15.2929 10.1355C15.4804 9.94801 15.7348 9.84265 16 9.84265C16.2652 9.84265 16.5196 9.94801 16.7071 10.1355C16.8946 10.3231 17 10.5774 17 10.8427V15.5H21.6573C21.9225 15.5 22.1769 15.6053 22.3644 15.7929C22.552 15.9804 22.6573 16.2348 22.6573 16.5C22.6573 16.7652 22.552 17.0196 22.3644 17.2071C22.1769 17.3946 21.9225 17.5 21.6573 17.5H17V22.1573C17 22.4225 16.8946 22.6769 16.7071 22.8644C16.5196 23.052 16.2652 23.1573 16 23.1573C15.7348 23.1573 15.4804 23.052 15.2929 22.8644C15.1053 22.6769 15 22.4225 15 22.1573V17.5H10.3427C10.0774 17.5 9.82308 17.3946 9.63554 17.2071C9.44801 17.0196 9.34265 16.7652 9.34265 16.5Z" fill="#F8F8F8"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.75601 5.52534C13.906 5.06528 18.0941 5.06528 22.244 5.52534C24.68 5.79734 26.6467 7.71601 26.932 10.1653C27.4253 14.3747 27.4253 18.6267 26.932 22.836C26.6453 25.2853 24.6787 27.2027 22.244 27.476C18.0941 27.9361 13.906 27.9361 9.75601 27.476C7.32001 27.2027 5.35335 25.2853 5.06801 22.836C4.57572 18.6268 4.57572 14.3745 5.06801 10.1653C5.35335 7.71601 7.32135 5.79734 9.75601 5.52534ZM22.0227 7.51201C18.0198 7.06832 13.9802 7.06832 9.97735 7.51201C9.23634 7.59421 8.54468 7.92384 8.01412 8.44763C7.48355 8.97142 7.14507 9.65878 7.05335 10.3987C6.57914 14.4533 6.57914 18.5494 7.05335 22.604C7.14535 23.3437 7.48396 24.0307 8.01449 24.5542C8.54503 25.0778 9.23654 25.4072 9.97735 25.4893C13.9467 25.932 18.0533 25.932 22.0227 25.4893C22.7633 25.4069 23.4544 25.0774 23.9847 24.5539C24.515 24.0304 24.8534 23.3435 24.9453 22.604C25.4196 18.5494 25.4196 14.4533 24.9453 10.3987C24.8531 9.65946 24.5146 8.97287 23.9843 8.44964C23.4541 7.9264 22.7631 7.59704 22.0227 7.51467" fill="#F8F8F8"/>
+            </svg>
+        
+            <span class="ml-3 font-DMSans font-medium text-white text-[1rem]">Add Supplier</span>
+        </button>
+
+    </div>
+  
+    <div class="gap-3 p-3 bg-white border shadow-md w-full rounded-[10px] flex flex-col" style="height: calc(100vh - 200px);">
+        <div class="w-full gap-3 flex flex-row tablet:justify-between items-center">
+            <div class="rounded-[10px] flex-1 flex items-center p-2 px-5 border-2 border-mainGray border-solid">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19.6 21L13.3 14.7C12.8 15.1 12.225 15.4167 11.575 15.65C10.925 15.8833 10.2333 16 9.5 16C7.68333 16 6.146 15.3707 4.888 14.112C3.63 12.8533 3.00067 11.316 3 9.5C2.99933 7.684 3.62867 6.14667 4.888 4.888C6.14733 3.62933 7.68467 3 9.5 3C11.3153 3 12.853 3.62933 14.113 4.888C15.373 6.14667 16.002 7.684 16 9.5C16 10.2333 15.8833 10.925 15.65 11.575C15.4167 12.225 15.1 12.8 14.7 13.3L21 19.6L19.6 21ZM9.5 14C10.75 14 11.8127 13.5627 12.688 12.688C13.5633 11.8133 14.0007 10.7507 14 9.5C13.9993 8.24933 13.562 7.187 12.688 6.313C11.814 5.439 10.7513 5.00133 9.5 5C8.24867 4.99867 7.18633 5.43633 6.313 6.313C5.43967 7.18967 5.002 8.252 5 9.5C4.998 10.748 5.43567 11.8107 6.313 12.688C7.19033 13.5653 8.25267 14.0027 9.5 14Z" fill="black" fill-opacity="0.7"/>
+                </svg>
+                    
+                <input [(ngModel)]="searchParam" (ngModelChange)="onChangeSearch()"  type="text" class="outline-none ml-3 font-DMSans font-medium text-black opacity-70 text-[0.9rem] tablet:text-[1.1rem] flex-1" placeholder="Search Inventory">
+            </div>
+    
+            <div class="relative flex flex-col items-center p-2 border-mainGray">
+                <div class="cursor-pointer" mat-button [matMenuTriggerFor]="menu">
+                    @if(searchFilter === ''){
+                        <div class="flex flex-row  w-full">
+                            <p class="text-[0.6rem] text-formText">Filter Search</p>
+                        </div>
+                        <div class="flex flex-row justify-center  w-full">
+                            <svg   class="select-none" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.5 12V19.88C14.54 20.18 14.44 20.5 14.21 20.71C14.1175 20.8027 14.0076 20.8762 13.8866 20.9264C13.7657 20.9766 13.636 21.0024 13.505 21.0024C13.374 21.0024 13.2444 20.9766 13.1234 20.9264C13.0024 20.8762 12.8925 20.8027 12.8 20.71L10.79 18.7C10.681 18.5933 10.5981 18.4629 10.5478 18.319C10.4975 18.175 10.4812 18.0213 10.5 17.87V12H10.47L4.71001 4.62C4.54762 4.41153 4.47434 4.14726 4.5062 3.88493C4.53805 3.6226 4.67244 3.38355 4.88001 3.22C5.07001 3.08 5.28001 3 5.50001 3H19.5C19.72 3 19.93 3.08 20.12 3.22C20.3276 3.38355 20.462 3.6226 20.4938 3.88493C20.5257 4.14726 20.4524 4.41153 20.29 4.62L14.53 12H14.5Z" fill="#2A5C66" fill-opacity="1"/>
+                            </svg>
+                        </div>
+
+                    }
+                    @else {
+                        <div class="border-mainGray text-white border-2 rounded-[10px] p-2 tablet:flex flex-row items-center justify-center hidden">
+                            <svg  class="select-none" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.5 12V19.88C14.54 20.18 14.44 20.5 14.21 20.71C14.1175 20.8027 14.0076 20.8762 13.8866 20.9264C13.7657 20.9766 13.636 21.0024 13.505 21.0024C13.374 21.0024 13.2444 20.9766 13.1234 20.9264C13.0024 20.8762 12.8925 20.8027 12.8 20.71L10.79 18.7C10.681 18.5933 10.5981 18.4629 10.5478 18.319C10.4975 18.175 10.4812 18.0213 10.5 17.87V12H10.47L4.71001 4.62C4.54762 4.41153 4.47434 4.14726 4.5062 3.88493C4.53805 3.6226 4.67244 3.38355 4.88001 3.22C5.07001 3.08 5.28001 3 5.50001 3H19.5C19.72 3 19.93 3.08 20.12 3.22C20.3276 3.38355 20.462 3.6226 20.4938 3.88493C20.5257 4.14726 20.4524 4.41153 20.29 4.62L14.53 12H14.5Z" fill="#2A5C66" fill-opacity="1"/>
+                            </svg>
+                            <p class="font-medium text-mainGreen">
+                                {{searchFilter}}
+                            </p>
+                        </div>
+
+                        <!-- Mobile View -->
+                        <div class="text-white tablet:hidden flex-col items-center justify-center flex">
+                            <p class="text-[0.6rem] text-formText">
+                                {{searchFilter}}
+                            </p>
+                            <svg  class="select-none" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.5 12V19.88C14.54 20.18 14.44 20.5 14.21 20.71C14.1175 20.8027 14.0076 20.8762 13.8866 20.9264C13.7657 20.9766 13.636 21.0024 13.505 21.0024C13.374 21.0024 13.2444 20.9766 13.1234 20.9264C13.0024 20.8762 12.8925 20.8027 12.8 20.71L10.79 18.7C10.681 18.5933 10.5981 18.4629 10.5478 18.319C10.4975 18.175 10.4812 18.0213 10.5 17.87V12H10.47L4.71001 4.62C4.54762 4.41153 4.47434 4.14726 4.5062 3.88493C4.53805 3.6226 4.67244 3.38355 4.88001 3.22C5.07001 3.08 5.28001 3 5.50001 3H19.5C19.72 3 19.93 3.08 20.12 3.22C20.3276 3.38355 20.462 3.6226 20.4938 3.88493C20.5257 4.14726 20.4524 4.41153 20.29 4.62L14.53 12H14.5Z" fill="#2A5C66" fill-opacity="1"/>
+                            </svg>
+                        </div>
+                    }
+                </div>
+                <mat-menu #menu="matMenu" class="custom-style">
+                    
+                    <div class="font-DMSans">
+                        <button mat-menu-item (click)="searchFilter = 'Supplier Name'">Supplier Name</button>
+                        <button mat-menu-item (click)="searchFilter = 'Supplier Contact'">Supplier Contact</button>
+                        <button mat-menu-item (click)="searchFilter = 'Promo Title'">Promo Title</button>
+                        <button mat-menu-item (click)="searchFilter = ''">Clear Filter</button>
+                    </div>
+                </mat-menu>
+            </div>
+
+        </div>
+        <div class="hidden w-full tablet:grid gap-3 tablet:grid-cols-[30%_30%_20%_20%] items-center bg-mainGreen rounded-[10px] text-[0.8rem] mobileS:text-[1rem] mb-2 p-2">
+            <p class="text-white">Supplier Name</p>
+            <p class="text-white ">Contact Information</p>
+            <p class="text-white">Note</p>
+        </div>
+
+        <div class="overflow-y-scroll no-scrollbar">
+
+            <div *ngFor="let supplier of suppliers; let i = index" class="p-[7px] border-t-2 flex flex-col justify-center"
+            [ngClass]="((i % 2 === 0) || (i == 0)) ? 'bg-[#f8f8f8]' : 'bg-white'"
+            >
+                <div class="flex flex-row items-center text-[0.9rem]">
+                    @if(supplier.isEditing && !supplier.isDropdown) {
+                        <form [formGroup]="SupplierForm" class="w-full">
+                            <div class="flex flex-col tablet:flex-row items-center text-[0.9rem] pt-2">
+                                <div class="w-full tablet:w-[30%]">
+                                    <input value="{{supplier.supplier_name}}" placeholder="{{supplier.supplier_name}}" formControlName="supplier_name" type="text" class="border rounded p-2 w-full">
+                                </div>    
+                        
+                                <div class="w-full tablet:w-[30%]">
+                                    <input value="{{supplier.supplier_contact}}" placeholder="{{supplier.supplier_contact}}" formControlName="supplier_contact" type="text" class="border rounded p-2 w-full">
+                                </div>
+
+                                <div class="w-full tablet:w-[30%] flex-1">
+                                    <input value="{{supplier.supplier_note}}" placeholder="{{supplier.supplier_note}}"  formControlName="supplier_note"  type="text" class="border rounded p-2 w-full">
+                                </div>
+                        
+                                <div  *ngIf="!supplier.isLoading"  class="flex flex-row items-center justify-end w-full tablet:w-[10%] gap-3 tablet:gap-0" >
+                                    <svg class="cursor-pointer hover:scale-[110%] pr-1 size-8"  title="Cancel" (click)="closeAdd(supplier)" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z" fill="#8C4848"/>
+                                    </svg>
+                                    
+                                    <svg class="cursor-pointer hover:scale-[110%] size-8" title="Submit" (click)="editSupplierInfo(supplier)" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.5501 18L3.8501 12.3L5.2751 10.875L9.5501 15.15L18.7251 5.97498L20.1501 7.39998L9.5501 18Z" fill="#2A5C66"/>
+                                    </svg>
+                                </div>
+
+                                <div *ngIf="supplier.isLoading" class="flex flex-row items-center justify-center w-[10%]">
+                                    <p class="font-DMSans text-sm">
+                                        Please Wait..
+                                    </p>
+                                    <mat-spinner class="mat-progress-spinner" [diameter]="30"></mat-spinner>
+                                </div>
+                            </div>
+                        </form>
+                    } @else {
+                        <div class="grid grid-cols-[40%_40%_20%] tablet:grid-cols-[30%_30%_20%_auto] tablet:grid-rows-1 w-full gap-3">
+                            <div class="grid col-span-1 tablet:col-span-2 grid-cols-1 tablet:grid-cols-2 gap-2">
+                                <p class="text-[0.8rem] tablet:text-[1rem]">{{ supplier.supplier_name }}</p>
+        
+                                <p class="text-[0.8rem] tablet:text-[1rem]">{{ supplier.supplier_contact }}</p>
+                            </div>
+                        <p class="text-[0.8rem] tablet:text-[1rem]">{{supplier.supplier_note}}</p>
+                        <div class="items-center hidden tablet:flex justify-end">
+                            @if(!supplier.isDropdown) {
+                                <button *ngIf="!supplier.isLoading" [disabled]="supplier.isDropdown" class="duration-300 hover:duration-300 hover:scale-[110%] pr-1 disabled:scale-[100%]" (click)="toggleEditSupplier(supplier)">
+                                    <svg class=" size-10 tablet:size-8" width="30" height="30" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4.5 5.5H3.5C2.96957 5.5 2.46086 5.71071 2.08579 6.08579C1.71071 6.46086 1.5 6.96957 1.5 7.5V16.5C1.5 17.0304 1.71071 17.5391 2.08579 17.9142C2.46086 18.2893 2.96957 18.5 3.5 18.5H12.5C13.0304 18.5 13.5391 18.2893 13.9142 17.9142C14.2893 17.5391 14.5 17.0304 14.5 16.5V15.5" stroke="#8D8D8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M13.5 3.49998L16.5 6.49998M17.885 5.08499C18.2788 4.69114 18.5001 4.15697 18.5001 3.59998C18.5001 3.043 18.2788 2.50883 17.885 2.11498C17.4912 1.72114 16.957 1.49988 16.4 1.49988C15.843 1.49988 15.3088 1.72114 14.915 2.11498L6.5 10.5V13.5H9.5L17.885 5.08499Z" stroke="#8D8D8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <button *ngIf="!supplier.isLoading" [disabled]="supplier.isDropdown" class="duration-300 hover:duration-300 hover:scale-[110%] pr-1 disabled:scale-[100%]" (click)="deleteSupplier(supplier)">
+                                    <svg class="size-10 tablet:size-8" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M19 4H15.5L14.5 3H9.5L8.5 4H5V6H19M6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19V7H6V19Z" fill="#8C4848"/>
+                                    </svg>
+                                </button>
+                                <p *ngIf="supplier.isLoading" class="font-DMSans text-sm">
+                                    Please Wait..
+                                </p>
+                                <mat-spinner *ngIf="supplier.isLoading" class="mat-progress-spinner" [diameter]="30"></mat-spinner>
+                            }
+
+                            @if(supplier.isDropdown) {
+                                <!-- up and down arrows for each row -->
+                                <button class="rounded-xl px-3 py-1 text-black"  (click)="supplier.isDropdown = !supplier.isDropdown;">
+                                    <svg width="25" height="25" viewBox="0 0 15 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.56608 8.54396C8.28572 8.83605 7.90568 9.00012 7.50943 9.00012C7.11319 9.00012 6.73315 8.83605 6.4528 8.54396L0.812735 2.66255C0.532364 2.36994 0.374907 1.97314 0.375 1.55942C0.375094 1.14571 0.53273 0.748977 0.813233 0.456506C1.09374 0.164035 1.47413 -0.000219532 1.87072 -0.000122027C2.26732 -2.45218e-05 2.64764 0.164416 2.92801 0.457025L7.50943 5.23619L12.0909 0.457025C12.3727 0.172757 12.7504 0.0153523 13.1424 0.018712C13.5345 0.0220717 13.9096 0.185927 14.1869 0.474988C14.4643 0.764048 14.6217 1.15518 14.6253 1.56415C14.6289 1.97312 14.4784 2.3672 14.2061 2.66151L8.56707 8.545L8.56608 8.54396Z" fill="#2A5C66"/>
+                                    </svg>
+        
+                                </button>
+        
+                            } @else {
+                                <button class="rounded-xl px-3 py-1 "  (click)="supplier.isDropdown = !supplier.isDropdown;">
+                                    <svg width="25" height="25" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">  
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.54384 6.43412C8.83593 6.71448 9 7.09452 9 7.49076C9 7.887 8.83593 8.26704 8.54384 8.5474L2.66243 14.1875C2.36982 14.4678 1.97301 14.6253 1.5593 14.6252C1.14559 14.6251 0.748855 14.4675 0.456384 14.187C0.163913 13.9065 -0.000341602 13.5261 -0.000244097 13.1295C-0.000146592 12.7329 0.164294 12.3526 0.456903 12.0722L5.23607 7.49076L0.456903 2.90933C0.172635 2.62745 0.0152302 2.24982 0.0185899 1.85777C0.0219496 1.46572 0.185805 1.09062 0.474866 0.813254C0.763926 0.535892 1.15506 0.378462 1.56403 0.374871C1.973 0.371281 2.36708 0.521818 2.66139 0.794059L8.54488 6.43312L8.54384 6.43412Z" fill="#2A5C66"/>
+                                    </svg>
+        
+                                </button>
+                            }
+                        </div>
+                        <button class="flex justify-center items-center tablet:hidden" mat-icon-button [matMenuTriggerFor]="menu" >
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu class="flex flex-row items-center" #menu="matMenu">
+                        @if(!supplier.isDropdown) {
+                            <button mat-menu-item *ngIf="!supplier.isLoading" [disabled]="supplier.isDropdown" class="flex gap-2 duration-300 hover:duration-300 hover:scale-[110%] pr-1 disabled:scale-[100%]" (click)="toggleEditSupplier(supplier)">
+                                <!-- <svg width="15" height="15" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4.5 5.5H3.5C2.96957 5.5 2.46086 5.71071 2.08579 6.08579C1.71071 6.46086 1.5 6.96957 1.5 7.5V16.5C1.5 17.0304 1.71071 17.5391 2.08579 17.9142C2.46086 18.2893 2.96957 18.5 3.5 18.5H12.5C13.0304 18.5 13.5391 18.2893 13.9142 17.9142C14.2893 17.5391 14.5 17.0304 14.5 16.5V15.5" stroke="#8D8D8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M13.5 3.49998L16.5 6.49998M17.885 5.08499C18.2788 4.69114 18.5001 4.15697 18.5001 3.59998C18.5001 3.043 18.2788 2.50883 17.885 2.11498C17.4912 1.72114 16.957 1.49988 16.4 1.49988C15.843 1.49988 15.3088 1.72114 14.915 2.11498L6.5 10.5V13.5H9.5L17.885 5.08499Z" stroke="#8D8D8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg> -->
+                                <span class="text-[0.8rem]">Edit Supplier</span>
+                            </button>
+                            <button mat-menu-item *ngIf="!supplier.isLoading" [disabled]="supplier.isDropdown" class="flex gap-2 duration-300 hover:duration-300 hover:scale-[110%] pr-1 disabled:scale-[100%]" (click)="deleteSupplier(supplier)">
+                                <!-- <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19 4H15.5L14.5 3H9.5L8.5 4H5V6H19M6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19V7H6V19Z" fill="#8C4848"/>
+                                </svg> -->
+                                <span class="text-[0.8rem]">Delete Supplier</span>
+                            </button>
+                            <p *ngIf="supplier.isLoading" class="font-DMSans text-sm">
+                                Please Wait..
+                            </p>
+                            <mat-spinner *ngIf="supplier.isLoading" class="mat-progress-spinner" [diameter]="30"></mat-spinner>
+                        }
+
+                        <button class="flex gap-2 rounded-xl px-3 py-1 text-black"  mat-menu-item (click)="supplier.isDropdown = !supplier.isDropdown;">
+                        @if(supplier.isDropdown) {
+                            <!-- up and down arrows for each row -->
+                                <!-- <svg width="15" height="15" viewBox="0 0 15 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.56608 8.54396C8.28572 8.83605 7.90568 9.00012 7.50943 9.00012C7.11319 9.00012 6.73315 8.83605 6.4528 8.54396L0.812735 2.66255C0.532364 2.36994 0.374907 1.97314 0.375 1.55942C0.375094 1.14571 0.53273 0.748977 0.813233 0.456506C1.09374 0.164035 1.47413 -0.000219532 1.87072 -0.000122027C2.26732 -2.45218e-05 2.64764 0.164416 2.92801 0.457025L7.50943 5.23619L12.0909 0.457025C12.3727 0.172757 12.7504 0.0153523 13.1424 0.018712C13.5345 0.0220717 13.9096 0.185927 14.1869 0.474988C14.4643 0.764048 14.6217 1.15518 14.6253 1.56415C14.6289 1.97312 14.4784 2.3672 14.2061 2.66151L8.56707 8.545L8.56608 8.54396Z" fill="#2A5C66"/>
+                                </svg> -->
+                                <span class="text-[0.8rem]">Hide Promo</span>
+                        } @else {
+                                <!-- <svg width="15" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">  
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.54384 6.43412C8.83593 6.71448 9 7.09452 9 7.49076C9 7.887 8.83593 8.26704 8.54384 8.5474L2.66243 14.1875C2.36982 14.4678 1.97301 14.6253 1.5593 14.6252C1.14559 14.6251 0.748855 14.4675 0.456384 14.187C0.163913 13.9065 -0.000341602 13.5261 -0.000244097 13.1295C-0.000146592 12.7329 0.164294 12.3526 0.456903 12.0722L5.23607 7.49076L0.456903 2.90933C0.172635 2.62745 0.0152302 2.24982 0.0185899 1.85777C0.0219496 1.46572 0.185805 1.09062 0.474866 0.813254C0.763926 0.535892 1.15506 0.378462 1.56403 0.374871C1.973 0.371281 2.36708 0.521818 2.66139 0.794059L8.54488 6.43312L8.54384 6.43412Z" fill="#2A5C66"/>
+                                </svg> -->
+                                <span class="text-[0.8rem]">Show Promo</span>
+                        }
+                        </button>
+                    </mat-menu>
+                    </div>
+                    }
+
+                </div>
+
+                <div *ngIf="supplier.isDropdown && !supplier.isEditing" class="w-full flex flex-col justify-center items-center ">
+                    <div class="w-[95%] border border-mainGray rounded-xl">
+                        <div class="hidden tablet:flex tablet:flex-row w-full items-center justify-end bg-mainGreen rounded-tr-[10px] rounded-tl-[10px] text-[0.8rem] mobileS:text-[1rem] mb-2 p-2">
+                            <p class="text-white w-[40%]">Promo Title</p>
+                            <p class="text-white w-[40%]">Promo Description</p>
+                            <div class="w-[20%] flex justify-end">
+                                <mat-spinner *ngIf="supplier.isLoading" class="mat-progress-spinner" [diameter]="30"></mat-spinner>
+                                <button *ngIf="!supplier.isLoading" class="text-mainGreen cursor-pointer font-semibold hover:scale-110 bg-white px-2 rounded-lg" [disabled]="disableAdd" (click)="toggleAddingPromo(supplier)">+ Promo</button>
+                            </div>
+                        </div>
+                        
+                        @if(getPromosForSupplier(supplier.supplier_ID).length < 1 && !supplier.addingPromo) {
+                            <div class="flex tablet:hidden" *ngIf="!supplier.addingPromo">
+                                <mat-spinner *ngIf="supplier.isLoading" class="mat-progress-spinner" [diameter]="30"></mat-spinner>
+                                <button *ngIf="!supplier.isLoading" class="text-mainGreen cursor-pointer font-semibold hover:scale-110 bg-transparent px-2 rounded-lg w-full" [disabled]="disableAdd" (click)="toggleAddingPromo(supplier)">+ Promo</button>    
+                            </div>    
+                        } @else {
+                        <div *ngFor="let promo of getPromosForSupplier(supplier.supplier_ID); let i = index" [ngClass]="{'border-t-2': i !== 0}"  class="p-[7px] border-t-2 flex flex-col justify-center w-full">
+                            <div class="flex flex-col tablet:flex-row text-[0.9rem] gap-3 tablet:gap-0">
+                                @if(promo.isEditing && !supplier.addingPromo) {
+                                    <form [formGroup]="PromoForm" class="w-full">
+                                        <div class="flex flex-col tablet:flex-row  text-[0.9rem] pt-2">
+                                            <div class="w-full tablet:w-[40%]">
+                                                <input (keydown)="onKeydown($event, supplier, promo)" placeholder="{{promo.promo_name}}" formControlName="promo_name" type="text" class="border rounded p-2 w-full">
+                                            </div>
+                                            <div class="w-full tablet:w-[40%]">
+                                                <input (keydown)="onKeydown($event, supplier, promo)" placeholder="{{promo.promo_description}}" formControlName="promo_description" type="text" class="border rounded p-2 w-full">
+                                            </div>
+
+                                            <div *ngIf="!promo.isLoading" class="w-full gap-3 tablet:gap-0 tablet:w-[20%] flex flex-row justify-end items-center pr-2">
+                                                <svg class="cursor-pointer hover:scale-[110%]" (click)="closePromo(supplier,promo)" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z" fill="#8C4848"/>
+                                                </svg>
+
+                                                <svg class="cursor-pointer hover:scale-[110%]" title="Submit"  (click)="submitPromo(supplier, promo)" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9.5501 18L3.8501 12.3L5.2751 10.875L9.5501 15.15L18.7251 5.97498L20.1501 7.39998L9.5501 18Z" fill="#2A5C66"/>
+                                                </svg>
+                                            </div>
+
+                                            <div *ngIf="promo.isLoading" class="w-[20%] flex flex-row justify-end items-center pr-2">
+                                                <p class="font-DMSans text-sm">
+                                                    Editing Promo..
+                                                </p>
+                                                <mat-spinner class="mat-progress-spinner" [diameter]="30"></mat-spinner>
+                                            </div>
+                                            
+                                        </div>
+                                    </form>
+
+                                } @else {
+                                    <div class="tablet:w-[40%] text-[0.8rem] tablet:text-[1rem] grid grid-cols-2">
+                                        <p class="block tablet:hidden">Promo: </p>    
+                                        <p class="font-medium">{{ promo.promo_name }}</p>
+                                    </div>
+                                    <div class="tablet:w-[40%] text-[0.8rem] tablet:text-[1rem] grid grid-cols-2">
+                                        <p class="block tablet:hidden">Note: </p>    
+                                        <p class="font-medium">{{ promo.promo_description }}</p>
+                                    </div>
+                                    <div *ngIf="!promo.isLoading " class="w-[20%] hidden tablet:flex flex-row justify-end items-center pr-2 ">
+                                        <button (click)="editPromo(supplier, promo)"  class="pr-1 duration-300 hover:duration-300 hover:scale-[110%]" title="Edit Promo">
+                                            <svg   width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M4.5 5.5H3.5C2.96957 5.5 2.46086 5.71071 2.08579 6.08579C1.71071 6.46086 1.5 6.96957 1.5 7.5V16.5C1.5 17.0304 1.71071 17.5391 2.08579 17.9142C2.46086 18.2893 2.96957 18.5 3.5 18.5H12.5C13.0304 18.5 13.5391 18.2893 13.9142 17.9142C14.2893 17.5391 14.5 17.0304 14.5 16.5V15.5" stroke="#8D8D8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M13.5 3.49998L16.5 6.49998M17.885 5.08499C18.2788 4.69114 18.5001 4.15697 18.5001 3.59998C18.5001 3.043 18.2788 2.50883 17.885 2.11498C17.4912 1.72114 16.957 1.49988 16.4 1.49988C15.843 1.49988 15.3088 1.72114 14.915 2.11498L6.5 10.5V13.5H9.5L17.885 5.08499Z" stroke="#8D8D8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </button>
+                                        <button (click)="deletePromo(promo)" title="Delete Promo" class="pr-1 duration-300 hover:duration-300 hover:scale-[110%]" >
+                                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M19 4H15.5L14.5 3H9.5L8.5 4H5V6H19M6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19V7H6V19Z" fill="#8C4848"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <div *ngIf="promo.isLoading && this.disableAdd" class="w-[20%] hidden tablet:flex flex-row justify-end items-center pr-2">
+                                        <p class="font-DMSans text-sm">
+                                            Please Wait..
+                                        </p>
+                                        <mat-spinner class="mat-progress-spinner" [diameter]="30"></mat-spinner>
+                                    </div>
+                                                                    <!-- In mobile view actions (edit/delete) -->
+                                <div class="flex tablet:hidden justify-end gap-5">
+                                    <div *ngIf="!promo.isLoading " class="flex flex-row justify-end items-center pr-2 gap-4 text-white">
+                                        <button (click)="editPromo(supplier, promo)"  class="duration-300 hover:duration-300 hover:scale-[110%] px-2 py-1 rounded-md bg-mainGreen text-[0.8rem]" title="Edit Promo">
+                                            <p>Edit Promo</p>
+                                            <!-- <svg   width="25" height="25" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M4.5 5.5H3.5C2.96957 5.5 2.46086 5.71071 2.08579 6.08579C1.71071 6.46086 1.5 6.96957 1.5 7.5V16.5C1.5 17.0304 1.71071 17.5391 2.08579 17.9142C2.46086 18.2893 2.96957 18.5 3.5 18.5H12.5C13.0304 18.5 13.5391 18.2893 13.9142 17.9142C14.2893 17.5391 14.5 17.0304 14.5 16.5V15.5" stroke="#8D8D8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M13.5 3.49998L16.5 6.49998M17.885 5.08499C18.2788 4.69114 18.5001 4.15697 18.5001 3.59998C18.5001 3.043 18.2788 2.50883 17.885 2.11498C17.4912 1.72114 16.957 1.49988 16.4 1.49988C15.843 1.49988 15.3088 1.72114 14.915 2.11498L6.5 10.5V13.5H9.5L17.885 5.08499Z" stroke="#8D8D8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg> -->
+                                        </button>
+                                        <button (click)="deletePromo(promo)" title="Delete Promo" class="duration-300 hover:duration-300 hover:scale-[110%] px-2 py-1 rounded-md bg-mainRed text-[0.8rem]" >
+                                            <p>Delete Promo</p>
+                                            <!-- <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M19 4H15.5L14.5 3H9.5L8.5 4H5V6H19M6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19V7H6V19Z" fill="#8C4848"/>
+                                            </svg> -->
+                                        </button>
+                                    </div>
+
+                                    <div *ngIf="promo.isLoading && this.disableAdd" class="w-[20%] flex flex-row justify-end items-center pr-2">
+                                        <p class="font-DMSans text-sm">
+                                            Please Wait..
+                                        </p>
+                                        <mat-spinner class="mat-progress-spinner" [diameter]="30"></mat-spinner>
+                                    </div>
+                                </div>
+
+                                }
+
+                                
+                            </div>
+                        </div>
+                        <div class="flex justify-end tablet:hidden mt-2" *ngIf="!supplier.addingPromo">
+                            <mat-spinner *ngIf="supplier.isLoading" class="mat-progress-spinner" [diameter]="30"></mat-spinner>
+                            <button *ngIf="!supplier.isLoading" class="text-mainGreen cursor-pointer font-semibold hover:scale-110 bg-transparent px-2 rounded-lg w-full" [disabled]="disableAdd" (click)="toggleAddingPromo(supplier)">+ Promo</button>    
+                        </div>
+                        }
+                        <div *ngIf="supplier.addingPromo && supplier.isDropdown" class="w-full flex flex-col justify-center items-center ">
+                            
+                            <div class="w-full border-mainGray rounded-xl" *ngIf="supplier.addingPromo">
+                                <div class="p-[7px] flex flex-col border-t-2 justify-center w-full">
+                                    <form [formGroup]="PromoForm" class="">
+                                        <div class="flex flex-col tablet:flex-row  text-[0.9rem] pt-2">
+                                            <div class="tablet:block tablet:w-[40%] w-full">
+                                                <input (keydown)="onKeydown($event, supplier, null)" placeholder="Promo Title" formControlName="promo_name" type="text" class="border rounded p-2 w-full">
+                                            </div>    
+                                
+                                            <div class="tablet:block w-full tablet:w-[40%]">
+                                                <input  (keydown)="onKeydown($event, supplier, null)" placeholder="Promo Description" formControlName="promo_description" type="text" class="border rounded p-2 w-full">
+                                            </div>
+            
+                                
+                                            <div class="w-full tablet:w-[20%] flex flex-row justify-end items-center pr-2 gap-3 tablet:gap-0">
+                                                <p *ngIf="supplier.isLoading"  class="font-DMSans text-sm">
+                                                    Adding new promo..
+                                                </p>
+                                                <mat-spinner *ngIf="supplier.isLoading" class="mat-progress-spinner" [diameter]="30"></mat-spinner>
+                                                <svg *ngIf="!supplier.isLoading" class="cursor-pointer hover:scale-[110%]"  (click)="closeAdd(supplier)" width="20" height="20" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z" fill="#8C4848"/>
+                                                </svg>
+
+                                                <svg *ngIf="!supplier.isLoading" class="cursor-pointer hover:scale-[110%]" title="Submit"  (click)="submitPromo(supplier, null)" width="20" height="20" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9.5501 18L3.8501 12.3L5.2751 10.875L9.5501 15.15L18.7251 5.97498L20.1501 7.39998L9.5501 18Z" fill="#2A5C66"/>
+                                                </svg>
+                                                
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+            
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                
+            </div>
+
+        </div>
+    </div>
+</div>
+}
+  

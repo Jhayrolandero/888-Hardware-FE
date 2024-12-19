@@ -1,0 +1,38 @@
+::ng-deep .mat-form-field {
+    .mat-input-element {
+        color: #2A5C66;
+    }
+    .mat-form-field-label {
+        color: #2A5C66;
+    }
+    .mat-form-field-underline {
+        background-color: #2A5C66;
+    }
+    .mat-form-field-ripple {
+        background-color: #2A5C66;
+    }
+    .mat-form-field-required-marker {
+        color: #2A5C66;
+    }
+}
+
+.manageCont{
+    height: calc(100vh - 60px)!important;
+}
+
+@media (min-width: 1024px) {
+    .half-screen {
+      width: 60%;
+      overflow: hidden;
+    }
+}
+
+.half-screen::-webkit-scrollbar {
+    display: none;
+}
+
+.sidenavMain{
+    background-color: #EFFAFC !important;
+    gap: 0.75rem !important;
+    height: calc(100vh - 60px)!important;
+}

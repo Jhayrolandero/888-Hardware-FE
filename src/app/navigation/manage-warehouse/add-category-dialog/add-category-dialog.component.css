@@ -1,0 +1,9 @@
+
+.selected {
+    background-color: #effafc;
+    color: #2a5c66
+}
+
+::ng-deep .mat-mdc-dialog-container {
+    --mdc-dialog-container-shape: 10px;
+  }

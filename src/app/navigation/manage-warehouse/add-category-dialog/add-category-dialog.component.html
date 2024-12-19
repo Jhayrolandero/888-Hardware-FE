@@ -1,0 +1,75 @@
+<span class="bg-slate-50 h-[600px]">
+    <div class="flex flex-row py-2 px-6 justify-between items-center bg-mainGreen">
+        <p class="font-DMSans text-white text-[1.2rem] font-bold truncate">Select Product Category</p>
+        <svg width="14" height="14"  class="cursor-pointer" (click)="onClose()" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="white"/>
+        </svg>
+                
+    </div>
+    <div *ngIf="categories.length === 0; else categoryContent">
+        <p>No categories available.</p>
+    </div>
+    
+    <ng-template #categoryContent>
+        <div class="p-2 px-2 w-full h-[430px] overflow-y-auto">
+            
+            <div class="flex flex-1 flex-row h-full">
+                <div class="flex flex-col min-w-[25%] font-DMSans overflow-y-auto overflow-x-hidden">
+                    <div class="flex flex-col min-w-[25%] font-DMSans overflow-y-auto" *ngFor="let level1 of getLevel1Categories()">
+                        <div class="hover:bg-mainBlue flex flex-row p-1 font-semibold text-sm cursor-pointer" (click)="selectLevel1(level1)" [ngClass]="{'selected': selectedLevel1 === level1}">
+                            {{ level1 }}
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col min-w-[25%] font-DMSans  overflow-y-auto overflow-x-hidden">
+                    @if (this.selectedLevel1 !== '') {
+                        <div class="flex flex-col min-w-[25%] font-DMSans">
+                            <div class="hover:bg-mainBlue flex flex-row p-1 font-semibold text-sm cursor-pointer" *ngFor="let level2 of getLevel2Categories(selectedLevel1)" (click)="selectLevel2(level2)" [ngClass]="{'selected': selectedLevel2 === level2}">
+                                {{ level2 }}
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="flex flex-col min-w-[25%] font-DMSans overflow-y-auto overflow-x-hidden">
+                    @if (this.selectedLevel2 !== '' && this.getLevel3Categories(selectedLevel1, selectedLevel2).length > 0) {
+                        <div class="flex flex-col min-w-[25%] font-DMSans">
+                            <div class="hover:bg-mainBlue flex flex-row p-1 font-semibold text-sm cursor-pointer" (click)="selectLevel3(level3)" [ngClass]="{'selected': selectedLevel3 === level3}"  *ngFor="let level3 of getLevel3Categories(selectedLevel1,selectedLevel2)">
+                                {{ level3 }}
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <div class="flex flex-col min-w-[25%] font-DMSans overflow-y-auto overflow-x-hidden">
+                    @if (this.selectedLevel3 !== '' && this.getLevel4Categories(selectedLevel1, selectedLevel2, selectedLevel3).length > 0) {
+                        <div class="flex flex-col min-w-[25%] font-DMSans  p-1 font-semibold text-sm cursor-pointer">
+                            <div class="hover:bg-mainBlue flex flex-row" (click)="selectLevel4(level4)" [ngClass]="{'selected': selectedLevel4 === level4}" *ngFor="let level4 of getLevel4Categories(selectedLevel1, selectedLevel2, selectedLevel3)">
+                                {{ level4 }}
+                            </div>
+                        </div>
+                    }
+                </div>
+
+
+            </div>
+        </div>
+    </ng-template>
+
+    <hr class="my-1">
+    <div class="flex flex-row px-2 items-center py-1">
+        <div class="flex flex-col w-[70%] cursor-default">
+            <h3 class="font-DMSans font-semibold text-xs truncate " title="{{ selectedCategory }}">
+                <span class="text-mainGreen" title="{{ selectedCategory }}">{{ selectedCategory }}</span>
+            </h3>
+        </div>
+        <div class="flex flex-row justify-end w-[30%] space-x-2 pr-2">
+            <button (click)="onClose()" class="rounded-md bg-mainGreen hover:scale-110 font-DMSans font-semibold text-white p-1 mr-1">
+                Cancel
+            </button>
+            <button (click)="submitCategory()" class="rounded-md bg-mainBlueB hover:scale-110 font-DMSans font-semibold text-white p-1 mr-1 disabled:bg-slate-300"
+                    [disabled]="hasMoreSubcategories()">
+                Submit
+            </button>
+        </div>
+    </div>
+</span>

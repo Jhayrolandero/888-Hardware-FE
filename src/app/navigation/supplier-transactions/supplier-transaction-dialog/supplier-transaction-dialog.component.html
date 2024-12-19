@@ -1,0 +1,95 @@
+<!-- <div class="flex flex-col py-5 px-5 bg-white">
+    <p class=" pb-2 font-DMSans text-black text-[1.2rem] font-bold">Confirm Supplier Payment Details</p>
+    <p class="font-DMSans font-medium text-formText tablet:text-[1rem] text-[0.8rem]">Enter payment details before proceeding.</p>
+    <hr class="my-4"> 
+    <div class="flex flex-col gap-3">
+        <div class="flex flex-col justify-around flex-1 h-[60px] mb-4">
+            <p class="font-DMSans font-medium text-black text-[0.9rem] my-1">Payment Details</p>
+            <textarea type="text" class="px-2 defaultInputPrimary bg-opacity-none rounded-[3px] border-2 border-formBorder" [(ngModel)]="transaction_detail"></textarea>
+        </div>
+    </div>
+    <div class="flex ml-auto mr-1 space-x-2 flex-row mb-1 gap-2">
+        <button (click)="close()" class="hover:scale-105 duration-300 hover:duration-300 text-medium border-mainGray border-2 p-1 px-5 rounded-[5px] text-[0.9rem] font-medium text-mainGray">Cancel</button>
+        <button (click)="submit()" class="hover:scale-105 duration-300 hover:duration-300 text-medium bg-mainGreen p-1 px-5 rounded-[5px] text-[0.9rem] font-medium text-white">Confirm Payment</button>
+    </div>
+</div>
+
+ -->
+
+
+ <div class="flex flex-col py-5 px-5 bg-white">
+    <p class=" pb-2 font-DMSans text-black text-[1.2rem] font-bold">Confirm Payment Details</p>
+    <!-- <svg (click)="cancel()" class="cursor-pointer hover:scale-[110%]"  width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="black"/>
+    </svg> --> 
+    <p class="font-DMSans font-medium text-formText tablet:text-[1rem] text-[0.8rem]">Enter payment details before proceeding.</p>
+    <hr class="my-4"> 
+    <div class="flex flex-col gap-3">
+
+        <div class="flex flex-col">
+            <p class="font-DMSans font-medium text-black text-[0.9rem]">Payment Type</p>
+            <p class="font-DMSans font-medium text-black text-[0.7rem] opacity-50">Payable Amount: {{parsePayableAmount()}}</p>
+
+            <div class="flex flex-row items-center h-[30px]">
+                <mat-radio-group [(ngModel)]="paymentTypeSupp" (change)="onpaymentTypeSuppChange($event)" class="mr-2" aria-label="Select an option">
+                    <mat-radio-button value="full">Full</mat-radio-button>
+                    <mat-radio-button value="partial">Partial</mat-radio-button>
+                  </mat-radio-group>
+                  <form [formGroup]="paymentFormSupp">
+                    <input 
+                      id="inputValueSupp" 
+                      formControlName="inputValueSupp" 
+                      [disabled]="paymentTypeSupp === 'full'" 
+                      [ngClass]="paymentTypeSupp === 'full' ? 'opacity-50' : 'opacity-100'" 
+                      type="text" 
+                      (input)="checkMaxPayable()" 
+                      class="px-2 defaultInputPrimary bg-opacity-none rounded-[3px] border-2 border-formBorder">
+                  </form>
+            </div>
+        </div>
+
+        <hr>
+        
+        <div class="flex flex-row items-center h-[30px] mb-1 gap-2">
+            <div class="flex flex-col">
+                <p class="font-DMSans font-medium text-black text-[0.9rem]">Payment Method</p>
+            </div>
+
+            <div class="flex flex-col">
+
+                <select matNativeControl class="cursor-pointer px-2 font-DMSans font-medium text-black text-[0.9rem] border-formBorder border p-1" [(ngModel)]="paymentMethod" (ngModelChange)="this.updateFullDetail()">
+                    <option value="Bank Transfer">Bank Transfer</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Cheque">Cheque</option>
+                    <option value="GCash">GCash</option>
+                </select>
+            </div>
+        </div>
+        <div class="flex flex-col justify-around flex-1 h-[60px] mb-4">
+            <div class="flex flex-row items-center pb-1 gap-1">
+                <p class="font-DMSans font-medium text-black text-[0.9rem] my-1">Payment Details</p>
+                <svg matTooltip="e.g Transaction or Reference Number" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                </svg>
+
+            </div>
+            <textarea type="text" class="px-2 defaultInputPrimary bg-opacity-none rounded-[3px] border-2 border-formBorder" [(ngModel)]="method_of_payment" (ngModelChange)="this.updateFullDetail()"></textarea>
+        </div>
+        <!-- <div class="flex flex-col justify-around flex-1 h-[60px] mb-4">
+            <p class="font-DMSans font-medium text-black text-[0.9rem] my-1">Term</p>
+            <textarea type="text" class="px-2 defaultInputPrimary bg-opacity-none rounded-[3px] border-2 border-formBorder" [(ngModel)]="terms" (ngModelChange)="this.updateTerms()"></textarea>
+        </div> -->
+    </div>
+    <div class="flex space-x-2 flex-row mb-1 gap-2">
+        <div class="flex flex-col w-full">
+            <p class="text-[0.8rem] text-mainRed font-medium">{{this.errorMsg}}</p>
+        </div>
+        <div class="flex col w-full space-x-2 ml-auto mr-1">
+            <button (click)="close()" class="hover:scale-105 duration-300 hover:duration-300 text-medium border-mainGray border-2 p-1 px-5 rounded-[5px] text-[0.9rem] font-medium text-mainGray">Cancel</button>
+            <button (click)="submit()" class="hover:scale-105 duration-300 hover:duration-300 text-medium bg-mainGreen p-1 px-5 rounded-[5px] text-[0.9rem] font-medium text-white">Confirm Payment</button>
+
+        </div>
+    </div>
+
+</div>
+

@@ -1,0 +1,40 @@
+
+<div class="flex flex-col py-5 px-5 bg-white">
+    <p class=" pb-2 font-DMSans text-black text-[1.2rem] font-bold">Archive Product?</p>
+    <div class="flex flex-col justify-around flex-1 h-[60px] border-formBorder">
+        <p *ngIf="promo_name" class="font-DMSans font-bold ">Are you sure you want archive this from drafts? All items will be returned to inventory stock.</p>
+        <p *ngIf="promo_name" class="font-DMSans font-bold ">Are you sure you want archive {{this.promo_name}}?</p>
+        <p *ngIf="supplier_name" class="font-DMSans font-bold ">Are you sure you want archive {{this.supplier_name}}?</p>
+        <p *ngIf="volume_quantity" class="font-DMSans font-bold "> Are you sure you want archive this item?</p>
+        <p *ngIf="product_name" class="font-DMSans font-bold "> Are you sure you want archive {{this.product_name}}?</p>
+        <p *ngIf="variant_name" class="font-DMSans font-bold "> Are you sure you want archive {{this.variant_name}}?</p>
+        <p *ngIf="order_draft" class="font-DMSans font-bold "> Are you sure you want archive this order draft?</p>
+        
+    </div>
+    <hr class="my-4"> 
+    <div class="flex ml-auto mr-1 space-x-2 flex-row mb-1 gap-2">
+        <button (click)="cancel()" class="hover:scale-105 duration-300 hover:duration-300 text-medium border-mainGray border-2 p-1 px-5 rounded-[5px] text-[0.9rem] font-medium text-mainGray">Cancel</button>
+        <button (click)="confirm()" class="hover:scale-105 duration-300 hover:duration-300 text-medium bg-mainGreen p-1 px-5 rounded-[5px] text-[0.9rem] font-medium text-white">Submit</button>
+    </div>
+</div>
+
+<!-- 
+<div class="flex flex-col py-5 px-5 bg-white">
+    <p class=" pb-2 font-DMSans text-black text-[1.2rem] font-bold">Confirm Delete?</p>
+    <div class="flex flex-col justify-around flex-1 h-[60px] border-formBorder">
+        <p *ngIf="promo_name" class="font-DMSans font-bold ">Are you sure you want remove this from drafts? All items will be returned to inventory stock.</p>
+        <p *ngIf="promo_name" class="font-DMSans font-bold ">Are you sure you want remove {{this.promo_name}}?</p>
+        <p *ngIf="supplier_name" class="font-DMSans font-bold ">Are you sure you want remove {{this.supplier_name}}?</p>
+        <p *ngIf="volume_quantity" class="font-DMSans font-bold "> Are you sure you want remove this item?</p>
+        <p *ngIf="product_name" class="font-DMSans font-bold "> Are you sure you want remove {{this.product_name}}?</p>
+        <p *ngIf="variant_name" class="font-DMSans font-bold "> Are you sure you want remove {{this.variant_name}}?</p>
+        <p *ngIf="order_draft" class="font-DMSans font-bold "> Are you sure you want remove this order draft?</p>
+        
+    </div>
+    <hr class="my-4"> 
+    <div class="flex ml-auto mr-1 space-x-2 flex-row mb-1 gap-2">
+        <button (click)="cancel()" class="hover:scale-105 duration-300 hover:duration-300 text-medium border-mainGray border-2 p-1 px-5 rounded-[5px] text-[0.9rem] font-medium text-mainGray">Cancel</button>
+        <button (click)="confirm()" class="hover:scale-105 duration-300 hover:duration-300 text-medium bg-mainGreen p-1 px-5 rounded-[5px] text-[0.9rem] font-medium text-white">Submit</button>
+    </div>
+</div>
+ -->

@@ -1,0 +1,46 @@
+<div class="flex justify-between items-center">
+
+  @if(inventory.variant_name){
+    <div class=" max-w-[60%] min-w-[50%] overflow-hidden">
+      <h1 class=" font-bold text-sm">{{inventory.brand}} {{ inventory.product_name }} - {{ inventory.variant_name }} </h1>
+    </div>
+  
+    <div class="flex flex-row">
+      <!-- <div class="flex flex-col">
+        @if(product.percentage_discount > 0){
+          <p class=" opacity-60 font-semibold pl-1 text-sm text-right  truncate pt-1 pr-3">{{ inventory.variant_unit_price - (inventory.variant_unit_price * (product.percentage_discount / 100)) }}</p>
+        
+          <p class=" opacity-60 font-semibold pl-1 text-sm text-right pb-1 truncate pr-3"><s>{{ inventory.variant_unit_price }}</s></p>
+        }
+        @else {
+          <h1 class=" opacity-60 font-semibold pl-1 text-sm text-right truncate pr-3">{{ inventory.variant_unit_price }}</h1>
+        }
+      </div>  -->
+    
+      <p class="text-gray-900 font-bold text-medium truncate">
+        ₱{{ product.final_total | number: '1.2-2' }}
+      </p>
+    </div>
+  } @else {
+    <div class="max-w-[60%] min-w-[50%] overflow-hidden">
+      <h1 class=" font-bold text-sm">{{inventory.brand}} {{ inventory.product_name }}</h1>
+    </div>
+  
+    <div class="flex flex-row">
+      <!-- <div class="flex flex-col">
+        @if(product.percentage_discount > 0){
+          <p class=" opacity-60 font-semibold pl-1 text-sm text-right  truncate pt-1 pr-3">{{ inventory.unit_price - (inventory.unit_price * (product.percentage_discount / 100)) }}</p>
+        
+          <p class=" opacity-60 font-semibold pl-1 text-sm text-right pb-1 truncate pr-3"><s>{{ inventory.unit_price }}</s></p>
+        }
+        @else {
+          <h1 class=" opacity-60 font-semibold pl-1 text-sm text-right pb-2 truncate pt-1 pr-3">{{ inventory.unit_price }}</h1>
+        }
+      </div> -->
+      <p class="text-gray-900 font-bold pl-1 text-medium">
+        ₱{{ product.final_total | number: '1.2-2' }}
+      </p>
+    </div>
+  }
+
+</div>

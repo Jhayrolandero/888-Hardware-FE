@@ -1,0 +1,52 @@
+<mat-sidenav-container class="flex w-[100%] h-[100%]">
+  <mat-sidenav
+    #sidenav
+    class="sidenav-width"
+    [mode]="'over'"
+    [opened]="false"
+    [fixedInViewport]="options.value.fixed"
+    [fixedTopGap]="options.value.top"
+    [fixedBottomGap]="options.value.bottom"
+    
+  >
+    <div class="w-full h-full">
+      <app-sidebar (closePanel)="sidenav.toggle()"></app-sidebar>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="bg-[#EFFAFC] flex flex-col w-full min-h-full">
+      <div class="bg-white h-[60px] overscroll-none justify-between items-center py-2 px-6 flex flex-row">
+        <div class="flex flex-row flex-1 justify-between items-center">
+          <svg 
+          (click)="sidenav.toggle()"
+          class="hover:scale-[105%] duration-300 hover:duration-300 cursor-pointer"
+          width="21" height="21" viewBox="0 0 31 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.375 1.75H28.625M2.375 10.5H28.625M2.375 19.25H28.625" stroke="#2A5C66" stroke-width="2.91667" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
+          <p class="font-DMSans text-formBorder">Hello, {{token.getUsername()}}!</p>
+          <!-- <div class="flex flex-row items-center">
+            @if(isOnline){
+              <div class="w-[10px] h-[10px] bg-green-600 rounded-full mr-1"></div>
+              <p class="text-mainGreen font-DMSans font-bold mobileS:text-[0.9rem] tablet:text-[1.1rem] py-2">
+                Online
+              </p>
+            }
+            @else {
+              <div class="w-[10px] h-[10px] bg-red-400 rounded-full mr-1"></div>
+              <p class="text-mainGreen font-DMSans font-bold mobileS:text-[0.9rem] tablet:text-[1.1rem] py-2">
+                Offline
+              </p>
+            }
+          </div> -->
+        </div>
+      </div>
+
+      <div>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+  

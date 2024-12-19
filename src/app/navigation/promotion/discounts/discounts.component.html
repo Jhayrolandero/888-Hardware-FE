@@ -1,0 +1,218 @@
+<!-- 8C4848 -->
+ <!-- 2A5C66 -->
+
+<div class="text-[#2A5C66] flex flex-col gap-4 w-full h-screen p-5">
+    <div
+    class="bg-white w-full rounded-[10px] flex flex-row justify-center tablet:justify-start items-center px-5">
+        <p (click)="goTo()" class="cursor-pointer text-mainGreen font-DMSans font-bold text-[1.7rem]  tablet:text-[2.5rem] py-2">
+            Promotions
+        </p>
+        <p class="cursor-default text-mainGreen font-DMSans font-bold text-[1.7rem]  tablet:text-[2.5rem] py-2 mx-5">
+            >
+        </p>
+        <p class="curosr-default text-mainGreen font-DMSans font-bold text-[1.7rem]  tablet:text-[2.5rem] py-2">
+            Discounts
+        </p>
+    </div>
+    <form [formGroup]="promotionDiscountForm">
+        <ng-container >
+            <div class="bg-white flex flex-col rounded-[10px] gap-2 px-6 py-4">
+                <h4 class="text-[1.5rem] font-medium">
+                    Basic Information
+                </h4>
+                <hr class="h-[1px] bg-[#2A5C66] border-0 ">
+                <div class="flex justify-between gap-2">
+                    <div class="space-x-4">
+                        <label for="promo-name">Discount Promotion Name</label>
+                        <input formControlName="discount_name" type="text" id="promo-name" class="border-2  px-2 rounded-[5px] py-1 focus:outline-none ">
+                    </div>
+                    <div class="space-x-4">
+                        <label for="promo-period">Discount Promotion Period</label>
+                        <input formControlName="discount_from" type="date" [ngClass]="discount_to! < discount_from! ? 'border-mainRed' : ''" class="border-2  rounded-[5px] px-2 py-1 focus:outline-none ">
+                        <span>-</span>
+                        <input formControlName="discount_to" type="date" [ngClass]="discount_to! < discount_from! ? 'border-mainRed' : ''" class="border-2  rounded-[5px] px-2 py-1 focus:outline-none ">
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="discount_products" class="bg-white flex flex-col rounded-[10px] gap-4 px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <h4 class="text-[1.5rem] font-medium">Discount Promotion Products</h4>
+                    <div class="w-[50%] flex gap-[1rem] mb-2">
+                        <div class=" rounded-[5px] flex-1 flex items-center p-1 px-5 border-2 border-mainGray border-solid">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.6 21L13.3 14.7C12.8 15.1 12.225 15.4167 11.575 15.65C10.925 15.8833 10.2333 16 9.5 16C7.68333 16 6.146 15.3707 4.888 14.112C3.63 12.8533 3.00067 11.316 3 9.5C2.99933 7.684 3.62867 6.14667 4.888 4.888C6.14733 3.62933 7.68467 3 9.5 3C11.3153 3 12.853 3.62933 14.113 4.888C15.373 6.14667 16.002 7.684 16 9.5C16 10.2333 15.8833 10.925 15.65 11.575C15.4167 12.225 15.1 12.8 14.7 13.3L21 19.6L19.6 21ZM9.5 14C10.75 14 11.8127 13.5627 12.688 12.688C13.5633 11.8133 14.0007 10.7507 14 9.5C13.9993 8.24933 13.562 7.187 12.688 6.313C11.814 5.439 10.7513 5.00133 9.5 5C8.24867 4.99867 7.18633 5.43633 6.313 6.313C5.43967 7.18967 5.002 8.252 5 9.5C4.998 10.748 5.43567 11.8107 6.313 12.688C7.19033 13.5653 8.25267 14.0027 9.5 14Z" fill="black" fill-opacity="0.7"/>
+                            </svg>
+                                
+                            <input 
+                            type="text" 
+                            class="outline-none ml-3 font-DMSans font-medium text-black opacity-70 text-[0.9rem] tablet:text-[1rem] flex-1" 
+                            [(ngModel)]="productSearch"
+                            [matAutocomplete]="auto"
+                            (ngModelChange)="productSearchFilter()"
+                            placeholder="Product Search"
+                            [ngModelOptions]="{standalone: true}"
+                            >
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let product of filteredProducts" [value]="filteredProducts" (click)="selectedProduct = product; productSearch = product.product_name">
+                                <div class="flex gap-2">
+                                    <img class="aspect-square w-[24px]" [lazyLoad]="port + product.product_image" [alt]="product.product_name">
+                                    <span>{{product.product_name}}</span>
+                                </div>
+                                </mat-option>
+                            </mat-autocomplete>
+                        </div>
+                        <button (click)="addProducts()" class="hover:duration-300 duration-300 hover:scale-[102%] bg-[#2A5C66] text-white rounded-[5px] px-4 py-2">+ Add Products</button>
+                    </div>
+                </div>
+                <hr class="h-[1px] bg-[#2A5C66] border-0 ">
+                @if(addedProducts.length <= 0){
+                    <p class="w-full text-center text-mainGreen font-DMSans font-bold text-[1.7rem] tablet:text-[2rem] py-2">
+                        Please add a product.
+                    </p>
+                } 
+                <div [ngClass]="addedProducts.length > 0 ? 'flex' : 'hidden'"  class=" justify-between items-center">
+                    <div class="flex gap-4">
+                        <div class="space-x-4">
+                            <label for="discount_form">Discount</label>
+                            <input type="number" id="discountAll" class="border-2  rounded-[5px] px-2 py-1 focus:outline-none max-w-[120px]">
+                        </div>
+                        <!-- <div class="flex gap-4 items-center">
+                            <label for="promostock_form">Promotion Stock</label>
+                            <select name="promostock_form" id="promostock_form" class="h-full bg-transparent px-2 py-1 border-2  rounded-[5px]" [(ngModel)]="test" (change)="testChange($event)">
+                                <option value="No Update" selected>No Update</option>
+                                <option value="No Limit">No Limit</option>
+                                <option value="Set Limit">Set Limit</option>
+                            </select>
+                            <input type="text" value="5" class="border-2  rounded-[5px] px-2 py-1 focus:outline-none max-w-[80px]" *ngIf="showLimit">
+                        </div> -->
+                    </div>
+                    <div class="space-x-4">
+                        <!-- <button class="border-gray-400 border-2 text-black px-4 py-1 rounded-[5px] font-medium">Update Selected</button> -->
+                        <button (click)="applyAllDiscount()" class="duration-300 hover:duration-300 hover:scale-[103%] border-[#2A5C66] border-2 text-mainGreen px-4 py-1 rounded-[5px] font-medium">Update All</button>
+                    
+                    </div>
+                </div>
+                <div [ngClass]="addedProducts.length > 0 ? 'grid' : 'hidden'"   class="border-2  rounded-[10px] pb-2 text-black">
+                    <div class="grid grid-cols-[1fr_1fr_1fr_auto_1fr_1fr_auto] gap-x-4 gap-y-2 col-span-7 bg-[#2A5C66] rounded-tl-[10px] rounded-tr-[10px] text-white px-4 py-2" #header>
+                        <p>Product Name</p>
+                        <p>Original Price</p>
+                        <p>Discounted Price</p>
+                        <p></p>
+                        <p>Discount</p>
+                        <p>Stock</p>
+                        <p>Action</p>
+                    </div>
+                    <form *ngFor="let inv of addedProducts; let idx = index" action="" formGroupName="{{idx}}" class="grid grid-cols-subgrid gap-x-4 col-span-7 mb-2 items-center">
+                        @if(inv.has_variant){
+                            <ng-container formArrayName="variantForms">
+                                <div class="grid grid-cols-subgrid gap-x-4 col-span-7 items-center px-4 py-2 bg-gray-100">
+                                    <div class="space-x-2">
+                                        <!-- <input class="inline-block" type="checkbox"> -->
+                                        <p class="inline-block">{{inv.product_name}}</p>
+                                    </div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div class="flex flex-row gap-3 justify-end">
+                                        @if(inv.has_variant) {
+                                            <div class="cursor-pointer hover:duration-300 duration-300 hover:scale-[103%] flex flex-row gap-3 items-center">
+                                                <div mat-button [matMenuTriggerFor]="menu" class="border-2 border-mainGreen font-xs rounded-[5px] text-mainGreenline-flex justify-center items-center px-4 py-1"><p>Select Variant</p></div>
+                                                <mat-menu #menu="matMenu">
+                                                    <button *ngFor="let vari of fetchVariants(inv); let idxA = index" mat-menu-item (click)="addVariant(inv, vari, idx)">{{vari.variant_group_name}} {{vari.variant_name}}</button>
+                                                </mat-menu>
+                                            </div>
+                                        }
+                                        <div (click)="deleteProduct(inv, idx)" class="cursor-pointer hover:duration-300 duration-300 hover:scale-[103%] text-center  border-[#8C4848] border-2 text-mainRed  py-1 rounded-[5px] font-medium px-4">Delete Product</div>
+                                    </div>
+                                </div>
+
+                                <form *ngFor="let vari of addedVariants![inv.product_ID]; let idxV = index" formGroupName="{{idxV}}" class="grid grid-cols-[1fr_1fr_1fr_auto_1fr_1fr_auto] gap-x-4 my-2 col-span-7 items-center px-4">
+                                    <ng-container *ngIf="vari.product_ID == inv.product_ID">
+                                        <p>{{vari.variant_name}}</p>
+                                        <p>{{vari.variant_unit_price}}</p>
+                                        <div [ngClass]="(getDiscountedPrice(idx, idxV) > vari.variant_unit_price) ? 'border-mainRed' : ''"  class="border-2  rounded-[5px] flex gap-2 items-center px-2 py-1">
+                                            <svg class="inline" width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M4.968 0.0625499C6.18 0.0625499 7.128 0.32055 7.812 0.836551C8.496 1.34055 8.946 2.05455 9.162 2.97855H10.116V4.22055H9.324C9.336 4.29255 9.342 4.36455 9.342 4.43655C9.342 4.49655 9.342 4.55655 9.342 4.61655C9.342 4.73655 9.336 4.85655 9.324 4.97655C9.324 5.08455 9.318 5.18655 9.306 5.28255H10.116V6.52455H9.054C8.874 7.08855 8.586 7.59255 8.19 8.03655C7.794 8.48055 7.272 8.82855 6.624 9.08055C5.976 9.33255 5.178 9.45855 4.23 9.45855H3.888V12.9146H1.206V6.52455H0.18V5.28255H1.206V4.22055H0.18V2.97855H1.206V0.0625499H4.968ZM6.246 6.52455H3.888V7.29855H4.176C4.668 7.29855 5.088 7.23855 5.436 7.11855C5.784 6.99855 6.054 6.80055 6.246 6.52455ZM6.642 4.22055H3.888V5.28255H6.642C6.654 5.18655 6.66 5.09655 6.66 5.01255C6.66 4.91655 6.66 4.81455 6.66 4.70655C6.66 4.62255 6.66 4.54455 6.66 4.47255C6.66 4.38855 6.654 4.30455 6.642 4.22055ZM4.842 2.22255H3.888V2.97855H6.354C6.222 2.73855 6.03 2.55255 5.778 2.42055C5.538 2.28855 5.226 2.22255 4.842 2.22255Z" fill="#AAAAAA" fill-opacity="0.6"/>
+                                            </svg>
+                                            <span class="inline">|</span>
+                                            <input step="0.1" (input)="priceChange($event, idx, idxV)" formControlName="discounted_price" class="inline flex-1 focus:outline-none" type="number">
+                                        </div>
+                                        <span>Or</span>
+                                        <div [ngClass]="(getDiscount(idx, idxV) > 100) ? 'border-mainRed' : ''" class="border-2  rounded-[5px] flex gap-2 items-center px-2 py-1">
+                                            <input step="0.1" max="100" (input)="discountChange($event, idx, idxV)" formControlName="discount" class="inline flex-1 focus:outline-none" type="number">
+                                            <span class="inline">|</span>
+                                            <p>%OFF</p>
+                                        </div>
+                                        <p>{{vari.variant_stock}}</p>
+                                        <svg (click)="deleteVariant(inv, vari, idx, idxV)" width="29" height="29" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M25.1471 5.82646H20.5147L19.1912 4.50293H12.5736L11.25 5.82646H6.61768V8.47352H25.1471M7.94121 25.6794C7.94121 26.3814 8.22009 27.0547 8.71651 27.5512C9.21293 28.0476 9.88622 28.3265 10.5883 28.3265H21.1765C21.8785 28.3265 22.5518 28.0476 23.0483 27.5512C23.5447 27.0547 23.8236 26.3814 23.8236 25.6794V9.79705H7.94121V25.6794Z" fill="#8C4848"/>
+                                        </svg>
+                                    </ng-container>
+                                </form>
+
+
+
+                            </ng-container>
+                            
+                        }
+                        @else {                           
+                            <div class="grid grid-cols-[1fr_1fr_1fr_auto_1fr_1fr_1fr] gap-x-4 col-span-7 items-center px-4 py-2 bg-gray-100">
+                                <div class="space-x-2">
+                                    <!-- <input class="inline-block" type="checkbox"> -->
+                                    <p class="inline-block">{{inv.product_name}}</p>
+                                </div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div (click)="deleteProduct(inv, idx)" class="text-center  border-[#8C4848] border-2 text-mainRed  py-1 rounded-[5px] font-medium">Delete Product</div>
+                            </div>
+                            <div class="grid grid-cols-[1fr_1fr_1fr_auto_1fr_1fr_auto] gap-x-4 my-2 col-span-7 items-center px-4">
+                                <p>{{inv.unit_price}}</p>
+                                <p>{{inv.unit_price}}</p>
+                                <div  [ngClass]="(getDiscountedPrice(idx, -1) > inv.unit_price) ? 'border-mainRed' : ''"  class="border-2  rounded-[5px] flex gap-2 items-center px-2 py-1">
+                                    <svg class="inline" width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4.968 0.0625499C6.18 0.0625499 7.128 0.32055 7.812 0.836551C8.496 1.34055 8.946 2.05455 9.162 2.97855H10.116V4.22055H9.324C9.336 4.29255 9.342 4.36455 9.342 4.43655C9.342 4.49655 9.342 4.55655 9.342 4.61655C9.342 4.73655 9.336 4.85655 9.324 4.97655C9.324 5.08455 9.318 5.18655 9.306 5.28255H10.116V6.52455H9.054C8.874 7.08855 8.586 7.59255 8.19 8.03655C7.794 8.48055 7.272 8.82855 6.624 9.08055C5.976 9.33255 5.178 9.45855 4.23 9.45855H3.888V12.9146H1.206V6.52455H0.18V5.28255H1.206V4.22055H0.18V2.97855H1.206V0.0625499H4.968ZM6.246 6.52455H3.888V7.29855H4.176C4.668 7.29855 5.088 7.23855 5.436 7.11855C5.784 6.99855 6.054 6.80055 6.246 6.52455ZM6.642 4.22055H3.888V5.28255H6.642C6.654 5.18655 6.66 5.09655 6.66 5.01255C6.66 4.91655 6.66 4.81455 6.66 4.70655C6.66 4.62255 6.66 4.54455 6.66 4.47255C6.66 4.38855 6.654 4.30455 6.642 4.22055ZM4.842 2.22255H3.888V2.97855H6.354C6.222 2.73855 6.03 2.55255 5.778 2.42055C5.538 2.28855 5.226 2.22255 4.842 2.22255Z" fill="#AAAAAA" fill-opacity="0.6"/>
+                                    </svg>
+                                    <span class="inline">|</span>
+                                    <input step="0.1" (input)="priceChange($event, idx, -1)" formControlName="discounted_price" class="inline flex-1 focus:outline-none" type="number">
+                                </div>
+                                <span>Or</span>
+                                <div [ngClass]="(getDiscount(idx, -1) > 100) ? 'border-mainRed' : ''" class="border-2  rounded-[5px] flex gap-2 items-center px-2 py-1">
+                                    <input step="0.1" max="100" (input)="discountChange($event, idx, -1)" formControlName="discount" class="inline flex-1 focus:outline-none" type="number">
+                                    <span class="inline">|</span>
+                                    <p>%OFF</p>
+                                </div>
+                                <p>{{inv.product_stock}}</p>
+                                <svg class="opacity-0" width="29" height="29" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M25.1471 5.82646H20.5147L19.1912 4.50293H12.5736L11.25 5.82646H6.61768V8.47352H25.1471M7.94121 25.6794C7.94121 26.3814 8.22009 27.0547 8.71651 27.5512C9.21293 28.0476 9.88622 28.3265 10.5883 28.3265H21.1765C21.8785 28.3265 22.5518 28.0476 23.0483 27.5512C23.5447 27.0547 23.8236 26.3814 23.8236 25.6794V9.79705H7.94121V25.6794Z" fill="#8C4848"/>
+                                </svg>
+                            </div>
+                        }
+                    </form>
+
+    
+    
+                
+                </div>
+            </div>
+        </ng-container>
+        <div class="flex justify-end items-center gap-4">
+            <button class="inline-flex  font-medium py-2 px-[1.3em] rounded-[5px] bg-white" (click)="goTo()" type="button">Cancel</button>
+            <div class="flex justify-end mt-2">
+                <div class="cursor-pointer inline-flex bg-mainBlueB font-medium py-2 px-[1.3em] rounded-[5px] text-mainBlue" (click)="submitDiscount()">
+                @if(isSubmitting){
+                    <mat-spinner class="mat-spinner-color" [diameter]="20"></mat-spinner>
+                }
+                @else {
+                    Submit
+                }
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

@@ -1,0 +1,152 @@
+<form [formGroup]="bundleTypeForm" (submit)="test()">
+    <div class="text-[#2A5C66] flex flex-col gap-4 w-full  p-5 overflow-y-hidden font-DMSans">
+        <div class="bg-white h-[10%] flex flex-row items-center rounded-[10px] gap-2 px-6 py-4 font-bold text-[2.5rem]">
+            <h4 class="cursor-pointer" (click)="goTo()">
+                Promotions
+            </h4>
+            <span>
+                >
+            </span>
+            <h4>
+                Bundle Deals
+            </h4>
+        </div>
+        <div class="bg-white flex flex-col rounded-[10px] gap-2 px-6 py-4">
+            <h4 class="text-[1.5rem] font-medium">Basic Information</h4>
+            <hr class="h-[2px] bg-[#2A5C66] border-0 ">
+            <div class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2">
+                <div class="grid grid-cols-subgrid col-span-2 items-center">
+                    <label class="text-end font-medium">Bundle Promotion Name</label>
+                    <input type="text" formControlName="bundleName" id="promo-name" class="border-2 border-[#AAAAAA] rounded-md px-2 py-1 focus:outline-none ">
+                </div>
+                <div class="grid grid-cols-subgrid col-span-2 items-center">
+                    <label class="text-end font-medium">Bundle Promotion Period</label>
+                    <div class="flex gap-4 items-center">
+                        <input type="date" class="border-2 border-[#AAAAAA] rounded-md px-2 py-1 focus:outline-none " formControlName="bundleStart">
+                        <span>-</span>
+                        <input  type="date" class="border-2 border-[#AAAAAA] rounded-md px-2 py-1 focus:outline-none " formControlName="bundleEnd">
+                        <!-- <div>
+                            <div *ngIf=" (getControlValue('bundleStart') !== null && getControlValue('bundleEnd') !== null) && periodValidator()">
+                                <p>Error</p>
+                            </div>
+                        </div> -->
+                    </div>
+    
+                </div>
+                <div class="grid grid-cols-subgrid col-span-2">
+                    <label class="text-end font-medium">Bundle Deal Type</label>
+                    <div  class="flex flex-col">
+                        <div>
+                            <input class="mr-2"   [checked]="true" type="radio" name="bundleType" value=1 formControlName="bundleType" id="percentoff">
+                            <label for="percentoff">Percentage Off</label>
+                        </div>
+                        <div  *ngIf="bundleTypeForm.get('bundleType')?.value == 1">
+                            <app-bundle-types [resetTier]="resetSubject.asObservable()" (tiersChanged)="onchangeTier($event)" [textDisplay]="'% OFF'"></app-bundle-types>
+                        </div>
+                        <div>
+                            <input class="mr-2" type="radio" name="bundleType" value=2 formControlName="bundleType" id="fixoff">
+                            <label for="fixoff">Fixed Amount Off</label>
+                        </div>
+                        <div  *ngIf="bundleTypeForm.get('bundleType')?.value == 2">
+                            <app-bundle-types [resetTier]="resetSubject.asObservable()" (tiersChanged)="onchangeTier($event)" [textDisplay]="'₱ OFF'"></app-bundle-types>
+                        </div>
+                        <div>
+                            <input class="mr-2" type="radio" name="bundleType" value=3 formControlName="bundleType" id="itemoff">
+                            <label for="itemoff">Fixed Item Amount</label>
+                        </div>
+                        <div  *ngIf="bundleTypeForm.get('bundleType')?.value == 3">
+                            <app-bundle-types [resetTier]="resetSubject.asObservable()" (tiersChanged)="onchangeTier($event)" [textDisplay]="'Free'"></app-bundle-types>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-subgrid col-span-2 items-center">
+                    <label class="text-end font-medium">Purchase Limit</label>
+                    <input type="number"  class="border-2 border-[#AAAAAA] rounded-md px-2 py-1 focus:outline-none " formControlName="purchaseLimit">
+                </div>
+    
+            </div>
+    
+        </div>
+        <div class="bg-white flex flex-col rounded-[10px] gap-2 px-6 py-4">
+            <div class="flex justify-between">
+                <div class="flex-1 flex justify-between items-center">
+                    <h4 class="text-[1.5rem] font-medium">Bundle Deal Products</h4>
+                    <div class="flex gap-[1rem] mb-2">
+                        <div class="rounded-[10px] flex-1 flex items-center p-2 px-5 border-2 border-mainGray border-solid">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.6 21L13.3 14.7C12.8 15.1 12.225 15.4167 11.575 15.65C10.925 15.8833 10.2333 16 9.5 16C7.68333 16 6.146 15.3707 4.888 14.112C3.63 12.8533 3.00067 11.316 3 9.5C2.99933 7.684 3.62867 6.14667 4.888 4.888C6.14733 3.62933 7.68467 3 9.5 3C11.3153 3 12.853 3.62933 14.113 4.888C15.373 6.14667 16.002 7.684 16 9.5C16 10.2333 15.8833 10.925 15.65 11.575C15.4167 12.225 15.1 12.8 14.7 13.3L21 19.6L19.6 21ZM9.5 14C10.75 14 11.8127 13.5627 12.688 12.688C13.5633 11.8133 14.0007 10.7507 14 9.5C13.9993 8.24933 13.562 7.187 12.688 6.313C11.814 5.439 10.7513 5.00133 9.5 5C8.24867 4.99867 7.18633 5.43633 6.313 6.313C5.43967 7.18967 5.002 8.252 5 9.5C4.998 10.748 5.43567 11.8107 6.313 12.688C7.19033 13.5653 8.25267 14.0027 9.5 14Z" fill="black" fill-opacity="0.7"/>
+                            </svg>
+    
+                            <input
+                            type="text"
+                            class="outline-none ml-3 font-DMSans font-medium text-black opacity-70 text-[0.9rem] tablet:text-[1.1rem] flex-1"
+                            [(ngModel)]="productSearch"
+                            [matAutocomplete]="auto"
+                            (ngModelChange)="_productFilter($event)"
+                            placeholder="Product Search"
+                            [ngModelOptions]="{standalone: true}"
+                            >
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let product of filteredProducts" [value]="filteredProducts" (click)="cre = product; productSearch = product.product_name"> 
+                                    <div class="flex gap-2">
+                                        <img class="aspect-square w-[24px]" [lazyLoad]="port + product.product_image" [alt]="product.product_name">
+                                        <span>{{product.product_name}}</span>
+                                    </div>
+                                </mat-option>
+                            </mat-autocomplete>
+                        </div>
+                        <button class="border-[3px] border-[#2A5C66] text-[#2A5C66] font-bold px-[0.5em] rounded-md" (click)="addProduct()" type="button">+ Add Product</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="h-[2px] bg-[#2A5C66] border-0 ">
+            <!-- <div class="bg-[#2A5C66] text-white flex justify-between px-4 py-2 rounded-lg" *ngIf="addProductArr.length > 0">
+                <div class="flex flex-col">
+                    <h4>Batch Setting</h4>
+                    <p># products selected</p>
+                </div>
+                <div class="flex justify-end items-center gap-4">
+                    <button>Disable</button>
+                    <button>Enable</button>
+                    <button>Delete</button>
+                </div>
+            </div> -->
+            @if(addProductArr.length > 0) {
+                <div class="grid grid-cols-[1fr_1fr_1fr_auto]  rounded-[10px] pb-2 overflow-y-auto" formArrayName="productsArr">
+                    <div class="grid grid-cols-subgrid col-span-4 gap-x-4 gap-y-2 bg-[#2A5C66] text-white px-4 py-1">
+                        <p>Product Name</p>
+                        <p>Price</p>
+                        <p>Stock</p>
+                        <p>Actions</p>
+                    </div>
+                    <div class="grid grid-cols-subgrid col-span-4" *ngFor="let product of addProductArr; let prodIdx = index">
+                        <div class="grid grid-cols-subgrid col-span-4 gap-x-4 gap-y-2  px-4 py-1 items-center bg-gray-100">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox">
+                                <p>{{product.product_name}}</p>
+                            </div>
+                            <div></div>
+                            <div></div>
+                            <svg class=" justify-self-center"  (click)="deleteProduct(prodIdx)" width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M25.1471 5.82646H20.5147L19.1912 4.50293H12.5736L11.25 5.82646H6.61768V8.47352H25.1471M7.94121 25.6794C7.94121 26.3814 8.22009 27.0547 8.71651 27.5512C9.21293 28.0476 9.88622 28.3265 10.5883 28.3265H21.1765C21.8785 28.3265 22.5518 28.0476 23.0483 27.5512C23.5447 27.0547 23.8236 26.3814 23.8236 25.6794V9.79705H7.94121V25.6794Z" fill="#8C4848"/>
+                            </svg>
+                        </div>
+                        <div class="grid grid-cols-subgrid col-span-4 gap-x-4 gap-y-2  px-4 py-1 items-center">
+                            <div></div>
+                            <p>₱{{product.unit_price}}</p>
+                            <p>{{product.product_stock}}</p>
+                        </div>
+                    </div>
+                </div>    
+            } @else {
+                <p class="w-full text-center text-mainGreen font-DMSans font-bold text-[1.7rem] tablet:text-[2rem] py-2">
+                    Please add a product.
+                </p>
+        }
+        </div>
+        <div class="flex justify-end items-center gap-4">
+            <button class="inline-flex  font-medium py-2 px-[1.3em] rounded-[5px] bg-white" (click)="goTo()" type="button">Cancel</button>
+            <button class="cursor-pointer inline-flex bg-mainBlueB font-medium py-2 px-[1.3em] rounded-[5px] text-mainBlue" type="submit">Submit</button>
+        </div>
+    </div>
+</form>

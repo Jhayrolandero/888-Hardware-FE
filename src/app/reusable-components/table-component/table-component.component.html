@@ -1,0 +1,149 @@
+<div class="px-4 hidden tablet:block">
+    <div class="bg-white px-3 py-2 shadow-xl ">
+        <table class="table-auto w-full border-spacing-4 border-separate text-[0.95rem]">
+            <thead>
+                <tr>
+                    @for (item of header; track $index) {
+                        <th 
+                        class="text-start font-medium"
+                        [ngClass]="'w-1/'+ (columns.length)"
+                        >{{item}}</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (itemData of paginatedItems; track $index) {
+                    <tr>
+                        <td [attr.colspan]="body.length" class="p-0">
+                            <hr class="w-full border-t-2">
+                        </td>
+                    </tr>
+                    <tr class="border-t-4 border-solid border-black">
+                        @for (itemBody of body; track $index) {
+                            @if (itemData.has_variant && itemBody.length == 2) {
+                                @if(itemBody[1] === 'variant_name') {
+                                    <td>{{itemData[itemBody[0]]}} {{itemData[itemBody[1]]}}</td>
+                                } @else if (itemBody[1] === 'variant_stock_discount') {
+                                    <td>{{itemData[itemBody[1]] ? parseDiscountDisplay(itemData[itemBody[1]]) : '-'}}</td>
+                                } @else if (itemBody.includes('unit_price') || itemBody.includes('default_stock_price')) {
+                                    <td>₱{{itemData[itemBody[0]] | number: '1.2-2'}}</td>
+
+                                }
+                                
+                                @else {
+                                    <td>{{itemData[itemBody[1]]}}</td>
+                                }
+                            } @else if (!itemData.has_variant && itemBody.length == 2) {
+
+                                @if(itemBody[0] === 'discount') {
+                                    <td>{{itemData[itemBody[0]] ? parseDiscountDisplay(itemData[itemBody[0]]) : '-'}}</td>
+                                }
+                                @else if (itemBody.includes('unit_price') || itemBody.includes('default_stock_price')) {
+                                    <td>₱{{itemData[itemBody[0]] | number: '1.2-2'}}</td>
+                                }
+                                @else {
+                                    <td>{{itemData[itemBody[0]]}}</td>
+                                }
+                            } @else if (itemBody.length > 2) {
+                                @if(itemBody === 'final_total' || itemBody === 'unit_price,variant_unit_price' || itemBody.includes('variant_unit_price')) {
+                                    <td>₱{{itemData[itemBody] | number: '1.2-2'}}</td>
+                                } @else {
+                                    <td>{{itemData[itemBody]}}</td>
+                                } 
+                            } 
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="flex w-full space-x-8 justify-end px-8">
+            <button 
+                (click)="changePage(currentPage - 1)" 
+                [disabled]="currentPage === 1"
+            >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+              </svg>
+              
+        </button>
+            <span>{{currentPage}}/{{totalPages}}</span>
+            <button 
+            (click)="changePage(currentPage + 1)" 
+            [disabled]="currentPage === totalPages"
+            >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>              
+        </button>
+        </div>
+    </div>
+</div>
+<div class="block tablet:hidden">
+    <div class="bg-white py-2 shadow-xl">
+        <table class="table-auto w-full border-spacing-5 border-separate">
+            <thead>
+                <tr>
+                    <th class="text-start">Property</th>
+                    <th class="text-start">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through each item in paginatedItems -->
+                @for (itemData of paginatedItems; track $index) {
+                    <!-- Loop through each property for a single itemData -->
+                    @for (itemBody of body; track $index; let idx = $index) {
+                        <tr class=" text-[0.8rem]">
+                            <!-- Display property name -->
+                            <td class="font-bold">{{ header[idx] }}</td>
+                            <!-- Display value -->
+                            @if (itemData.has_variant && itemBody.length == 2) {
+                                @if(itemBody[1] === 'variant_name') {
+                                    <td>{{itemData[itemBody[0]]}} {{itemData[itemBody[1]]}}</td>
+                                } @else if (itemBody[1] === 'variant_stock_discount') {
+                                    <td>{{itemData[itemBody[1]] ? parseDiscountDisplay(itemData[itemBody[1]]) : '-'}}</td>
+                                } @else {
+                                    <td>{{itemData[itemBody[1]]}}</td>
+                                }
+                            } @else if (!itemData.has_variant && itemBody.length == 2) {
+                                @if(itemBody[0] === 'discount') {
+                                    <td>{{itemData[itemBody[0]] ? parseDiscountDisplay(itemData[itemBody[0]]) : '-'}}</td>
+                                } @else {
+                                    <td>{{itemData[itemBody[0]]}}</td>
+                                }
+                            } @else if (itemBody.length > 2) {
+                                @if(itemBody === 'final_total') {
+                                    <td>P{{itemData[itemBody] | number: '1.2-2'}}</td>
+                                } @else {
+                                    <td>{{itemData[itemBody]}}</td>
+                                } 
+                            }
+                        </tr>
+                    }
+                    <!-- Add a separator row for better visual separation between items -->
+                    <tr>
+                        <td colspan="2" class="bg-gray-100 h-4"></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="flex w-full space-x-8 justify-end px-8">
+            <button 
+                (click)="changePage(currentPage - 1)" 
+                [disabled]="currentPage === 1"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>
+            </button>
+            <span>{{currentPage}}/{{totalPages}}</span>
+            <button 
+                (click)="changePage(currentPage + 1)" 
+                [disabled]="currentPage === totalPages"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>              
+            </button>
+        </div>
+    </div>
+</div>

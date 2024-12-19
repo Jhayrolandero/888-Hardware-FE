@@ -1,0 +1,48 @@
+::ng-deep .mat-form-field {
+    .mat-input-element {
+        color: #2A5C66;
+    }
+    .mat-form-field-label {
+        color: #2A5C66;
+    }
+    .mat-form-field-underline {
+        background-color: #2A5C66;
+    }
+    .mat-form-field-ripple {
+        background-color: #2A5C66;
+    }
+    .mat-form-field-required-marker {
+        color: #2A5C66;
+    }
+}
+
+button:disabled{
+    opacity: 70%;
+}
+
+.defaultInputPrimary{
+	flex: 1 1 0%;
+    outline: none;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 3px;
+    height: 5px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+background: #f1f1f1;
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #888;
+}
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555;
+}

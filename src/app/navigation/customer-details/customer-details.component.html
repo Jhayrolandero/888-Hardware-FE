@@ -1,0 +1,185 @@
+@if(!offlineService.isOnline()) {
+  <div class="flex flex-col justify-center items-center h-full">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" size-12 text-mainGreen">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m3 3 8.735 8.735m0 0a.374.374 0 1 1 .53.53m-.53-.53.53.53m0 0L21 21M14.652 9.348a3.75 3.75 0 0 1 0 5.304m2.121-7.425a6.75 6.75 0 0 1 0 9.546m2.121-11.667c3.808 3.807 3.808 9.98 0 13.788m-9.546-4.242a3.733 3.733 0 0 1-1.06-2.122m-1.061 4.243a6.75 6.75 0 0 1-1.625-6.929m-.496 9.05c-3.068-3.067-3.664-7.67-1.79-11.334M12 12h.008v.008H12V12Z" />
+    </svg>
+    <p
+    class="text-center text-mainGreen font-DMSans font-bold text-[1.7rem] tablet:text-[2rem] py-2"
+    >
+        You are offline!
+    </p>
+</div>
+} @else {
+<div class="tablet:p-5 grid gap-3">
+  <!-- Title Segment -->
+  <div
+      class="bg-white border shadow-md w-full rounded-[10px] flex flex-row justify-center tablet:justify-between items-center px-5">
+      <p class="text-mainGreen font-DMSans font-bold text-[1.7rem]  tablet:text-[2.5rem] py-2">
+          Manage Customers
+      </p>
+  </div>
+
+  <div
+  class="bg-white border shadow-md w-full rounded-[10px] flex flex-row justify-center tablet:justify-between items-center p-3">
+    <div class="w-full gap-3 flex flex-row tablet:justify-between items-center">
+      <div class="rounded-[10px] flex-1 flex items-center p-2 border-2 border-mainGray border-solid">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.6 21L13.3 14.7C12.8 15.1 12.225 15.4167 11.575 15.65C10.925 15.8833 10.2333 16 9.5 16C7.68333 16 6.146 15.3707 4.888 14.112C3.63 12.8533 3.00067 11.316 3 9.5C2.99933 7.684 3.62867 6.14667 4.888 4.888C6.14733 3.62933 7.68467 3 9.5 3C11.3153 3 12.853 3.62933 14.113 4.888C15.373 6.14667 16.002 7.684 16 9.5C16 10.2333 15.8833 10.925 15.65 11.575C15.4167 12.225 15.1 12.8 14.7 13.3L21 19.6L19.6 21ZM9.5 14C10.75 14 11.8127 13.5627 12.688 12.688C13.5633 11.8133 14.0007 10.7507 14 9.5C13.9993 8.24933 13.562 7.187 12.688 6.313C11.814 5.439 10.7513 5.00133 9.5 5C8.24867 4.99867 7.18633 5.43633 6.313 6.313C5.43967 7.18967 5.002 8.252 5 9.5C4.998 10.748 5.43567 11.8107 6.313 12.688C7.19033 13.5653 8.25267 14.0027 9.5 14Z" fill="black" fill-opacity="0.7"/>
+          </svg>
+              
+          <input [(ngModel)]="searchParam" (ngModelChange)="onChangeSearch()"  type="text" class="outline-none ml-3 font-DMSans font-medium text-black opacity-70 text-[0.9rem] tablet:text-[1.1rem] flex-1" placeholder="Search Inventory">
+      </div>
+
+      <div class="relative flex flex-col items-center border-mainGray">
+          <div class="cursor-pointer" mat-button [matMenuTriggerFor]="menu">
+              @if(searchFilter === ''){
+                  <div class="flex flex-row  w-full">
+                      <p class="text-[0.60rem] text-formText">Filter Search</p>
+                  </div>
+                  <div class="flex flex-row justify-center  w-full">
+                      <svg   class="select-none" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M14.5 12V19.88C14.54 20.18 14.44 20.5 14.21 20.71C14.1175 20.8027 14.0076 20.8762 13.8866 20.9264C13.7657 20.9766 13.636 21.0024 13.505 21.0024C13.374 21.0024 13.2444 20.9766 13.1234 20.9264C13.0024 20.8762 12.8925 20.8027 12.8 20.71L10.79 18.7C10.681 18.5933 10.5981 18.4629 10.5478 18.319C10.4975 18.175 10.4812 18.0213 10.5 17.87V12H10.47L4.71001 4.62C4.54762 4.41153 4.47434 4.14726 4.5062 3.88493C4.53805 3.6226 4.67244 3.38355 4.88001 3.22C5.07001 3.08 5.28001 3 5.50001 3H19.5C19.72 3 19.93 3.08 20.12 3.22C20.3276 3.38355 20.462 3.6226 20.4938 3.88493C20.5257 4.14726 20.4524 4.41153 20.29 4.62L14.53 12H14.5Z" fill="#2A5C66" fill-opacity="1"/>
+                      </svg>
+                  </div>
+
+              }
+              @else {
+                  <div class="border-mainGray text-white border-2 rounded-[10px] p-2 flex-row items-center justify-center hidden tablet:flex">
+                      <svg  class="select-none" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M14.5 12V19.88C14.54 20.18 14.44 20.5 14.21 20.71C14.1175 20.8027 14.0076 20.8762 13.8866 20.9264C13.7657 20.9766 13.636 21.0024 13.505 21.0024C13.374 21.0024 13.2444 20.9766 13.1234 20.9264C13.0024 20.8762 12.8925 20.8027 12.8 20.71L10.79 18.7C10.681 18.5933 10.5981 18.4629 10.5478 18.319C10.4975 18.175 10.4812 18.0213 10.5 17.87V12H10.47L4.71001 4.62C4.54762 4.41153 4.47434 4.14726 4.5062 3.88493C4.53805 3.6226 4.67244 3.38355 4.88001 3.22C5.07001 3.08 5.28001 3 5.50001 3H19.5C19.72 3 19.93 3.08 20.12 3.22C20.3276 3.38355 20.462 3.6226 20.4938 3.88493C20.5257 4.14726 20.4524 4.41153 20.29 4.62L14.53 12H14.5Z" fill="#2A5C66" fill-opacity="1"/>
+                      </svg>
+                      <p class="font-medium text-mainGreen">
+                          {{searchFilter}}
+                      </p>
+                  </div>
+                  <div class="text-white flex tablet:hidden flex-col items-center justify-center">
+                      <p class="text-[0.60rem] text-formText">
+                          {{searchFilter}}
+                      </p>
+                      <svg  class="select-none" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M14.5 12V19.88C14.54 20.18 14.44 20.5 14.21 20.71C14.1175 20.8027 14.0076 20.8762 13.8866 20.9264C13.7657 20.9766 13.636 21.0024 13.505 21.0024C13.374 21.0024 13.2444 20.9766 13.1234 20.9264C13.0024 20.8762 12.8925 20.8027 12.8 20.71L10.79 18.7C10.681 18.5933 10.5981 18.4629 10.5478 18.319C10.4975 18.175 10.4812 18.0213 10.5 17.87V12H10.47L4.71001 4.62C4.54762 4.41153 4.47434 4.14726 4.5062 3.88493C4.53805 3.6226 4.67244 3.38355 4.88001 3.22C5.07001 3.08 5.28001 3 5.50001 3H19.5C19.72 3 19.93 3.08 20.12 3.22C20.3276 3.38355 20.462 3.6226 20.4938 3.88493C20.5257 4.14726 20.4524 4.41153 20.29 4.62L14.53 12H14.5Z" fill="#2A5C66" fill-opacity="1"/>
+                      </svg>
+                  </div>
+                }
+          </div>
+          <mat-menu #menu="matMenu" class="custom-style">
+              <div class="font-DMSans">
+                  <button mat-menu-item (click)="searchFilter = 'Client Name'; clearState()">Client Name</button>
+                  <button mat-menu-item (click)="searchFilter = 'Contact Information'; clearState()">Contact Information</button>
+                  <button mat-menu-item (click)="searchFilter = 'Client Address'; clearState()">Client Address</button>
+                  <button mat-menu-item (click)="searchFilter = 'Note'; clearState()">Note</button>
+                  <button mat-menu-item (click)="searchFilter = ''; clearState()">Clear Filter</button>
+              </div>
+          </mat-menu>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="gap-3 p-3 bg-white border shadow-md w-full rounded-[10px] flex flex-col">
+    <div>
+      <div class="hidden tablet:flex tablet:flex-row items-center bg-mainGreen rounded-[10px] text-[0.8rem] mobileS:text-[1rem] mb-2 p-2">
+          <p class="text-white w-[30%]">Client Name</p>
+          <p class="text-white w-[20%]">Contact Information</p>
+          <p class="text-white w-[25%]">Default Address</p>
+          <p class="text-white w-[13%]">Note</p>
+      </div>
+
+      <div *ngIf="isLoading" class="w-full flex flex-row justify-center">
+        <mat-spinner class="mat-progress-spinner" [diameter]="50"></mat-spinner>
+      </div>
+
+      <div *ngIf="clients.length < 1 && !isLoading" class="w-full flex flex-row justify-center">
+        <p class="text-center text-mainGreen font-DMSans font-bold text-[1.7rem] tablet:text-[2rem] py-2">
+            No Records Found!
+        </p>
+      </div>
+
+
+      <div *ngFor="let client of clients; let i = index" class="p-[7px] border-t-2 flex flex-col justify-center"
+      [ngClass]="((i % 2 === 0) || (i == 0)) ? 'bg-[#f8f8f8]' : 'bg-white'"
+      >
+        @if(editingClient && currentlyEditing === client.client_ID){
+          <form [formGroup]="clientForm" class="">
+            <div class="flex flex-col tablet:flex-row text-[0.9rem] gap-3 tablet:gap-0">
+              <div class="tablet:block tablet:w-[30%] w-full">
+                <input placeholder="Client Name" formControlName="client_name" value="{{ client.client_name }}" type="text" class="border rounded p-2 w-full">
+              </div>    
+    
+              <div class="tablet:block tablet:w-[20%] w-full">
+                <input placeholder="Client Contact" formControlName="client_contact" value="{{ client.client_contact }}" type="text" class="border rounded p-2 w-full">
+              </div>
+    
+              <div class="laptop:block tablet:w-[25%] w-full">
+                <input placeholder="Client Address" formControlName="client_address" value="{{ client.client_address }}" type="text" class="border rounded p-2 w-full">
+              </div>
+    
+    
+              <div class="tablet:flex flex-1 w-full">
+                <input placeholder="Client Note" formControlName="client_note" value="{{ client.client_note }}" type="text" class="border rounded p-2 w-full">
+              </div>
+    
+              <div class="flex flex-row items-center justify-end gap-3 tablet:gap-0 ">
+                <svg class="cursor-pointer hover:scale-[105%] hover:duration-300 duration-300" (click)="closeEdit()" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z" fill="#8C4848"/>
+                </svg>
+                  
+                <svg class="cursor-pointer hover:scale-[105%] hover:duration-300 duration-300" (click)="submitClientEdit()" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.5501 18L3.8501 12.3L5.2751 10.875L9.5501 15.15L18.7251 5.97498L20.1501 7.39998L9.5501 18Z" fill="#2A5C66"/>
+                </svg>
+              </div>
+            </div>
+          </form>
+        }
+        @else {
+          <div class="grid grid-cols-2 tablet:flex tablet:flex-row text-[0.9rem] gap-3 tablet:gap-0">
+            <div class="text-[0.8rem] tablet:text-[1rem] grid col-span-full grid-cols-subgrid tablet:block w-full tablet:w-[30%]">
+              <p class="block tablet:hidden">Name: </p>
+              <p>{{ client.client_name }}</p>
+            </div>
+            
+            
+            <div class="text-[0.8rem] tablet:text-[1rem] grid col-span-full grid-cols-subgrid  tablet:block w-full tablet:w-[20%]">
+              <p class="block tablet:hidden">Contact: </p>
+              <p>{{ client.client_contact }}</p>
+            </div>
+            
+            <div class="text-[0.8rem] tablet:text-[1rem] grid col-span-full grid-cols-subgrid  laptop:block w-full tablet:w-[25%]">
+              <p class="block tablet:hidden">Address: </p>
+              <p>{{client.client_address}}</p>
+            </div>
+            
+            
+            <div class="text-[0.8rem] tablet:text-[1rem] grid col-span-full grid-cols-subgrid  tablet:flex w-full tablet:flex-1">
+              <p class="block tablet:hidden">Note: </p>
+              <p>{{ client.client_note }}</p>
+            </div>
+
+            <div class="hidden tablet:flex flex-row items-center">
+              <svg (click)="editClient(client.client_ID)" class="cursor-pointer duration-300 hover:duration-300 hover:scale-[103%]" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.5 5.5H3.5C2.96957 5.5 2.46086 5.71071 2.08579 6.08579C1.71071 6.46086 1.5 6.96957 1.5 7.5V16.5C1.5 17.0304 1.71071 17.5391 2.08579 17.9142C2.46086 18.2893 2.96957 18.5 3.5 18.5H12.5C13.0304 18.5 13.5391 18.2893 13.9142 17.9142C14.2893 17.5391 14.5 17.0304 14.5 16.5V15.5" stroke="#8D8D8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13.5 3.49998L16.5 6.49998M17.885 5.08499C18.2788 4.69114 18.5001 4.15697 18.5001 3.59998C18.5001 3.043 18.2788 2.50883 17.885 2.11498C17.4912 1.72114 16.957 1.49988 16.4 1.49988C15.843 1.49988 15.3088 1.72114 14.915 2.11498L6.5 10.5V13.5H9.5L17.885 5.08499Z" stroke="#8D8D8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <svg (click)="deleteClient(client.client_ID)" class="cursor-pointer duration-300 hover:duration-300 hover:scale-[103%]" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 4H15.5L14.5 3H9.5L8.5 4H5V6H19M6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19V7H6V19Z" fill="#8C4848"/>
+              </svg>
+                
+            </div>
+          </div>
+          <!-- Mobile view actions -->
+          <div class="tablet:hidden pt-2 flex-row flex justify-end items-center text-[0.8rem] tablet:text-[1rem] gap-3 text-white">
+            <button class="cursor-pointer hover:scale-[105%] hover:duration-300 duration-300 bg-mainGreen px-2 py-1 rounded-md" (click)="editClient(client.client_ID)">
+              Edit Details
+            </button>
+            <button class="cursor-pointer hover:scale-[105%] hover:duration-300 duration-300 bg-mainRed px-2 py-1 rounded-md" (click)="deleteClient(client.client_ID)">
+              Delete Customer
+            </button>
+          </div>
+        }
+
+      </div>
+    </div>
+  </div>
+</div>
+}

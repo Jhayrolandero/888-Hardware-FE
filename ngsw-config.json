@@ -1,0 +1,42 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.png",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [{
+    "name": "message",
+    "urls": [
+      "https://green-anteater-976545.hostingersite.com/888-Hardware-Trading/API-hardware-trading/main/getProduct",
+      "https://green-anteater-976545.hostingersite.com/888-Hardware-Trading/API-hardware-trading/main/getVariant"
+    ],
+    "cacheConfig": {
+      "strategy": "freshness",
+      "maxAge": "1d",
+      "maxSize": 1000,
+      "timeout": "5s"
+    }
+  }]
+}

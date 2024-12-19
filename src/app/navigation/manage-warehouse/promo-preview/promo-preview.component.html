@@ -1,0 +1,132 @@
+<div class="text-[#2A5C66] flex flex-col gap-4 w-full h-screen p-5">
+    <div
+    class="bg-white w-full rounded-[10px] flex flex-row justify-center tablet:justify-start items-center px-5">
+        <p (click)="goTo()" class="cursor-pointer text-mainGreen font-DMSans font-bold text-[1.7rem]  tablet:text-[2.5rem] py-2">
+            Promotions
+        </p>
+        <p class="cursor-default text-mainGreen font-DMSans font-bold text-[1.7rem]  tablet:text-[2.5rem] py-2 mx-5">
+            >
+        </p>
+        <p class="curosr-default text-mainGreen font-DMSans font-bold text-[1.7rem]  tablet:text-[2.5rem] py-2">
+            {{promo.promotion_type}} Promotion Details
+        </p>
+    </div>
+    <div class="bg-white flex flex-col rounded-[10px] gap-2 px-6 py-4">
+        <div class="flex flex-col gap-2 font-DMSans">
+            <div class="flex flex-row">
+                <h3 class="text-xl font-medium">Basic Information</h3>
+            </div>
+            <hr class="my-2">
+            <div class="flex flex-row justify-between text-lg">
+                <div class="flex flex-col">
+                    <h3><span class="font-medium">{{promoType}} Promotion Name:</span> {{promo.promotion_name}}</h3>
+                </div>
+                <div class="flex flex-col">
+                    <h3><span class="font-medium">{{promoType}} Promotion Period:</span> {{ promo.promotion_from }} to {{promo.promotion_to}}</h3>
+                </div>
+                <div class="flex flex-col">
+                    <h3><span class="font-medium">{{promoType}} Promotion Name:</span> {{promoType}}</h3>
+                </div>
+                @if(promoType === 'Bundle') {
+                    <div class="flex flex-col">
+                        <h3><span class="font-medium">Purchase Limit:</span> {{ promo.bundle_details!.purchase_limit }} bundle deal per buyer</h3>
+                    </div>
+                }
+
+            </div>
+            <div *ngIf="promoType === 'Bundle'" class="flex flex-row w-full">
+                <h3><span class="font-medium text-lg mr-1">Bundle Deal Type: </span> </h3>
+                <div *ngFor="let tier of promo.bundle_details?.bundle_tier; let i = index; let last = last" class="ml-1 text-lg flex flex-row">
+                    <ng-container *ngIf="tier.percentage !== null">
+                     Buy {{tier.required_qty}} and get {{tier.percentage}}% off
+                    </ng-container>
+                    <ng-container *ngIf="tier.amount !== null">
+                     Buy {{tier.required_qty}} and get {{tier.amount}} PHP off
+                    </ng-container>
+                    <ng-container *ngIf="tier.free_product_qty !== null">
+                     Buy {{tier.required_qty}} and get {{tier.free_product_qty}} free
+                    </ng-container>
+                    <ng-container *ngIf="!last">, </ng-container>
+                </div>
+                
+            </div>
+            
+        </div>
+
+    </div>
+
+    <div class="bg-white flex flex-col rounded-[10px] gap-2 px-6 py-4">
+        <div class="flex flex-col gap-2 font-DMSans">
+            <div class="flex flex-row">
+                <h3 *ngIf="promo.promotion_type !== 'Bundle'" class="text-xl font-medium">{{promo.promotion_type}} Promotion Products</h3>
+                <h3 *ngIf="promo.promotion_type === 'Bundle'" class="text-xl font-medium">{{promo.promotion_type}} Deal Products </h3>
+            </div>
+            <div class="flex flex-row justify-between text-lg">
+                <div *ngIf="promo.promotion_type !== 'Bundle'" class="flex flex-col w-full">
+                    <div class="hidden tablet:flex tablet:flex-row items-center bg-mainGreen rounded-[10px] rounded-b-[0px] text-[0.8rem] mobileS:text-[1rem] p-2">
+                        <p class="text-white w-[55%]">Product Name</p>
+                        <p class="text-white w-[15%] laptop:w-[15%]">Original Price</p>
+                        <p class="text-white w-[13%] laptop:w-[10%]">Discounted Price</p>
+                        <p class="text-white w-[13%] laptop:w-[15%]">Discount</p>
+                    </div>
+                </div>
+
+                <div *ngIf="promo.promotion_type === 'Bundle'" class="flex flex-col w-full">
+                    <div class="hidden tablet:flex tablet:flex-row items-center bg-mainGreen rounded-[10px] rounded-b-[0px] text-[0.8rem] mobileS:text-[1rem] p-2">
+                        <p class="text-white w-[50%]">Products</p>
+                        <p class="text-white w-[25%] laptop:w-[40%]">Price</p>
+                        <p class="text-white w-[25%] laptop:w-[10%]">Stock</p>
+                    </div>
+                </div>
+
+            </div>
+
+            @if(promo.promotion_type === 'Bundle') { 
+                <div  *ngFor="let prod of promo.products"class="font-DMSans p-[7px]  flex flex-row w-full justify-center">
+                    <div class="flex flex-col w-full">
+                        <div class="flex flex-row items-center">
+                            <img class="w-[50px] h-[50px] object-contain" loading="lazy" [src]="port + prod.product_image" alt="">
+                            <p class="w-[47%] ml-1"> {{prod.product_name}}</p>
+                            <p class="w-[25%] laptop:w-[40%]">{{prod.unit_price}}</p>
+                            <p class="w-[25%] laptop:w-[10%]">{{prod.product_stock}}</p>
+                        </div>
+                    </div>
+                </div>
+
+            } @else {
+
+                <div *ngFor="let prod of getUniqueProducts(promo)" class="font-DMSans p-[7px] flex flex-row w-full justify-center">
+                    <div class="flex flex-col w-full">
+                        <div class="flex flex-row items-center">
+                            <img class="w-[50px] h-[50px] object-contain" loading="lazy" [src]="port + prod.product_image" alt="">
+                            <p class="w-[35%] ml-1">{{ prod.product_name }}</p>
+                        </div>
+                        <div *ngIf="prod.has_variant" class="flex flex-col mt-1 justify-center text-formText font-medium bg-[#f8f8f8] p-2">
+                            <div *ngIf="groupVariantsByProduct(promo)![prod.product_ID]!.length > 1; else singleVariant" class="flex flex-col">
+                            <div *ngFor="let variant of groupVariantsByProduct(promo)![prod.product_ID]" class="flex flex-row items-center">
+                                <p class="w-[55%] ml-1 text-center">{{ variant.variant_name }}</p>
+                                <p class="w-[15%]">{{ variant.variant_unit_price }}</p>
+                                <p class="w-[13%]">{{ variant.discounted_price }}</p>
+                                <p class="w-[13%]">{{ variant.discount_value }}</p>
+                            </div>
+                            </div>
+                            <ng-template #singleVariant>
+                            <div class="flex flex-row items-center">
+                                <p class="w-[55%] ml-1 text-center">{{ prod.variant_name }}</p>
+                                <p class="w-[15%] ">{{ prod.variant_unit_price }}</p>
+                                <p class="w-[13%]">{{ prod.discounted_price }}</p>
+                                <p class="w-[13%]">{{ prod.discount_value }}</p>
+                            </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+
+        </div>
+
+    </div>
+
+</div>

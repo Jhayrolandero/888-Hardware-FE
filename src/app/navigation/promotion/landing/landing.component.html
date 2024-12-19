@@ -1,0 +1,296 @@
+@if(!switchInfo) {
+    <div class="text-[#2A5C66] flex flex-col gap-4 w-full h-screen p-5">
+        <div class=" bg-white w-full rounded-[10px] flex flex-row justify-center tablet:justify-between items-center px-5">
+            <p class="cursor-pointer text-mainGreen font-DMSans font-bold text-[1.7rem]  tablet:text-[2.5rem] py-2">
+                Promotions
+            </p>
+        </div>
+
+        <div class="bg-white flex flex-col  rounded-[10px] gap-2 px-6 py-4">
+            <h4>Create Discount</h4>
+            <hr class="h-[2px] bg-[#2A5C66] border-0 ">
+            <div class="text-white grid grid-cols-[1fr_1fr] gap-x-4">
+                <div class="duration-300 hover:duration-300 hover:scale-[102%] bg-[#2A5C66] rounded-[5px] p-4 cursor-pointer" (click)="goTo('discounts')">
+                    <div class="flex items-center gap-2">
+                        <span>
+                            <svg class="w-[32px] aspect-square" width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.7292 0.354248L16.6459 2.27091L2.27091 16.6459L0.354248 14.7292L7.54172 7.5417L14.7292 0.354248ZM3.70841 0.833408C5.29925 0.833408 6.58341 2.11758 6.58341 3.70841C6.58341 5.29925 5.29925 6.58341 3.70841 6.58341C2.11758 6.58341 0.833408 5.29925 0.833408 3.70841C0.833408 2.11758 2.11758 0.833408 3.70841 0.833408ZM13.2917 10.4167C14.8826 10.4167 16.1667 11.7009 16.1667 13.2917C16.1667 14.8826 14.8826 16.1667 13.2917 16.1667C11.7009 16.1667 10.4167 14.8826 10.4167 13.2917C10.4167 11.7009 11.7009 10.4167 13.2917 10.4167ZM3.70841 2.75008C3.18133 2.75008 2.75008 3.18133 2.75008 3.70841C2.75008 4.2355 3.18133 4.66675 3.70841 4.66675C4.2355 4.66675 4.66675 4.2355 4.66675 3.70841C4.66675 3.18133 4.2355 2.75008 3.70841 2.75008ZM13.2917 12.3334C12.7646 12.3334 12.3334 12.7647 12.3334 13.2917C12.3334 13.8188 12.7646 14.2501 13.2917 14.2501C13.8188 14.2501 14.2501 13.8188 14.2501 13.2917C14.2501 12.7647 13.8188 12.3334 13.2917 12.3334Z" fill="white"/>
+                            </svg>
+                        </span>
+                        <p class="text-[1.5rem] font-medium">
+                            Discount Promotions
+                        </p>
+                    </div>
+                    <p class="text-[#ffffff]">Set a timed discount for products.</p>
+                </div>
+                <div class="duration-300 hover:duration-300 hover:scale-[102%] bg-[#2A5C66] rounded-[5px] p-4 cursor-pointer" (click)="goTo('bundle')">
+                        <div class="flex items-center gap-2">
+                            <span>
+                                <svg class="w-[32px] aspect-square" width="23" height="14" viewBox="0 0 23 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16.7273 8.4H6.27273ZM16.7273 0.7H23V7.7M23 7.7H16.7273ZM23 7.7V10.5ZM0 7.7V10.5ZM0 7.7H6.27273ZM0 7.7V0.7H6.27273M0 10.5H6.27273ZM0 10.5V13.3H6.27273M16.7273 10.5H23ZM23 10.5V13.3H16.7273M6.27273 14H16.7273V0H6.27273V14Z" fill="white"/>
+                                </svg>
+                            </span>
+                            <p class="text-[1.5rem] font-medium">
+                            Bundle Deal
+                            </p>
+                        </div>
+                        <p class="text-[#ffffff]">Set discount to products as bundles.</p>
+                </div>
+                <!-- <div class="duration-300 hover:duration-300 hover:scale-[102%] bg-[#2A5C66] rounded-[5px] p-4 cursor-pointer" (click)="goTo('addon')">
+                    <div class="flex items-center gap-2">
+                        <span>
+                            <svg class="w-[32px] aspect-square" width="23" height="21" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_1181_6)">
+                                <path d="M15.0938 0L23 3.63959V11.7563L21.5625 11.0945V5.11817L15.8125 7.76514V10.4328L14.375 11.0945V7.76514L8.625 5.11817V7.46529L7.1875 6.80354V3.63959L15.0938 0ZM15.0938 6.61743L17.0815 5.69719L11.8818 2.95716L9.51221 4.05318L15.0938 6.61743ZM18.6313 4.99409L20.6753 4.05318L15.0938 1.47858L13.4204 2.25406L18.6313 4.99409ZM12.9375 11.7563L11.5 12.418V12.4077L7.1875 14.3929V19.0975L11.5 17.1019V18.5908L6.46875 20.9069L0 17.9188V10.9291L6.46875 7.95126L12.9375 10.9291V11.7563ZM5.75 19.0975V14.3929L1.4375 12.4077V17.1019L5.75 19.0975ZM6.46875 13.2452L10.6128 11.3427L6.46875 9.42984L2.32471 11.3427L6.46875 13.2452ZM12.9375 13.2349L17.9688 10.9188L23 13.2349V18.6839L17.9688 21L12.9375 18.6839V13.2349ZM17.25 19.1905V16.0369L14.375 14.7134V17.8671L17.25 19.1905ZM21.5625 17.8671V14.7134L18.6875 16.0369V19.1905L21.5625 17.8671ZM17.9688 14.8892L20.6753 13.6381L17.9688 12.3973L15.2622 13.6381L17.9688 14.8892Z" fill="white"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_1181_6">
+                                <rect width="23" height="21" fill="white"/>
+                                </clipPath>
+                                </defs>
+                                </svg>
+                        </span>
+                        <p class="text-[1.5rem] font-medium">
+                        Add-on Deals
+                        </p>
+                    </div>
+                    <p class="text-[#ffffff]">Set discount to products as bundles.</p>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="bg-white flex flex-col rounded-[10px] gap-2 px-6 py-4 w-full ">
+            <h4>Promotion List</h4>
+            <hr class="h-[2px] bg-[#2A5C66] border-0 ">
+            <div class="flex flex-row w-full space-x-3 ">
+                <div class="flex flex-col justify-center items-center ">
+                    <div class="text-sm flex justify-center items-center py-0 px-2">
+                        <div class="flex flex-row border  h-[70%] rounded-[10px] ">
+                            <div class="flex flex-col justify-center items-center p-2">
+                                <div class="cursor-pointer " mat-button [matMenuTriggerFor]="menu">
+                                    @if(searchFilter === ''){
+                                        <div class="flex flex-row justify-center  p-2 w-full">
+                                            <svg   class="select-none" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14.5 12V19.88C14.54 20.18 14.44 20.5 14.21 20.71C14.1175 20.8027 14.0076 20.8762 13.8866 20.9264C13.7657 20.9766 13.636 21.0024 13.505 21.0024C13.374 21.0024 13.2444 20.9766 13.1234 20.9264C13.0024 20.8762 12.8925 20.8027 12.8 20.71L10.79 18.7C10.681 18.5933 10.5981 18.4629 10.5478 18.319C10.4975 18.175 10.4812 18.0213 10.5 17.87V12H10.47L4.71001 4.62C4.54762 4.41153 4.47434 4.14726 4.5062 3.88493C4.53805 3.6226 4.67244 3.38355 4.88001 3.22C5.07001 3.08 5.28001 3 5.50001 3H19.5C19.72 3 19.93 3.08 20.12 3.22C20.3276 3.38355 20.462 3.6226 20.4938 3.88493C20.5257 4.14726 20.4524 4.41153 20.29 4.62L14.53 12H14.5Z" fill="#2A5C66" fill-opacity="1"/>
+                                            </svg>
+                                            <p class="font-medium text-mainGreen">Filter Search</p>
+                                        </div>
+                
+                                    }
+                                    @else {
+                                        <div class="cursor-pointer border-mainGray text-white rounded-[10px] p-2 flex flex-row items-center justify-center">
+                                            <svg  class="select-none" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14.5 12V19.88C14.54 20.18 14.44 20.5 14.21 20.71C14.1175 20.8027 14.0076 20.8762 13.8866 20.9264C13.7657 20.9766 13.636 21.0024 13.505 21.0024C13.374 21.0024 13.2444 20.9766 13.1234 20.9264C13.0024 20.8762 12.8925 20.8027 12.8 20.71L10.79 18.7C10.681 18.5933 10.5981 18.4629 10.5478 18.319C10.4975 18.175 10.4812 18.0213 10.5 17.87V12H10.47L4.71001 4.62C4.54762 4.41153 4.47434 4.14726 4.5062 3.88493C4.53805 3.6226 4.67244 3.38355 4.88001 3.22C5.07001 3.08 5.28001 3 5.50001 3H19.5C19.72 3 19.93 3.08 20.12 3.22C20.3276 3.38355 20.462 3.6226 20.4938 3.88493C20.5257 4.14726 20.4524 4.41153 20.29 4.62L14.53 12H14.5Z" fill="#2A5C66" fill-opacity="1"/>
+                                            </svg>
+                                            <p class="font-medium text-mainGreen">
+                                                {{searchFilter}}
+                                            </p>
+                                        </div>
+                                    }
+                                </div>
+                                <mat-menu #menu="matMenu" class="custom-style">
+                                    
+                                    <div class="font-DMSans">
+                                        <button mat-menu-item (click)="searchFilter = 'Product Name'">Product Name</button>
+                                        <button mat-menu-item (click)="searchFilter = 'Promotion Name'">Promotion Name</button>
+                                    </div>
+                                </mat-menu>
+                            </div>
+            
+                            <input [(ngModel)]="searchKey" type="text" class="outline-none ml-3 font-DMSans font-medium text-black opacity-70 text-[0.9rem] tablet:text-[1.1rem]" placeholder="Search Promos">
+                            
+                        </div>
+                    </div>
+                    <div class="flex-row flex text-[0.7rem]">
+                        <p *ngIf="this.errorMessage !== '' && this.searchFilter === '' " class="text-mainRed font-DMSans font-medium">{{errorMessage}}</p>
+                    </div>
+    
+                </div>
+
+                <div class="flex flex-row items-center justify-center space-x-2 ">
+
+                    <div class="flex flex-row justify-start items-center">
+                        <p class="font-medium text-mainGreen">Filter By Date</p>
+                    </div>
+                    <div class="flex flex-row justify-center items-center rounded-[10px] space-x-3">
+                        <input [(ngModel)]="fromFilter" type="date" class="border-2  rounded-[5px] px-2 py-2 focus:outline-none ">
+                        <span class="">-</span>
+                        <input [(ngModel)]="toFilter" type="date" class="border-2  rounded-[5px] px-2 py-2 focus:outline-none ">
+
+                    </div>
+
+                </div>
+
+                <div class="flex flex-row items-center space-x-3">
+                    <button 
+                        [ngClass]="{'button-disabled': (searchKey === '' && (fromFilter === null || toFilter === null)), 'bg-mainBlueB': !(searchKey === '' && (fromFilter === null || toFilter === null))}"  
+                        [disabled]="searchKey === '' && (fromFilter === null || toFilter === null)" 
+                        (click)="filter()" 
+                        class="text-white rounded-[5px] px-3 py-2 font-DMSans font-medium text-[0.9rem] tablet:text-[1.1rem]">
+                        Search
+                    </button>
+                    <button (click)="reset()" class="bg-mainRed text-white rounded-[5px] px-3 py-2 font-DMSans font-medium text-[0.9rem] tablet:text-[1.1rem]">Reset</button>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="flex flex-col w-full">
+        <div class="bg-mainGreen rounded-[10px] rounded-b-[0px] text-[0.8rem] p-2 grid grid-cols-5">
+            <!-- I will improve this later on, for now i will align the grid -->
+            <!-- <div class="w-full hidden tablet:flex tablet:flex-row bg-mainGreen rounded-[10px] rounded-b-[0px] text-[0.8rem] mobileS:text-[1rem] p-2"> -->
+            <div class="grid col-span-5 grid-cols-subgrid items-center text-white font-medium ">
+                <p >
+                    <button [matMenuTriggerFor]="status">
+                        {{statusFilter}}
+                        <button class="rounded-xl px-3 py-1 border-2 border-mainGreen"  (click)="isDropdown = !isDropdown;">
+                            <svg width="10" height="10" viewBox="0 0 15 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.56608 8.54396C8.28572 8.83605 7.90568 9.00012 7.50943 9.00012C7.11319 9.00012 6.73315 8.83605 6.4528 8.54396L0.812735 2.66255C0.532364 2.36994 0.374907 1.97314 0.375 1.55942C0.375094 1.14571 0.53273 0.748977 0.813233 0.456506C1.09374 0.164035 1.47413 -0.000219532 1.87072 -0.000122027C2.26732 -2.45218e-05 2.64764 0.164416 2.92801 0.457025L7.50943 5.23619L12.0909 0.457025C12.3727 0.172757 12.7504 0.0153523 13.1424 0.018712C13.5345 0.0220717 13.9096 0.185927 14.1869 0.474988C14.4643 0.764048 14.6217 1.15518 14.6253 1.56415C14.6289 1.97312 14.4784 2.3672 14.2061 2.66151L8.56707 8.545L8.56608 8.54396Z" fill="#ffffff"/>
+                            </svg>
+                        </button>
+                    </button>
+                    <mat-menu #status="matMenu" class="custom-style">
+                        <div class="font-DMSans">
+                            <button mat-menu-item (click)="filter('status','All')" class="text-blue-400">All</button>
+                            <button mat-menu-item (click)="filter('status','Upcoming')">Upcoming</button>
+                            <button mat-menu-item (click)="filter('status','Ongoing')">Ongoing</button>
+                            <button mat-menu-item (click)="filter('status','Expired')">Expired</button>
+                        </div>
+                    </mat-menu>
+                <!--<button *ngIf="!isDropdown" >
+                        All
+                        <button class="rounded-xl px-3 py-1 border-2 border-mainGreen"  (click)="isDropdown = !isDropdown;">
+                            <svg width="10" height="10" viewBox="0 0 15 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M11.2932 8.29303C11.4807 8.10556 11.735 8.00024 12.0002 8.00024C12.2653 8.00024 12.5197 8.10556 12.7072 8.29303L18.3642 13.95C18.5463 14.1386 18.6471 14.3912 18.6449 14.6534C18.6426 14.9156 18.5374 15.1664 18.352 15.3518C18.1666 15.5373 17.9158 15.6424 17.6536 15.6447C17.3914 15.647 17.1388 15.5462 16.9502 15.364L12.0002 10.414L7.05018 15.364C6.86158 15.5462 6.60898 15.647 6.34678 15.6447C6.08458 15.6424 5.83377 15.5373 5.64836 15.3518C5.46295 15.1664 5.35778 14.9156 5.35551 14.6534C5.35323 14.3912 5.45402 14.1386 5.63618 13.95L11.2932 8.29303Z" fill="white"/>
+                                
+                            </svg>
+    
+                        </button>
+                    </button> -->
+                </p>
+
+                <p >
+                    <button [matMenuTriggerFor]="type">
+                        Promotion Type
+                        <button class="rounded-xl px-3 py-1 border-2 border-mainGreen"  (click)="isDropdown = !isDropdown;">
+                            <svg width="10" height="10" viewBox="0 0 15 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.56608 8.54396C8.28572 8.83605 7.90568 9.00012 7.50943 9.00012C7.11319 9.00012 6.73315 8.83605 6.4528 8.54396L0.812735 2.66255C0.532364 2.36994 0.374907 1.97314 0.375 1.55942C0.375094 1.14571 0.53273 0.748977 0.813233 0.456506C1.09374 0.164035 1.47413 -0.000219532 1.87072 -0.000122027C2.26732 -2.45218e-05 2.64764 0.164416 2.92801 0.457025L7.50943 5.23619L12.0909 0.457025C12.3727 0.172757 12.7504 0.0153523 13.1424 0.018712C13.5345 0.0220717 13.9096 0.185927 14.1869 0.474988C14.4643 0.764048 14.6217 1.15518 14.6253 1.56415C14.6289 1.97312 14.4784 2.3672 14.2061 2.66151L8.56707 8.545L8.56608 8.54396Z" fill="#ffffff"/>
+                            </svg>
+                        </button>
+                    </button>
+                    <mat-menu #type="matMenu" class="custom-style">
+                        <div class="font-DMSans">
+                            <button mat-menu-item (click)="filter('type','all')" class="text-blue-400">All</button>
+                            <button mat-menu-item (click)="filter('type','bundle')">Bundle</button>
+                            <button mat-menu-item (click)="filter('type','discount')">Discount</button>
+                        </div>
+                    </mat-menu>
+                </p>
+
+                <p >Products</p>
+                <p >Period</p>
+                <p >Actions</p>
+            </div>
+        </div>
+
+
+            @if(filteredPromo!.length < 1 && !isLoading && promo!.length > 0) {
+                <div  class="w-full flex flex-row justify-center">
+                    <!-- <mat-spinner class="mat-progress-spinner" [diameter]="50"></mat-spinner> -->
+                    <p class="text-center text-mainGreen font-DMSans font-bold text-[1.7rem] tablet:text-[2rem] py-2">
+                        No Records Found!
+                    </p>
+                </div>
+            } @else if (isLoading) {
+                <div  class="w-full flex flex-row justify-center">
+                    <mat-spinner class="mat-progress-spinner" [diameter]="50"></mat-spinner>
+                </div>
+            } @else if (promo!.length == 0) {
+                <div  class="w-full flex flex-row justify-center">
+                    <!-- <mat-spinner class="mat-progress-spinner" [diameter]="50"></mat-spinner> -->
+                    <p class="text-center text-mainGreen font-DMSans font-bold text-[1.7rem] tablet:text-[2rem] py-2">
+                        Promotions are Empty!
+                    </p>
+                </div>
+            } @else {
+            <div class="overflow-y-scroll no-scrollbar">
+                <div *ngFor="let pro of filteredPromo; let i = index"   class="font-DMSans border-t-2 grid grid-cols-5 w-full justify-center items-center" >
+                <!-- <div *ngFor="let pro of filteredPromo; let i = index" class="font-DMSans p-[7px] border-t-2 flex flex-row w-full justify-center items-center" [ngClass]="((i % 2 === 0) || (i == 0)) ? 'bg-[#f8f8f8]' : 'bg-white'"> -->
+                    <div class="grid grid-cols-subgrid col-span-5 items-center p-[7px]" [ngClass]="((i % 2 === 0) || (i == 0)) ? 'bg-[#f8f8f8]' : 'bg-white'">
+                        <div class="flex flex-col">
+                            <span class="max-w-fit text-[0.8rem] px-[0.25em] py-[0.1em] bg-[#ececec] rounded-[0.025em]">{{ pro.status }}</span>
+                            <p>
+                                {{ pro.promotion_name }}
+                            </p>
+                        </div>
+                        <!-- <div class="flex flex-row w-[20%]">
+                            <div class="flex flex-col">
+                                <p class="text-xs font-medium text-formText bg-[#c9ced6] text-center p-0 w-[60px]">{{this.checkStatus(pro)}}</p>
+                                <p class="text-medium" >
+                                    {{ pro.promotion_name }}
+                                </p>
+                            </div>
+                        </div> -->
+                        <!-- <div class="flex flex-row w-[20%]"> -->
+                            <p>
+                                {{ pro.promotion_type }}
+                            </p>
+                        <!-- </div> -->
+                        <!-- <div class="flex flex-row w-[30%] justify-start items-start flex-wrap"> -->
+                            <div class="flex gap-2">
+                                <ng-container *ngFor="let product of getUniqueProducts(pro); let i = index">
+                                    @if(product.product_image !== '') {
+                                    <div class="w-1/5 p-1">
+                                        <img title="{{ product.product_name }}"
+                                        [src]="port + product.product_image"
+                                        alt="{{ product.product_name }}"
+                                        class="w-full h-10 object-cover" />
+                                    </div>
+                                } @else {
+                                    <div class="p-1 ">
+                                        <p>{{product.product_name}}</p>
+                                    </div>
+                                }
+                            </ng-container>
+                            </div>
+                        <!-- </div> -->
+                        
+                        <!-- <div class="flex flex-row w-[20%]"> -->
+                            <p >
+                                <span class="font-semibold">{{ pro.promotion_from }} </span> to <span class="font-semibold">{{ pro.promotion_to }} </span>
+                            </p>
+                        <!-- </div> -->
+                        <!-- <div class="flex flex-row w-[10%] space-x-2 "> -->
+                            <!-- <button >
+                                <svg class="" width="24" height="24" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="#8C4848" d="M20.25 4.5H16.875V3.375C16.875 2.67881 16.5984 2.01113 16.1062 1.51884C15.6139 1.02656 14.9462 0.75 14.25 0.75H9.75C9.05381 0.75 8.38613 1.02656 7.89384 1.51884C7.40156 2.01113 7.125 2.67881 7.125 3.375V4.5H3.75C3.45163 4.5 3.16548 4.61853 2.9545 4.8295C2.74353 5.04048 2.625 5.32663 2.625 5.625C2.625 5.92337 2.74353 6.20952 2.9545 6.4205C3.16548 6.63147 3.45163 6.75 3.75 6.75H4.125V19.5C4.125 19.9973 4.32254 20.4742 4.67417 20.8258C5.02581 21.1775 5.50272 21.375 6 21.375H18C18.4973 21.375 18.9742 21.1775 19.3258 20.8258C19.6775 20.4742 19.875 19.9973 19.875 19.5V6.75H20.25C20.5484 6.75 20.8345 6.63147 21.0455 6.4205C21.2565 6.20952 21.375 5.92337 21.375 5.625C21.375 5.32663 21.2565 5.04048 21.0455 4.8295C20.8345 4.61853 20.5484 4.5 20.25 4.5ZM9.375 3.375C9.375 3.27554 9.41451 3.18016 9.48483 3.10984C9.55516 3.03951 9.65054 3 9.75 3H14.25C14.3495 3 14.4448 3.03951 14.5152 3.10984C14.5855 3.18016 14.625 3.27554 14.625 3.375V4.5H9.375V3.375ZM17.625 19.125H6.375V6.75H17.625V19.125ZM10.875 9.75V15.75C10.875 16.0484 10.7565 16.3345 10.5455 16.5455C10.3345 16.7565 10.0484 16.875 9.75 16.875C9.45163 16.875 9.16548 16.7565 8.9545 16.5455C8.74353 16.3345 8.625 16.0484 8.625 15.75V9.75C8.625 9.45163 8.74353 9.16548 8.9545 8.9545C9.16548 8.74353 9.45163 8.625 9.75 8.625C10.0484 8.625 10.3345 8.74353 10.5455 8.9545C10.7565 9.16548 10.875 9.45163 10.875 9.75ZM15.375 9.75V15.75C15.375 16.0484 15.2565 16.3345 15.0455 16.5455C14.8345 16.7565 14.5484 16.875 14.25 16.875C13.9516 16.875 13.6655 16.7565 13.4545 16.5455C13.2435 16.3345 13.125 16.0484 13.125 15.75V9.75C13.125 9.45163 13.2435 9.16548 13.4545 8.9545C13.6655 8.74353 13.9516 8.625 14.25 8.625C14.5484 8.625 14.8345 8.74353 15.0455 8.9545C15.2565 9.16548 15.375 9.45163 15.375 9.75Z"/>
+                                </svg>
+                            </button> -->
+                        <!-- </div> -->
+                        <!-- <div class="flex flex-row w-[10%] space-x-2 "> -->
+
+                        <div>
+
+                            <button (click)="openInfo(pro)">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 7H11V5H9M10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18ZM10 0C8.68678 0 7.38642 0.258658 6.17317 0.761205C4.95991 1.26375 3.85752 2.00035 2.92893 2.92893C1.05357 4.8043 0 7.34784 0 10C0 12.6522 1.05357 15.1957 2.92893 17.0711C3.85752 17.9997 4.95991 18.7362 6.17317 19.2388C7.38642 19.7413 8.68678 20 10 20C12.6522 20 15.1957 18.9464 17.0711 17.0711C18.9464 15.1957 20 12.6522 20 10C20 8.68678 19.7413 7.38642 19.2388 6.17317C18.7362 4.95991 17.9997 3.85752 17.0711 2.92893C16.1425 2.00035 15.0401 1.26375 13.8268 0.761205C12.6136 0.258658 11.3132 0 10 0ZM9 15H11V9H9V15Z" fill="#2A5C66"/>
+                                </svg>
+                            </button>
+                            <button>
+                                <svg class="" width="24" height="24" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="#8C4848" d="M20.25 4.5H16.875V3.375C16.875 2.67881 16.5984 2.01113 16.1062 1.51884C15.6139 1.02656 14.9462 0.75 14.25 0.75H9.75C9.05381 0.75 8.38613 1.02656 7.89384 1.51884C7.40156 2.01113 7.125 2.67881 7.125 3.375V4.5H3.75C3.45163 4.5 3.16548 4.61853 2.9545 4.8295C2.74353 5.04048 2.625 5.32663 2.625 5.625C2.625 5.92337 2.74353 6.20952 2.9545 6.4205C3.16548 6.63147 3.45163 6.75 3.75 6.75H4.125V19.5C4.125 19.9973 4.32254 20.4742 4.67417 20.8258C5.02581 21.1775 5.50272 21.375 6 21.375H18C18.4973 21.375 18.9742 21.1775 19.3258 20.8258C19.6775 20.4742 19.875 19.9973 19.875 19.5V6.75H20.25C20.5484 6.75 20.8345 6.63147 21.0455 6.4205C21.2565 6.20952 21.375 5.92337 21.375 5.625C21.375 5.32663 21.2565 5.04048 21.0455 4.8295C20.8345 4.61853 20.5484 4.5 20.25 4.5ZM9.375 3.375C9.375 3.27554 9.41451 3.18016 9.48483 3.10984C9.55516 3.03951 9.65054 3 9.75 3H14.25C14.3495 3 14.4448 3.03951 14.5152 3.10984C14.5855 3.18016 14.625 3.27554 14.625 3.375V4.5H9.375V3.375ZM17.625 19.125H6.375V6.75H17.625V19.125ZM10.875 9.75V15.75C10.875 16.0484 10.7565 16.3345 10.5455 16.5455C10.3345 16.7565 10.0484 16.875 9.75 16.875C9.45163 16.875 9.16548 16.7565 8.9545 16.5455C8.74353 16.3345 8.625 16.0484 8.625 15.75V9.75C8.625 9.45163 8.74353 9.16548 8.9545 8.9545C9.16548 8.74353 9.45163 8.625 9.75 8.625C10.0484 8.625 10.3345 8.74353 10.5455 8.9545C10.7565 9.16548 10.875 9.45163 10.875 9.75ZM15.375 9.75V15.75C15.375 16.0484 15.2565 16.3345 15.0455 16.5455C14.8345 16.7565 14.5484 16.875 14.25 16.875C13.9516 16.875 13.6655 16.7565 13.4545 16.5455C13.2435 16.3345 13.125 16.0484 13.125 15.75V9.75C13.125 9.45163 13.2435 9.16548 13.4545 8.9545C13.6655 8.74353 13.9516 8.625 14.25 8.625C14.5484 8.625 14.8345 8.74353 15.0455 8.9545C15.2565 9.16548 15.375 9.45163 15.375 9.75Z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            }
+        </div>
+        </div>
+} @else {
+    <app-promo-preview [promo]="promoInfo" (closePreview)="closeInfo()"></app-promo-preview>
+
+}

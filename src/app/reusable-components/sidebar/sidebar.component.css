@@ -1,0 +1,48 @@
+.hovered {
+    cursor: pointer;
+    color: #2A5C66;
+    background-color: #EFFAFC;
+    border-left: solid 8px;
+}
+
+::ng-deep .mat-expansion-panel {
+    border: none !important;
+    box-shadow: none !important;
+    background-color: white !important;
+    padding: 0 !important;
+    color: #4D4D4D;
+}
+
+::ng-deep .mat-expansion-panel-header {
+    padding : 0 rem !important;
+}
+
+::ng-deep .mat-expansion-panel:hover .mat-expansion-panel-header {
+    background-color: transparent !important;
+    color: #2A5C66;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    background-color: transparent !important;
+    padding: 0 !important;
+}
+
+::ng-deep .mat-expansion-panel-content,
+::ng-deep .mat-expansion-panel-content{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+::-webkit-scrollbar { 
+    width: 3px; 
+  } 
+
+  .mainHeader{
+    padding-left: 0.75rem /* 12px */!important;
+    padding-right: 0.75rem /* 12px */!important;
+  }
+
+  .mainTitle{
+    margin-right: 0px !important;
+    width: 40px !important;
+  }
